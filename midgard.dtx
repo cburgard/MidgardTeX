@@ -11,6 +11,21 @@
 % 
 % and version 1.2 or later is part of all distributions of
 % LaTeX version 1999/12/01 or later.
+%
+% The pictures accompanying this package
+%
+%       arrow.pdf  arrow.eps
+%       box.pdf    box.eps
+%       scroll.pdf scroll.eps
+%
+% are property of 
+%
+%   	Verlag für Fantasy- und Science Fiction-Spiele (VFSF)
+%       Elsa Franke
+%	Ringstraße 22
+%       D-67705 Stelzenberg
+%
+% and are used and distributed with kind permission thereof.
 % 
 % \fi
 %
@@ -23,7 +38,11 @@
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{midgard}
+\usepackage{flafter}
+\usepackage{boxedminipage}
 \usepackage[a4paper]{geometry}
 \newcommand{\footnoteremember}[2]{%
   \footnote{#2}%
@@ -61,11 +80,11 @@
 % \maketitle
 %\selectlanguage{ngerman}%
 %\begin {abstract}
-%  \Midgard{} ist ein deutsches Pen-\&-Paper Fantasy Rollenspiel, das
+%  \textsc{Midgard} ist ein deutsches Pen-\&-Paper Fantasy Rollenspiel, das
 %  seit 1981 erscheint und damit das erste deutsche
 %  Fantasy-Rollenspiel überhaupt war.  Dieses \LaTeX{}-Paket versucht,
 %  das Layout der offiziellen, häufig mit propietären
-%  Textsatzprogrammen gesetzten \Midgard-Publikationen der vierten
+%  Textsatzprogrammen gesetzten \textsc{Midgard}-Publikationen der vierten
 %  Auflage so gut es geht nachzuahmen. Zu diesem Zweck werden einige
 %  Kommandos und Umgebungen definiert. Insbesondere wurde versucht,
 %  ein Störungsfreies und vollautomatisches Zwei-Spalten-Layout zu
@@ -73,7 +92,7 @@
 %\end{abstract}
 %\selectlanguage{english}%
 %\begin{abstract}
-%  \Midgard{} is a german pen \& paper roleplay game. This package for
+%  \textsc{Midgard} is a german pen \& paper roleplay game. This package for
 %  \LaTeX{} tries to resemble the layout of the official publications of
 %  this game and make it possible to write your own documents in a
 %  similar style and layout. Differend commands and environments are
@@ -82,25 +101,183 @@
 %  is the game itself. A translation of this package into other
 %  languages is not planned, since there is little use for this
 %  package outside the entirely german-speaking fanbase of the game
-%  \Midgard{} itself.
+%  \textsc{Midgard} itself.
 %\end {abstract}
 %\selectlanguage{ngerman}%
 %
 % \section{Einleitung}
 %
-% More Text
+% Spielleiter verbringen mitunter viel Zeit mit ihrer
+% Kampagnenplanung. Es gibt zwar inzwischen eine große Zahl von
+% Abenteuern, sei es im Internet zum freien oder kostenpflichtigen
+% Download oder in gedruckter Form, als Hefte oder Teile von
+% Quellenbüchern -- doch letzten Endes kommt man nicht umhin, immer
+% wieder Zeit aufzuwenden, um eigene Abenteuer oder Regelerweiterungen
+% zu entwickeln. Oft jedoch ist die Hemmschwelle groß, die eigenen
+% Ideen anderen zugänglich zu machen -- denn das würde bedeuten, dass
+% man sie zunächst einigermaßen ordentlich aufschreiben muss. Viel
+% Zeit geht dabei verloren, die Werte von neuen Zaubern oder Kreaturen
+% abzutippen und in eine einigermaßen ansehnliche, wenn nicht sogar
+% mit den offiziellen Schreibweisen konforme Form zu bringen.
+%
+% Dieses Paket versucht, diese Hemmschwelle zu senken, indem es
+% Kommandos und Umgebungen zur Verfügung stellt, die es erlauben, auf
+% einfach und -- hoffentlich -- intuitive Weise ein Layout zu
+% erzielen, das dem der offiziellen Veröffentlichungen so nahe wie
+% möglich kommt. Ich möchte jedoch nicht verhehlen, dass ich bei
+% einigen Details auch bewusst vom offiziellen Layout abweiche, um das
+% Layout unter Verwendung der Kapazitäten von \LaTeX{} noch
+% ansehnlicher zu machen. Die folgende Liste enthält die von mir
+% bewusst abweichend implementierten Details.
+%
+%\begin{itemize}
+%\item Alle sonst in GROSSBUCHSTABEN geschriebenen Begriffe werden
+%  stattdessen in \textsc{Kapitälchen} gesetzt, um sie weniger blockig
+%  wirken zu lassen.
+%\item Wenn die Felder \glqq Besonderheiten\grqq{} und \glqq
+%  Angriff\grqq{} von Kreaturendaten so lang sind, dass sie
+%  Zeilenumbrüche verursachen, erhalten die nachfolgenden Zeilen einen
+%  leichten hängenden Einzug.
+%\item Die Werte von Kreaturen enthalten ein zusätzliches Feld \glqq
+%  Aura\grqq, das im Anschluss an die Besonderheiten in die gleiche
+%  Zeile gedruckt wird.
+%\end{itemize}
 %
 % \section{Anleitung}
 %
-% Even more Text
+% \begin{figure}[Htbp]
+% \centering
+% \midgardabenteuer
+% \caption{Schriftzug auf der Titelseite von Abenteuern\label{fig:midgardabenteuer}}
+% \end{figure}
+% 
+% \DescribeMacro{\midgardabenteuer} Auf der Titelseite von offiziellen
+% \textsc{Midgard}-Abenteuern sind oft die Worte \glqq Midgard
+% Abenteuer\grqq{} in einer dekorativen Weise angebracht. Einen
+% ähnlichen Schriftzug wie den in offiziellen Abenteuern abgedruckten
+% liefert das Kommando |\midgardabenteuer|, dessen Ergebnis in
+% Abbildung~\ref{fig:midgardabenteuer} dargestellt wird. Je nach
+% Kontext sollte es mit |\centering| auf der Seite zentriert werden.
+%
+% \begin{figure}[Htbp]
+% \centering
+% \begin{beispiel}
+%   In einer solchen \textit{Beispiel-Box} können erklärende
+%   Textpassagen abgedruckt werden. Die Breite expandiert dabei
+%   automatisch auf den gesamten zugänglichen Bereich. Soll sie
+%   künstlich eingeschränkt werden, kann hierfür die Umgebung
+%   |minipage| verwendet werden.
+% \end{beispiel}
+% \caption{Die Umgebung \textsf{beispiel} \label{fig:beispiel}}
+% \end{figure}
+%
+% \DescribeEnv{beispiel} Gerade im Grundregelwerk \glqq
+% \textsc{Midgard} -- Das Fantasy Rollenspiel\grqq{} finden sich immer
+% wieder Beispiel-Passagen, welche die konkrete Verwendung bestimmter
+% Regeln demonstrieren sollen. Diese sind typischerweise in leicht
+% grau hinterlegte, abgerundete Boxen abgedruckt. Dies versucht die
+% Umgebung |beispiel| nachzuempfinden. Das Ergebnis ist in
+% Abbildung~\ref{fig:beispiel} dargestellt.
+%
+% \begin{figure}[Htbp]
+% \centering
+% \begin{minipage}{0.4\textwidth}
+%   \zauber[name=Neuer Zauber, scroll=false, stufe=1,
+%   art=Gestenzauber, prozess=Veränden, agens=Holz, reagens=Erde,
+%   AP=1, Zd=1\,sec, Rw=30\,m, Wz=Geist, Wb=Zauberer, Wd=\textinfty,
+%   Ur=druidisch, FP=100, G={Dr, Th}, th=S, S={Hl, Hx, \textsc{Pri} a.~T},
+%   A=niemand, anmerkung={nur zu Demonstrationszwecken},
+%   material={Haare eines Hundes}, matpreis={1~KS},
+%   matannotation={wird nur bei krit.~Fehler verbraucht}
+%   ]{} \par \noindent Beschreibungstext des Zaubers
+% \end{minipage}
+% \hspace{0.5ex}\vrule\hspace{0.5ex}
+% \begin{minipage}{0.55\textwidth}
+% \begin{verbatim}
+%\zauber[name=Neuer Zauber, scroll=false,th=S,
+%  anmerkung={nur zu Demonstrationszwecken},
+%  stufe=1,art=Gestenzauber,
+%  prozess=Veränden,agens=Holz,reagens=Erde
+%  AP=1, Zd=1\,sec, Rw=30\,m,
+%  Wz=Geist, Wb=Zauberer, Wd=\textinfty,
+%  Ur=druidisch, FP=100,
+%  S={Hl, Hx, \textsc{Pri} a.~T},
+%  G={Dr, Th}, A=niemand, 
+%  material={Haare eines Hundes}, 
+%  matpreis={1~KS}, 
+%  matannotation={wird nur bei krit.~Fehler
+%   verbraucht}
+% ]{}
+% 
+% \noindent Beschreibungstext des Zaubers
+% \end{verbatim}
+% \end{minipage}
+% \caption{Ein dem Arkanum nachempfundenes Layout für Zauber\label{fig:zauber}}
+% \end{figure}
+% 
+% \DescribeMacro{\zauber} Mit dem Kommando |zauber| kann ein dem
+% Layout des Arkanums nachempfundener Textsatz der Werte eines Zaubers
+% erzeugt werden. Intern wird hierzu das Paket |xkeyval| verwendet,
+% welches die Übergabe einer durch Kommas getrennten Liste von
+% Schlüssel-Wert-Paaren im optionalen Argument eines Kommandos
+% erlaubt. Ein Aufruf des |zauber|-Kommandos erfolgt durch die
+% Übergabe der Werte sämtlicher Felder im optionalen Argument. Das
+% Ergebnis ist im Abbildung~\ref{fig:zauber} dargestellt.
+%
+% \begin{figure}[Htbp]
+% \begin{verbatim}
+%% \bestiarium[
+%%   name=Kreatur, mag=true, typ=Humanoid, grad=3, In=m30,
+%%   LP=3W6, AP=3W6+2, MW=18, EP=5,
+%%   Gw=80, St=70, B=24, RK=KR,
+%%   abwehr=12, resistenz=13/15/11,
+%%   angriff={Keule+8 (1W6+1) -- Raufen+8 (1W6-2)},
+%%   zauberEW=12, zauber={Bannen von Dunkelheit, Schlaf -- Niessalz},
+%%   zauberArtigEW=18, zauberArtig={Heilen von Wunden \textup{(jede Runde auf sich selbst)}}
+%% ]{}
+% \end{verbatim}
+% \hrule
+% \hfill
+% \begin{minipage}{0.45\textwidth}
+%%   \bestiarium[ name=Kreatur, mag=true, typ=Humanoid, grad=3,
+%%   In=m30, LP=3W6, AP=3W6+2, MW=18, EP=5, Gw=80, St=70, B=24, RK=KR,
+%%   abwehr=12, resistenz=13/15/11, angriff={Keule+8 (1W6+1) --
+%%   Raufen+8 (1W6-2)}, zauberEW=12, zauber={Bannen von Dunkelheit,
+%%   Schlaf -- Niessalz}, zauberArtigEW=18, zauberArtig={Heilen von
+%%   Wunden \textup{(jede Runde auf sich selbst)}} ]{}
+% \end{minipage}\hfill
+% \begin{minipage}{0.45\textwidth}
+%   \best[ name=Kreatur,  mag=true, typ=Humanoid, grad=3,
+%   In=m30, LP=3W6, AP=3W6+2, MW=18, EP=5, Gw=80, St=70, B=24, RK=KR,
+%   abwehr=12, resistenz=13/15/11, angriff={Keule+8 (1W6+1) --
+%   Raufen+8 (1W6-2)}, zauberEW=12, zauber={Bannen von Dunkelheit,
+%   Schlaf -- Niessalz}, zauberArtigEW=18, zauberArtig={Heilen von
+%   Wunden \textup{(jede Runde auf sich selbst)}} ]{}
+% \end{minipage}
+% \hfill~
+
+% \caption{Ein dem Bestiarium nachempfundenes Layout für Kreaturendaten\label{fig:bestiarium}}
+% \end{figure}
+% 
+% \DescribeMacro{\bestiarium} Mit dem Kommando |\bestiarium| kann ein
+% an das Bestiarium angelehntes Layout für die Spieldaten von
+% Kreaturen -- komplett mit Box -- erzeugt werden. Ähnlich wie schon
+% beim Kommando |zauber| werden die Werte der einzelnen Felder dabei
+% als Schlüssel-Wert-Paare übergeben. Die Verwendung und das Ergebnis
+% sind in Abbildung~\ref{fig:bestiarium} (links) dargestellt.
+%
+% \DescribeMacro{\best} Mit |\best| kann die aus einigen Abenteuern
+% und Zauberbeschreibungen bekannte Kurzform von Kreaturendaten
+% erzeugt werden, die ohne Box auskommt. Die Verwendung ist identisch
+% mit der des Kommandos |\bestiarium|, das Ergebnis ist ebenfalls sind
+% in Abbildung~\ref{fig:bestiarium} (rechts) dargestellt.
+%
 %
 % \StopEventually{\PrintIndex}
 %
 % \section{Implementierung}
 %
 %
-% \begin{macro}{initializations}
-%   code
 %    \begin{macrocode}
 \RequirePackage{setspace}
 \RequirePackage{xkeyval}
@@ -109,17 +286,26 @@
 \RequirePackage[framemethod=tikz]{mdframed}
 \usetikzlibrary{shadows}
 \RequirePackage{calc}
-
-\typeout{Package MIDGARD Message: package loaded}
-
-\newmdenv[%
-  backgroundcolor=lightgray,
-  roundcorner=10pt,%
-%  tikzsetting={drop shadow={shadow xshift=1.0ex, shadow yshift=-0.5em, fill=black!50, opacity=1, every shadow }}%
-]{beispiel}
-
-\newcommand\Midgard{\textsc{Midgard}}
-
+%    \end{macrocode}
+% \begin{macro}{counter}
+%   Die folgenden Counter weden benötigt um die Grund-, und
+%   Ausnahmekosten von Zaubern und Fähigkeiten nur aus der Angabe von
+%   Standardkosten zu berechnen und die Stufe auf \textit{Große Magie}
+%   zu überprüfen. Sie werden nur intern verwendet.
+%    \begin{macrocode}
+\newcounter{midgard@GrundKosten}
+\newcounter{midgard@StandardKosten}
+\newcounter{midgard@AusnahmeKosten}
+\newcounter{Stufe}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{spacelesstabbing}
+%   Die Umgebung |spacelesstabbing| brauchen wir, da wir die
+%   \LaTeX-Umgebung |tabbing| benutzen wollen, um Zauber und
+%   Kreaturendaten zu setzen, aber vermeiden wollen, dass die
+%   Umgebungen jeweils zusätzliche Abstände zwischen Text und
+%   datenblock verursachen.
+%    \begin{macrocode}
 \newenvironment{spacelesstabbing}{%
 \setlength{\parskip}{0pt}
 \setlength{\parsep}{0pt}
@@ -131,31 +317,24 @@
   \tabbing%
 }
 {\endtabbing}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\text...}
+%   Einige mathematische Symbole wie etwa das Unendlich-Zeichen
+%   \glqq\textinfty\grqq müssen in den Daten von Zaubern und Kreaturen
+%   häufig im Text-Modus gesetzt werden. Daher definieren wir hier
+%   entsprechende Kommandos.
+%    \begin{macrocode}
+\def\textinfty{\ensuremath{\infty}}
+%    \end{macrocode}
+% \end{macro}
 
-%%% Die folgenden Counter weden benötigt
-%%% um die Grund-, und Ausnahmekosten
-%%% von Zaubern und Fähigkeiten 
-%%% nur aus der Angabe von Standardkosten
-%%% zu berechnen
-\newcounter{GrundKosten}
-\newcounter{StandardKosten}
-\newcounter{AusnahmeKosten}
-\newcounter{Stufe}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% MIDGARD-ABENTEUER
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Dieses Kommando produziert eine Box der Art
-%%%
-%%%  MM MM I D G A R DDD
-%%%  M M M           D DD
-%%%  M   M ABENTEUER DDD
-%%%
-%%% die in ihrem Layout dem Label in offiziellen
-%%% Publikationen nachempfunden ist
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% TODO: fonz size anpassbar machen, layout verbessern
-
+% \begin{macro}{\midgardabenteuer}
+%   Die offiziellen Publikationen zeigen auf der dem
+%   Inhaltsverzeichnis vorgeschalteten Titelseite häufig einen
+%   Schriftzug wie den in Abbildung~\ref{fig:midgardabenteuer}
+%   dargestellten. Diesen wollen wir hier nachempfinden.
+%    \begin{macrocode}
 \newcommand\midgardabenteuer{%
 \textbf{\fontsize{36}{0}\selectfont M}
 \hspace{-6pt}
@@ -167,17 +346,27 @@ ABENTEUER
 \hspace{-6pt}
 \textbf{\fontsize{36}{0}\selectfont D}
 } 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% ARKANUM 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Um die Umgebung für das Arkanums-Artige Layout
-%%% neuer Zauber zu setzen, wird das Paket 'xkeyval'
-%%% verwendet
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% zunächst werden für die Umgebung 'zauber'
-% lokale Kommandos definiert
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{beispiel}
+%   In offiziellen Veröffentlichungen werden Beispiele in leicht grau
+%   hinterlegte Rundboxen gesetzt. Dies versuchen wir mit dem Paket
+%   |mdframed| nachzubilden. Das Ergebnis wird in
+%   Abbildung~\ref{fig:beispiel} dargestellt.
+%    \begin{macrocode}
+\newmdenv[%
+  backgroundcolor=lightgray,
+  roundcorner=10pt,%
+%  tikzsetting={drop shadow={shadow xshift=1.0ex, shadow yshift=-0.5em, fill=black!50, opacity=1, every shadow }}%
+]{beispiel}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\zauber}
+%   Um die Umgebung für das Arkanums-Artige Layout neuer Zauber zu
+%   setzen, wird das Paket |xkeyval| verwendet. Zunächst werden
+%   innerhalb des |\zauber|-Kommandos lokale Kommandos definiert, um
+%   auf die Werte der einzlenen Felder zuzugreifen.
+%    \begin{macrocode}
 \define@key{zauber}{name}{\def\zaubername{#1}}\define@key{zauber}{entry}{\def\zauberentry{#1}}
 \define@key{zauber}{anmerkung}{\def\zauberAnmerkung{#1}}
 \define@key{zauber}{scroll}{\def\zauberscroll{#1}}
@@ -206,37 +395,34 @@ ABENTEUER
 % 'default-Werte' definiert
 % die angenommen werden, wenn der Nutzer
 % die Variablen nicht explizit setzt
-\savekeys{zauber}{anmerkung,material, matpreis, AP, Zd, Rw, Wz, Wb, Wd, Ur, art,stufe, th, scroll, FP, G, S, A, GZ, entry, matannotation}
-\presetkeys{zauber}{anmerkung=none,material=none, AP=0, Zd=keine, Rw=-, Wz=-, Wb=-, Wd=0, Ur={n.\,A.}, art=Zauber,stufe=1,matpreis=0, th=none, scroll=true, G=niemand, S=niemand, A=niemand, GZ=0, FP=keine, entry=none, matannotation=none}{}
+\savekeys{zauber}{anmerkung,material, matpreis,name,prozess,agens,reagens, AP, Zd, Rw, Wz, Wb, Wd, Ur, art,stufe, th, scroll, FP, G, S, A, GZ, entry, matannotation}
+\presetkeys{zauber}{anmerkung=none,material=none, name=Name des Zaubers, prozess=Prozess, agens=Agens, reagens=Reagens, AP=0, Zd=keine, Rw=-, Wz=-, Wb=-, Wd=0, Ur={n.\,A.}, art=Zauber,stufe=1,matpreis=0, th=none, scroll=true, G=niemand, S=niemand, A=niemand, GZ=0, FP=keine, entry=none, matannotation=none}{}
 
 %%% Das 
 \newcommand*\zauber[2][]{%
 \setkeys{zauber}{#1}{
 \setlength{\parindent}{0pt}\par
+\setlength{\parskip}{3pt}\par
 \ifthenelse{\equal{\zauberFP}{keine}}{}{
-  \setcounter{StandardKosten}{\zauberFP}%
-  \setcounter{GrundKosten}{\value{StandardKosten}/2}%
-  \setcounter{AusnahmeKosten}{\value{StandardKosten}*5}%
+  \setcounter{midgard@StandardKosten}{\zauberFP}%
+  \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
+  \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
 }%
-\vspace{1em}
 \ifthenelse{\equal{\zauberentry}{none}}{%
         \addcontentsline{toc}{subsubsection}{\zaubername}
         }{%
         \addcontentsline{toc}{subsubsection}{\zauberentry}
         }
 \noindent{\bfseries \large \zaubername}
-%\rlap{\smash{\raisebox{1.85em}{%
 \hfill\makebox[3em][l]{
       \ifthenelse{\equal{\zauberscroll}{true}}%
                  {}%
                  {\includegraphics[height=1.0em]{pics/scroll}}%
-%      \hspace{2em}%
                  \hfill
       \ifthenelse{\equal{\zauberth}{none}}%
                  {}%
                  {\textbf{\zauberth}}%
                  }%
-%               }}}%
 \ifthenelse{\equal{\zauberAnmerkung}{none}}{}{\newline{\footnotesize\bfseries\itshape\zauberAnmerkung}}%
 \nopagebreak\par\zauberart\ %
 \ifthenelse{\equal{\zauberstufe}{GM}}%
@@ -252,12 +438,12 @@ ABENTEUER
             \ifthenelse{\equal{\zaubermatannotation}{none}}%
             {}%
             {; \zaubermatannotation}%
-          }%
-\par\zauberprozess\ %
+          }\par%
+\zauberprozess\ %
 \includegraphics[height=0.7em]{pics/box}\ %
 \zauberagens\ %
 \includegraphics[height=0.7em]{pics/arrow}\ %
-\zauberreagens%
+\zauberreagens\par\vspace{\parskip}%
 \begin{spacelesstabbing}%
 \textbf{Wirkungsbereich:}\hspace{1ex} \= anytext \kill
 \textbf{AP-Verbrauch:} \> \zauberAP\\%
@@ -273,18 +459,18 @@ ABENTEUER
 \ifthenelse{\equal{\zauberFP}{keine}}{}{
   \ifthenelse{\equal{\zauberG}{niemand}}%
   {niemand }%
-  {\textbf{\theGrundKosten :} \nolinebreak \zauberG\ }%
+  {\textbf{\themidgard@GrundKosten :} \nolinebreak \zauberG\ }%
   --\ %
   \ifthenelse{\equal{\zauberS}{niemand}}%
   {niemand }%
-  {\textbf{\theStandardKosten :} \nolinebreak \zauberS\ }%
+  {\textbf{\themidgard@StandardKosten :} \nolinebreak \zauberS\ }%
   --\ %
   \ifthenelse{\equal{\zauberA}{niemand}}%
   {niemand }%
-  {\textbf{\theAusnahmeKosten :} \nolinebreak \zauberA\ }%
-  \leavevmode\par%
-}
+  {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zauberA\ }\par%
 }%
+}%
+\vspace{-0.5em}\leavevmode\par%
 }%
 
 %%% das Kommando 'zaubervariante' kann benutzt werden
@@ -317,9 +503,9 @@ ABENTEUER
 \setlength{\parindent}{0pt}\par
 %\setlength{\parskip}{0pt}\par
 \ifthenelse{\equal{\zauberwerkstattFP}{keine}}{}{
-  \setcounter{StandardKosten}{\zauberwerkstattFP}%
-  \setcounter{GrundKosten}{\value{StandardKosten}/2}%
-  \setcounter{AusnahmeKosten}{\value{StandardKosten}*5}%
+  \setcounter{midgard@StandardKosten}{\zauberwerkstattFP}%
+  \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
+  \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
 }%
 \vspace{1em}
 \ifthenelse{\equal{\zauberwerkstattEntry}{none}}{%
@@ -339,15 +525,15 @@ ABENTEUER
 \ifthenelse{\equal{\zauberFP}{keine}}{}{
   \ifthenelse{\equal{\zauberG}{niemand}}%
   {niemand }%
-  {\textbf{\theGrundKosten :} \nolinebreak \zauberG\ }%
+  {\textbf{\themidgard@GrundKosten :} \nolinebreak \zauberG\ }%
   --\ %
   \ifthenelse{\equal{\zauberS}{niemand}}%
   {niemand }%
-  {\textbf{\theStandardKosten :} \nolinebreak \zauberS\ }%
+  {\textbf{\themidgard@StandardKosten :} \nolinebreak \zauberS\ }%
   --\ %
   \ifthenelse{\equal{\zauberA}{niemand}}%
   {niemand }%
-  {\textbf{\theAusnahmeKosten :} \nolinebreak \zauberA\ }%
+  {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zauberA\ }%
   \par\vspace{0.5em}%
 }
 }}%
@@ -610,9 +796,9 @@ Grad \bestGrad%
 \pagebreak[2]
 \setkeys{weapon}{#1}{
 \ifthenelse{\equal{\weaponFP}{keine}}{}{
-  \setcounter{StandardKosten}{\weaponFP}%
-  \setcounter{GrundKosten}{\value{StandardKosten}/2}%
-  \setcounter{AusnahmeKosten}{\value{StandardKosten}*2}%
+  \setcounter{midgard@StandardKosten}{\weaponFP}%
+  \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
+  \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*2}%
 }%
 \paragraph{\weaponName}~(\weaponDamage{})\hspace{1cm} \weaponRange{}\par% 
 \begin{small}
@@ -623,15 +809,15 @@ Grad \bestGrad%
   \noindent%
   \ifthenelse{\equal{\weaponG}{niemand}}%
   {niemand }%
-  {\textbf{\theGrundKosten :} \nolinebreak \weaponG\ }%
+  {\textbf{\themidgard@GrundKosten :} \nolinebreak \weaponG\ }%
   --\ %
   \ifthenelse{\equal{\weaponS}{niemand}}%
   {niemand }%
-  {\textbf{\theStandardKosten :} \nolinebreak \weaponS\ }%
+  {\textbf{\themidgard@StandardKosten :} \nolinebreak \weaponS\ }%
   --\ %
   \ifthenelse{\equal{\weaponA}{niemand}}%
   {niemand }%
-  {\textbf{\theAusnahmeKosten :} \nolinebreak \weaponA\ }%
+  {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \weaponA\ }%
   \newline%
   \vspace{-1em}%
 }
