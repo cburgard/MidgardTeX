@@ -326,6 +326,11 @@
 %   entsprechende Kommandos.
 %    \begin{macrocode}
 \def\textinfty{\ensuremath{\infty}}
+\def\texttimes{\ensuremath{\times}}
+\def\textdagger{\ensuremath{\dagger}}
+\def\textddagger{\ensuremath{\ddagger}}
+\newcommand{\texthigh}[1]{\ensuremath{{}^{\textup{#1}}}}
+\newcommand{\textfrac}[2]{\ensuremath{\frac{#1}{#2}}}
 %    \end{macrocode}
 % \end{macro}
 
@@ -400,6 +405,7 @@ ABENTEUER
 
 %%% Das 
 \newcommand*\zauber[2][]{%
+\addvspace{1em}
 \setkeys{zauber}{#1}{
 \setlength{\parindent}{0pt}\par
 \setlength{\parskip}{3pt}\par
@@ -470,7 +476,7 @@ ABENTEUER
   {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zauberA\ }\par%
 }%
 }%
-\vspace{-0.5em}\leavevmode\par%
+\vspace{-1em}\leavevmode%
 }%
 
 %%% das Kommando 'zaubervariante' kann benutzt werden
