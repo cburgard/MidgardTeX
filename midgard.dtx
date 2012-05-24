@@ -1,0 +1,645 @@
+% \iffalse meta-comment
+% 
+% Copyright (C) 2012 by Carsten Burgard
+% 
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either
+% version 1.2 of this license or (at your option) any later
+% version. The latest version of this license is in:
+% 
+%     http://www.latex-project.org/lppl.txt
+% 
+% and version 1.2 or later is part of all distributions of
+% LaTeX version 1999/12/01 or later.
+% 
+% \fi
+%
+% \iffalse
+%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<package>\ProvidesPackage{midgard}
+%<package> [2012/05/23 v1.0 A package for typesetting documents for the german Pen & Paper Roleplay Game 'Midgard']
+%
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[ngerman,english]{babel}
+\usepackage{midgard}
+\usepackage[a4paper]{geometry}
+\newcommand{\footnoteremember}[2]{%
+  \footnote{#2}%
+  \newcounter{#1}%
+  \setcounter{#1}{\value{footnote}}%
+}
+\newcommand{\footnoterecall}[1]{%
+  \footnotemark[\value{#1}]%
+}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+% \OnlyDescription
+\DocInput{midgard.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \changes{v1.0}{2012/05/23}{Initial version}
+%
+% \GetFileInfo {midgard.sty}
+%
+% \DoNotIndex{\#,\$,\%,\&,\@,\\,\{,\},\^,\_,\~,\ }             
+% \DoNotIndex{\@ne}                                            
+% \DoNotIndex{\advance,\begingroup,\catcode,\closein}          
+% \DoNotIndex{\closeout,\day,\def,\edef,\else,\empty,\endgroup}
+%
+% \title{Das \textsf{ midgard } Paket\thanks{Dieses Dokument bezieht
+% sich auf \textsf{ midgard }~\fileversion, datiert~\filedate.}}
+% \author{ Carsten Burgard \\ \texttt{ carsten.burgard@gmail.com }}
+%
+% \maketitle
+%\selectlanguage{ngerman}%
+%\begin {abstract}
+%  \Midgard{} ist ein deutsches Pen-\&-Paper Fantasy Rollenspiel, das
+%  seit 1981 erscheint und damit das erste deutsche
+%  Fantasy-Rollenspiel überhaupt war.  Dieses \LaTeX{}-Paket versucht,
+%  das Layout der offiziellen, häufig mit propietären
+%  Textsatzprogrammen gesetzten \Midgard-Publikationen der vierten
+%  Auflage so gut es geht nachzuahmen. Zu diesem Zweck werden einige
+%  Kommandos und Umgebungen definiert. Insbesondere wurde versucht,
+%  ein Störungsfreies und vollautomatisches Zwei-Spalten-Layout zu
+%  erlauben.
+%\end{abstract}
+%\selectlanguage{english}%
+%\begin{abstract}
+%  \Midgard{} is a german pen \& paper roleplay game. This package for
+%  \LaTeX{} tries to resemble the layout of the official publications of
+%  this game and make it possible to write your own documents in a
+%  similar style and layout. Differend commands and environments are
+%  defined to fit this purpose. The package and the documentation is
+%  -- apart from this paragraph -- entirely written in german, as is
+%  is the game itself. A translation of this package into other
+%  languages is not planned, since there is little use for this
+%  package outside the entirely german-speaking fanbase of the game
+%  \Midgard{} itself.
+%\end {abstract}
+%\selectlanguage{ngerman}%
+%
+% \section{Einleitung}
+%
+% More Text
+%
+% \section{Anleitung}
+%
+% Even more Text
+%
+% \StopEventually{\PrintIndex}
+%
+% \section{Implementierung}
+%
+%
+% \begin{macro}{initializations}
+%   code
+%    \begin{macrocode}
+\RequirePackage{setspace}
+\RequirePackage{xkeyval}
+\RequirePackage{ifthen}
+\RequirePackage{graphicx}
+\RequirePackage[framemethod=tikz]{mdframed}
+\usetikzlibrary{shadows}
+\RequirePackage{calc}
+
+\typeout{Package MIDGARD Message: package loaded}
+
+\newmdenv[%
+  backgroundcolor=lightgray,
+  roundcorner=10pt,%
+%  tikzsetting={drop shadow={shadow xshift=1.0ex, shadow yshift=-0.5em, fill=black!50, opacity=1, every shadow }}%
+]{beispiel}
+
+\newcommand\Midgard{\textsc{Midgard}}
+
+\newenvironment{spacelesstabbing}{%
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\topmargin}{0pt}
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+  \tabbing%
+}
+{\endtabbing}
+
+%%% Die folgenden Counter weden benötigt
+%%% um die Grund-, und Ausnahmekosten
+%%% von Zaubern und Fähigkeiten 
+%%% nur aus der Angabe von Standardkosten
+%%% zu berechnen
+\newcounter{GrundKosten}
+\newcounter{StandardKosten}
+\newcounter{AusnahmeKosten}
+\newcounter{Stufe}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% MIDGARD-ABENTEUER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Dieses Kommando produziert eine Box der Art
+%%%
+%%%  MM MM I D G A R DDD
+%%%  M M M           D DD
+%%%  M   M ABENTEUER DDD
+%%%
+%%% die in ihrem Layout dem Label in offiziellen
+%%% Publikationen nachempfunden ist
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TODO: fonz size anpassbar machen, layout verbessern
+
+\newcommand\midgardabenteuer{%
+\textbf{\fontsize{36}{0}\selectfont M}
+\hspace{-6pt}
+\begin{minipage}{65pt}
+\vspace{-20pt}
+\centering \noindent{\LARGE \textbf{IDGAR}}\\
+ABENTEUER
+\end{minipage}
+\hspace{-6pt}
+\textbf{\fontsize{36}{0}\selectfont D}
+} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ARKANUM 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Um die Umgebung für das Arkanums-Artige Layout
+%%% neuer Zauber zu setzen, wird das Paket 'xkeyval'
+%%% verwendet
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% zunächst werden für die Umgebung 'zauber'
+% lokale Kommandos definiert
+\define@key{zauber}{name}{\def\zaubername{#1}}\define@key{zauber}{entry}{\def\zauberentry{#1}}
+\define@key{zauber}{anmerkung}{\def\zauberAnmerkung{#1}}
+\define@key{zauber}{scroll}{\def\zauberscroll{#1}}
+\define@key{zauber}{th}{\def\zauberth{#1}}
+\define@key{zauber}{art}{\def\zauberart{#1}}
+\define@key{zauber}{stufe}{\def\zauberstufe{#1}}
+\define@key{zauber}{material}{\def\zaubermaterial{#1}}
+\define@key{zauber}{matpreis}{\def\zaubermatpreis{#1}}
+\define@key{zauber}{matannotation}{\def\zaubermatannotation{#1}}
+\define@key{zauber}{prozess}{\def\zauberprozess{#1}}
+\define@key{zauber}{agens}{\def\zauberagens{#1}}
+\define@key{zauber}{reagens}{\def\zauberreagens{#1}}
+\define@key{zauber}{AP}{\def\zauberAP{#1}}
+\define@key{zauber}{GZ}{\def\zauberGZ{#1}}
+\define@key{zauber}{Zd}{\def\zauberZd{#1}}
+\define@key{zauber}{Rw}{\def\zauberRw{#1}}
+\define@key{zauber}{Wz}{\def\zauberWz{#1}}
+\define@key{zauber}{Wb}{\def\zauberWb{#1}}
+\define@key{zauber}{Wd}{\def\zauberWd{#1}}
+\define@key{zauber}{Ur}{\def\zauberUr{#1}}
+\define@key{zauber}{FP}{\def\zauberFP{#1}}
+\define@key{zauber}{G}{\def\zauberG{#1}}
+\define@key{zauber}{S}{\def\zauberS{#1}}
+\define@key{zauber}{A}{\def\zauberA{#1}}
+% für einige ausgewählte Variablen werden
+% 'default-Werte' definiert
+% die angenommen werden, wenn der Nutzer
+% die Variablen nicht explizit setzt
+\savekeys{zauber}{anmerkung,material, matpreis, AP, Zd, Rw, Wz, Wb, Wd, Ur, art,stufe, th, scroll, FP, G, S, A, GZ, entry, matannotation}
+\presetkeys{zauber}{anmerkung=none,material=none, AP=0, Zd=keine, Rw=-, Wz=-, Wb=-, Wd=0, Ur={n.\,A.}, art=Zauber,stufe=1,matpreis=0, th=none, scroll=true, G=niemand, S=niemand, A=niemand, GZ=0, FP=keine, entry=none, matannotation=none}{}
+
+%%% Das 
+\newcommand*\zauber[2][]{%
+\setkeys{zauber}{#1}{
+\setlength{\parindent}{0pt}\par
+\ifthenelse{\equal{\zauberFP}{keine}}{}{
+  \setcounter{StandardKosten}{\zauberFP}%
+  \setcounter{GrundKosten}{\value{StandardKosten}/2}%
+  \setcounter{AusnahmeKosten}{\value{StandardKosten}*5}%
+}%
+\vspace{1em}
+\ifthenelse{\equal{\zauberentry}{none}}{%
+        \addcontentsline{toc}{subsubsection}{\zaubername}
+        }{%
+        \addcontentsline{toc}{subsubsection}{\zauberentry}
+        }
+\noindent{\bfseries \large \zaubername}
+%\rlap{\smash{\raisebox{1.85em}{%
+\hfill\makebox[3em][l]{
+      \ifthenelse{\equal{\zauberscroll}{true}}%
+                 {}%
+                 {\includegraphics[height=1.0em]{pics/scroll}}%
+%      \hspace{2em}%
+                 \hfill
+      \ifthenelse{\equal{\zauberth}{none}}%
+                 {}%
+                 {\textbf{\zauberth}}%
+                 }%
+%               }}}%
+\ifthenelse{\equal{\zauberAnmerkung}{none}}{}{\newline{\footnotesize\bfseries\itshape\zauberAnmerkung}}%
+\nopagebreak\par\zauberart\ %
+\ifthenelse{\equal{\zauberstufe}{GM}}%
+           {der Großen Magie}%
+           {der Stufe \zauberstufe}%
+\newline
+\ifthenelse{\equal{\zaubermaterial}{none}}%
+          {\vspace{-1em}}%
+          {\textit{\zaubermaterial}%
+            \ifthenelse{\equal{\zaubermatpreis}{0}}%
+            {}%
+            { (\zaubermatpreis)}%
+            \ifthenelse{\equal{\zaubermatannotation}{none}}%
+            {}%
+            {; \zaubermatannotation}%
+          }%
+\par\zauberprozess\ %
+\includegraphics[height=0.7em]{pics/box}\ %
+\zauberagens\ %
+\includegraphics[height=0.7em]{pics/arrow}\ %
+\zauberreagens%
+\begin{spacelesstabbing}%
+\textbf{Wirkungsbereich:}\hspace{1ex} \= anytext \kill
+\textbf{AP-Verbrauch:} \> \zauberAP\\%
+\ifthenelse{\equal{\zauberGZ}{0}}{}{\textbf{Gefährdungszahl:} \> \zauberGZ\\}%
+\ifthenelse{\equal{\zauberZd}{-}}{}{\textbf{Zauberdauer:} \> \zauberZd\\}%
+\textbf{Reichweite:} \> \zauberRw\\%
+\textbf{Wirkungsziel:} \> \zauberWz\\%
+\textbf{Wirkungsbereich:} \> \zauberWb\\%
+\textbf{Wirkungsdauer:} \> \zauberWd\\%
+\textbf{Ursprung:} \> \zauberUr\\%
+\end{spacelesstabbing}%
+\vspace{-1em}%
+\ifthenelse{\equal{\zauberFP}{keine}}{}{
+  \ifthenelse{\equal{\zauberG}{niemand}}%
+  {niemand }%
+  {\textbf{\theGrundKosten :} \nolinebreak \zauberG\ }%
+  --\ %
+  \ifthenelse{\equal{\zauberS}{niemand}}%
+  {niemand }%
+  {\textbf{\theStandardKosten :} \nolinebreak \zauberS\ }%
+  --\ %
+  \ifthenelse{\equal{\zauberA}{niemand}}%
+  {niemand }%
+  {\textbf{\theAusnahmeKosten :} \nolinebreak \zauberA\ }%
+  \leavevmode\par%
+}
+}%
+}%
+
+%%% das Kommando 'zaubervariante' kann benutzt werden
+%%% um am Ende einer Zauberbeschreibung die Variationen des Zaubers
+%%% für verschiedene Zaubererklassen zu spezifizieren
+%%% z.B. \zaubervariante{Thaumaturgie}
+\newcommand{\zaubervariante}[1]{\noindent\textbf{\textsc{#1}: }}
+
+%%% für die Zauberwerkstatt wählen wir ein ähnliches Vorgehen
+%%% wie für das Arkanums-Layout der Zuaber
+%%% zunächst definieren wir lokale Kommandos
+\define@key{zauberwerkstatt}{name}{\def\zauberwerkstattName{#1}}\define@key{zauberwerkstatt}{entry}{\def\zauberwerkstattEntry{#1}}
+\define@key{zauberwerkstatt}{voraussetzungen}{\def\zauberwerkstattVor{#1}}
+\define@key{zauberwerkstatt}{stufe}{\def\zauberwerkstattStufe{#1}}
+\define@key{zauberwerkstatt}{zeitaufwand}{\def\zauberwerkstattZeit{#1}}
+\define@key{zauberwerkstatt}{kosten}{\def\zauberwerkstattKosten{#1}}
+\define@key{zauberwerkstatt}{FP}{\def\zauberwerkstattFP{#1}}
+\define@key{zauberwerkstatt}{G}{\def\zauberwerkstattG{#1}}
+\define@key{zauberwerkstatt}{S}{\def\zauberwerkstattS{#1}}
+\define@key{zauberwerkstatt}{A}{\def\zauberwerkstattA{#1}}
+% für einige ausgewählte Variablen werden
+% 'default-Werte' definiert
+% die angenommen werden, wenn der Nutzer
+% die Variablen nicht explizit setzt
+\savekeys{zauberwerkstatt}{voraussetzungen,stufe,zeitaufwand,FP, G, S, A, GZ, entry}
+\presetkeys{zauberwerkstatt}{voraussetzungen=keine,stufe=1,zeitaufwand=keine,FP=keine,G=niemand,S=niemand,A=niemand,entry=none}{}
+
+\newcommand*\zauberwerkstatt[2][]{%
+\setkeys{zauberwerkstatt}{#1}{
+\setlength{\parindent}{0pt}\par
+%\setlength{\parskip}{0pt}\par
+\ifthenelse{\equal{\zauberwerkstattFP}{keine}}{}{
+  \setcounter{StandardKosten}{\zauberwerkstattFP}%
+  \setcounter{GrundKosten}{\value{StandardKosten}/2}%
+  \setcounter{AusnahmeKosten}{\value{StandardKosten}*5}%
+}%
+\vspace{1em}
+\ifthenelse{\equal{\zauberwerkstattEntry}{none}}{%
+        \addcontentsline{toc}{subsubsection}{\zauberwerkstattName}
+        }{%
+        \addcontentsline{toc}{subsubsection}{\zauberwerkstattEntry}
+      }
+\noindent{\bfseries\zauberwerkstattName} -- Stufe \zauberwerkstattStufe%
+\ifthenelse{\equal{\zauberwerkstattVor}{keine}}{}{\\\textit{\zauberwerkstattVor}}%
+\par\vspace{0.5em}%
+\begin{spacelesstabbing}%
+\textbf{Zeitaufwand:}\hspace{1ex} \= anytext \kill
+\textbf{Zeitaufwand:} \> \zauberwerkstattZeit\\
+\textbf{Kosten:} \> \zauberwerkstattKosten
+\end{spacelesstabbing}%
+%\vspace{-1em}%
+\ifthenelse{\equal{\zauberFP}{keine}}{}{
+  \ifthenelse{\equal{\zauberG}{niemand}}%
+  {niemand }%
+  {\textbf{\theGrundKosten :} \nolinebreak \zauberG\ }%
+  --\ %
+  \ifthenelse{\equal{\zauberS}{niemand}}%
+  {niemand }%
+  {\textbf{\theStandardKosten :} \nolinebreak \zauberS\ }%
+  --\ %
+  \ifthenelse{\equal{\zauberA}{niemand}}%
+  {niemand }%
+  {\textbf{\theAusnahmeKosten :} \nolinebreak \zauberA\ }%
+  \par\vspace{0.5em}%
+}
+}}%
+
+
+%%% BESTIARIUM COMMANDS
+
+\define@key{best}{name}{\def\bestName{#1}}
+\define@key{best}{typ}{\def\bestTyp{#1}}
+\define@key{best}{modus}{\def\bestModus{#1}}
+\define@key{best}{addendum}{\def\bestAdd{#1}}
+\define@key{best}{variant}{\def\bestVariant{#1}}
+\define@key{best}{grad}{\def\bestGrad{#1}}
+\define@key{best}{mag} {\def\bestMag {#1}}
+\define@key{best}{In}  {\def\bestIn  {#1}}
+\define@key{best}{size}{\def\bestSize  {#1}}
+\define@key{best}{EP}  {\def\bestEP  {#1}}
+\define@key{best}{LP}  {\def\bestLP  {#1}}
+\define@key{best}{energy}  {\def\bestEnergie  {#1}}
+\define@key{best}{AP}  {\def\bestAP  {#1}}
+\define@key{best}{Gw}  {\def\bestGw  {#1}}
+\define@key{best}{St}  {\def\bestSt  {#1}}
+\define@key{best}{B}   {\def\bestB   {#1}}
+\define@key{best}{RK}  {\def\bestRK  {#1}}
+\define@key{best}{MW}  {\def\bestMW  {#1}}
+\define@key{best}{abwehr}{\def\bestAbwehr  {#1}}
+\define@key{best}{resistenz}  {\def\bestResistenz  {#1}}
+\define@key{best}{angriff}{\def\bestAngriff  {#1}}
+\define@key{best}{bes}    {\def\bestBes  {#1}}
+\define@key{best}{aura}    {\def\bestAura  {#1}}
+\define@key{best}{vorkommen}    {\def\bestVork  {#1}}
+\define@key{best}{zauber}             {\def\bestZauber {#1}}
+\define@key{best}{zauberEW}           {\def\bestZauberEW {#1}}
+\define@key{best}{zauberMore}         {\def\bestZauberMore {#1}}
+\define@key{best}{zauberMMore}        {\def\bestZauberMMore {#1}}
+\define@key{best}{zauberMoreEW}       {\def\bestZauberMoreEW {#1}}
+\define@key{best}{zauberMMoreEW}      {\def\bestZauberMMoreEW {#1}}
+\define@key{best}{zauberArtig}        {\def\bestZauberArtig {#1}}
+\define@key{best}{zauberArtigEW}      {\def\bestZauberArtigEW {#1}}
+\define@key{best}{zauberArtigMore}    {\def\bestZauberArtigMore {#1}}
+\define@key{best}{zauberArtigMoreEW}  {\def\bestZauberArtigMoreEW {#1}}
+\define@key{best}{zauberArtigMMore}   {\def\bestZauberArtigMMore {#1}}
+\define@key{best}{zauberArtigMMoreEW} {\def\bestZauberArtigMMoreEW {#1}}
+
+\savekeys{best}{%
+  name%,
+  mag,% 
+  aura,%
+  grad,%
+  typ,% 
+  modus,% 
+  addendum,%
+  variant,%
+  size,%
+  LP,%
+  AP,%
+  RK,%
+  EP,%
+  In,%
+  St,%
+  Gw,%
+  B,%
+  MW,%
+  abwehr,%
+  resistenz,%
+  angriff,%
+  zauber,%
+  zauberMore,%
+  zauberMMore=none,%
+  zauberArtig,%
+  zauberArtigMore,%
+  zauberArtigMMore,%
+  bes,%
+  vorkommen,%
+  energy%
+}
+
+\presetkeys{best}{%
+  name=Wesen,%
+  grad=0,%
+  modus=none,%
+  typ=none,%
+  mag=false,%
+  aura=none,%
+  size=normal,%
+  addendum=none,%
+  variant=none,%
+  LP=*,%
+  AP=*,%
+  RK=OR,%
+  EP=1,%
+  In=t01,%
+  St=01,%
+  Gw=01,%
+  B=*,%
+  MW=none,%
+  abwehr=10,%
+  resistenz=10/10/10,%
+  angriff=keiner,%
+  zauber=none,%
+  zauberMore=none,%
+  zauberMMore=none,%
+  zauberArtig=none,%
+  zauberArtigMore=none,%
+  zauberArtigMMore=none,%
+  bes=none,%
+  vorkommen=none,%
+  energy=0%
+}{}
+
+%% bestiarium box
+\mdfdefinestyle{bestbox}{%
+  skipabove=0em,
+  skipbelow=0em,
+  innertopmargin=0pt,%
+  innerbottommargin=5pt,%
+  innerleftmargin=5pt,%
+  innerrightmargin=10pt}
+\newcommand*\bestiarium[2][]{%
+\setkeys{best}{#1}{
+\par\setlength\parskip{0pt}\par
+\ifthenelse{\equal{#2}{noframe}}{%
+  \pagebreak[2]
+}{%
+  \pagebreak[3]
+  \vspace{0.3em plus 0.7em minus 0.3em}%
+  \begin{mdframed}[style=bestbox]%
+}%
+\setlength{\leftskip}{1ex}
+\setlength{\parindent}{-1ex}
+\small%
+\begin{spacelesstabbing}%
+\hspace{0.3\linewidth} \= \hspace{0.3\linewidth} \= \hspace{0.2\linewidth} \= anything\kill
+\textbf{\bestName}%
+\ifthenelse{\equal{\bestMag}{true}}%
+           {~\includegraphics[height=0.7em]{pics/scroll}}%
+           {}% 
+\ifthenelse{\equal{\bestAdd}{none}}%
+           {}%
+           {\textbf{,\,\bestAdd}}%
+\ifthenelse{\equal{\bestVariant}{none}}%
+           {}%
+           {,\,\bestVariant}%
+~%
+\ifthenelse{\equal{\bestModus}{none}}%
+           {}
+           {\bestModus~}% 
+(%
+\ifthenelse{\equal{\bestTyp}{none}}%
+           {}%
+           {\bestTyp~}%
+Grad \bestGrad%
+\ifthenelse{\equal{\bestSize}{normal}}{}{ -- \bestSize}%
+) \> \> \> \ifthenelse{\equal{\bestIn}{hide}}{~}{In: \bestIn}\\ 
+\textbf{LP} \bestLP \> \textbf{AP} \bestAP \> \ifthenelse{\equal{\bestMW}{none}}{}{MW+\bestMW}\> EP \bestEP\\ 
+Gw \bestGw \> St \bestSt \> B\,\bestB \> \textbf{\bestRK}\\
+Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifthenelse{\equal{\bestEnergie}{0}}{}{\> \textsc{E} \bestEnergie}
+\end{spacelesstabbing}%
+\par
+\textbf{Angriff:} \sloppy \bestAngriff\par
+\ifthenelse{\equal{\bestBes}{none}}%
+           {\ifthenelse{\equal{\bestAura}{none}}{}{\textbf{\textsc{Aura:}} \bestAura\par}}%
+           {\textbf{Bes.:} \bestBes \ifthenelse{\equal{\bestAura}{none}}{}{ -- \textbf{\textsc{Aura:}} \bestAura} \par}%
+\ifthenelse{\equal{\bestZauber}{none}}%
+           {}%
+           {\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}\par}%
+\ifthenelse{\equal{\bestZauberMore}{none}}%
+           {}%
+           {\textbf{Zaubern+\bestZauberMoreEW:} \textit{\bestZauberMore}\par}%
+\ifthenelse{\equal{\bestZauberMMore}{none}}%
+           {}%
+           {\textbf{Zaubern+\bestZauberMMoreEW:} \textit{\bestZauberMMore}\par}%
+\ifthenelse{\equal{\bestZauberArtig}{none}}%
+           {}%
+           {\textbf{\guillemotright Zaubern+\bestZauberArtigEW\guillemotleft:} \textit{\bestZauberArtig}\par}%
+\ifthenelse{\equal{\bestZauberArtigMore}{none}}%
+           {}%
+           {\textbf{\guillemotright Zaubern+\bestZauberArtigMoreEW\guillemotleft:} \textit{\bestZauberArtigMore}\par}%
+\ifthenelse{\equal{\bestZauberArtigMMore}{none}}%
+           {}%
+           {\textbf{\guillemotright Zaubern+\bestZauberArtigMMoreEW\guillemotleft:} \textit{\bestZauberArtigMMore}\par}%
+\ifthenelse{\equal{\bestVork}{none}}%
+           {}%
+           {\textbf{Vorkommen:} \bestVork}%
+\ifthenelse{\equal{#2}{noframe}}{%
+  \par\vspace{0.3em plus 0.7em minus 0.3em}\par%
+  \pagebreak[2]
+}{%
+  \end{mdframed}%
+  \pagebreak[3]
+  \par\vspace{0.5em plus 1.0em}\par%
+}%
+}%
+
+}%
+
+%%% inline creature data
+\newcommand*\best[2][]{%
+\pagebreak[3]
+\setkeys{best}{#1}{
+\setlength{\parskip}{0pt}
+\setlength{\topsep}{0pt}%
+\setlength{\partopsep}{0pt}%
+\par
+\small
+\begin{spacing}{0.5}%
+\vspace{0.3em}%
+\noindent\textbf{\bestName}%
+\ifthenelse{\equal{\bestMag}{true}}{~\includegraphics[height=0.7em]{pics/scroll}}{}%
+\ifthenelse{\equal{\bestAdd}{none}}{}{\textbf{,\,\bestAdd}}%
+\ifthenelse{\equal{\bestVariant}{none}}{}{,\,\bestVariant}%
+~\ifthenelse{\equal{\bestModus}{none}}{}{\bestModus~}%
+(%
+\ifthenelse{\equal{\bestTyp}{none}}{}{\bestTyp~}%
+Grad \bestGrad%
+\ifthenelse{\equal{\bestSize}{normal}}{}{ -- \bestSize}%
+)\par%
+\noindent\bestLP~LP, \bestAP~AP -- \bestRK~-- St~\bestSt, Gw~\bestGw, B\,\bestB \ifthenelse{\equal{\bestEnergie}{0}}{}{, \textsc{E}\,\bestEnergie}\par%
+\setlength{\leftskip}{1ex}
+\setlength{\parindent}{-1ex}
+\textbf{Angriff:} \bestAngriff~-- \textsc{Abwehr}+\bestAbwehr, \textsc{Resistenz}+\bestResistenz%
+\ifthenelse{\equal{\bestBes}{none}}{%
+  \ifthenelse{\equal{\bestAura}{none}}{}{\par\textbf{\textsc{Aura:}} \bestAura}%
+}{%
+  \par\textbf{Bes.:} \bestBes%
+  \ifthenelse{\equal{\bestAura}{none}}{}{-- \textbf{\textsc{Aura:}} \bestAura}%
+}%
+\ifthenelse{\equal{\bestZauber}{none}}{}{\par\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}}%
+\ifthenelse{\equal{\bestZauberMore}{none}}{}{\par\textbf{Zaubern+\bestZauberMoreEW:} \textit{\bestZauberMore}}%
+\ifthenelse{\equal{\bestZauberMMore}{none}}{}{\par\textbf{Zaubern+\bestZauberMMoreEW:} \textit{\bestZauberMMore}}%
+\ifthenelse{\equal{\bestZauberArtig}{none}}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigEW\guillemotleft:} \textit{\bestZauberArtig}}%
+\ifthenelse{\equal{\bestZauberArtigMore}{none}}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigMoreEW\guillemotleft:} \textit{\bestZauberArtigMore}}%
+\ifthenelse{\equal{\bestZauberArtigMMore}{none}}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigMMoreEW\guillemotleft:} \textit{\bestZauberArtigMMore}}%
+\par\end{spacing}\par%
+\vspace{0.4em}%
+\pagebreak[3]
+%\end{small}%
+%\vspace{-1em}
+}\par%
+}%
+
+%%% WEAPON ABILITIES
+
+\define@key{weapon}{name}{\def\weaponName{#1}}
+\define@key{weapon}{damage}{\def\weaponDamage{#1}}
+\define@key{weapon}{range}{\def\weaponRange{#1}}
+\define@key{weapon}{premise}{\def\weaponPremise{#1}}
+\define@key{weapon}{basics}{\def\weaponBasics{#1}}
+\define@key{weapon}{examples}{\def\weaponExamples{#1}}
+\define@key{weapon}{difficulty}{\def\weaponDifficulty{#1}}
+\define@key{weapon}{FP}{\def\weaponFP{#1}}
+\define@key{weapon}{G}{\def\weaponG{#1}}
+\define@key{weapon}{S}{\def\weaponS{#1}}
+\define@key{weapon}{A}{\def\weaponA{#1}}
+
+\savekeys{weapon}{range, FP, G, S, A}
+\presetkeys{weapon}{range=, G=niemand, S=niemand, A=niemand, FP=keine}{}
+
+\newcommand*\weapon[2][]{%
+\pagebreak[2]
+\setkeys{weapon}{#1}{
+\ifthenelse{\equal{\weaponFP}{keine}}{}{
+  \setcounter{StandardKosten}{\weaponFP}%
+  \setcounter{GrundKosten}{\value{StandardKosten}/2}%
+  \setcounter{AusnahmeKosten}{\value{StandardKosten}*2}%
+}%
+\paragraph{\weaponName}~(\weaponDamage{})\hspace{1cm} \weaponRange{}\par% 
+\begin{small}
+\noindent\weaponPremise \hspace{1cm} Erfolgswert+4\par%
+\noindent\textbf{\weaponBasics} \textit{(\weaponExamples)}\\
+\ifthenelse{\equal{\weaponFP}{keine}}{\vspace{0.5em}}{
+  \noindent\textit{Schwierigkeit:} \weaponDifficulty\\%
+  \noindent%
+  \ifthenelse{\equal{\weaponG}{niemand}}%
+  {niemand }%
+  {\textbf{\theGrundKosten :} \nolinebreak \weaponG\ }%
+  --\ %
+  \ifthenelse{\equal{\weaponS}{niemand}}%
+  {niemand }%
+  {\textbf{\theStandardKosten :} \nolinebreak \weaponS\ }%
+  --\ %
+  \ifthenelse{\equal{\weaponA}{niemand}}%
+  {niemand }%
+  {\textbf{\theAusnahmeKosten :} \nolinebreak \weaponA\ }%
+  \newline%
+  \vspace{-1em}%
+}
+\end{small}
+}}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \Finale
+% \endinput
