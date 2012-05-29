@@ -226,6 +226,121 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %
 % \subsection{Das Fantasy Rollenspiel}
 %
+% \begin{figure}
+% \centering
+% \begin{minipage}{1.0\textwidth}
+%   \fertigkeit[name=Schleucheln, kategorie=Kampf, ungelernt=0,
+%   leitAtt=Gs\,91, anforderungen={Gw 81, \itshape Schleichen+12,
+%   Meucheln+12}, FP=200, G=As, S={\textsc{Käm} a.~As}, A={alle
+%   anderen}]{}
+%   \noindent Der Kämpfer kann gleichzeitig \textit{Schleichen} und
+%   \textit{Meucheln}.  
+%   
+%   \bigskip 
+%   
+%   \fertigkeit[name=Atmen, EW=20,
+%   anforderungen={Wk 01}]{}
+%   \noindent Jeder Mensch kann atmen. Ein kritischer Fehler führt zum
+%   Verschlucken.
+% \end{minipage}\par
+% \bigskip\hrule\bigskip\par
+% \begin{minipage}{0.9\textwidth}
+% \begin{verbatim}
+%   \fertigkeit[name=Schleucheln, kategorie=Kampf, ungelernt=0,
+%   leitAtt=Gs\,91, anforderungen={Gw 81, \itshape Schleichen+12,
+%   Meucheln+12}, FP=200, G=As, S={\textsc{Käm} a.~As}, A={alle
+%   anderen}]{}
+%   \noindent Der Kämpfer kann gleichzeitig \textit{Schleichen} und
+%   \textit{Meucheln}.  
+%   
+%   \bigskip 
+%   
+%   \fertigkeit[name=Atmen, EW=20, anforderungen={Wk 01}]{}
+%   \noindent Jeder Mensch kann atmen. Ein kritischer Fehler führt zum
+%   Verschlucken.
+% \end{verbatim}
+% \end{minipage}
+% \caption{Ein dem \textsc{Dfr4} nachempfundenes Layout für
+% Allgemeine Fertigkeiten\label{fig:fertigkeit}}
+% \end{figure}
+%
+% \DescribeMacro{\fertigkeit} Mit dem Kommando
+% |\fertigkeit[|\meta{Schlüssel}|=|\meta{Wert}|]{}| kann ein dem
+% \textsc{Dfr4} nachempfundenes Layout von allgemeinen Fähigkeiten
+% erzeugt werden. Die Benutzung und das Ergebnis wird durch
+% Abbildung~\ref{fig:fertigkeit} an zwei (nicht ganz ernstzunehmenden)
+% Beispielen illustriert. Das erste stellt eine reguläre allgemeine,
+% das zweite eine angeborene Fertigkeit ohne Lernmechanismus
+% dar. Letzteres wurde erzielt, indem der Wert |FP| auf \textit{hide}
+% gesetzt bzw.~auf seinem Standard-Wert belassen wurde. Die
+% Tabelle~\ref{tbl:fertigkeit} enthält eine vollständige Liste aller
+% implementierten Schlüssel-Wert-Paare.
+%
+%
+%\begin{widecenter}
+%\setkeys{fertigkeit}{}{
+%\begin{longtable}{>{\sf}l | >{\itshape}c | p{12cm}}
+%  \caption{Vollständige Liste der Schlüssel und Felder des \textsf{fertigkeit}-Kommandos\label{tbl:fertigkeit}}\\
+%  \rm\bfseries Schlüssel & default & \bfseries Wirkung
+%  \tabularnewline\hline name & \fertigkeitName & Der Name der
+%  Fertigkeit wird durch \textbf{Fettdruck} hervorgehoben in der
+%  Titelzeile dargestellt. Eine Besonderheit besteht, wenn |FP| nicht
+%  gesetzt ist -- dann ist die Fähigkeit nicht lernbar und hat daher
+%  einen fixen erfolgswert, der dann unmittelbar auf den Namen folgend
+%  dargestellt wird.\tabularnewline entry & \fertigkeitEntry & Eintrag
+%  dieser Fähigkeit im Inhaltsverzeichnis.  Bei \textit{none} wird der
+%  mit \meta{name} gesetzte Name der Fertigkeit
+%  verwendet. \tabularnewline kategorie & \fertigkeitKategorie & Die
+%  Kategorie der Fähigkeit, etwa \glqq Sozial\grqq{} oder \glqq
+%  Bewegung\grqq{}. Jeder Wert außer \textit{none} wird in der
+%  Titelzeile hinter dem Namen der Fähigkeit in Klammern
+%  abgedruckt. \tabularnewline ungelernt & \fertigkeitUngelernt & Der
+%  ungelernte Erfolgswert für diese Fertigkeit. Jeder Wert außer
+%  \textit{none} wird als Erfolgswert interpretiert und ind er Form
+%  \glqq ungelernt+(\meta{ungelernt})\grqq{} am Ende der Titelzeile
+%  abgedruckt. Der Löwenanteil des folgenden Datenblocks wird dann
+%  ignoriert und nur das Leitattribut und die anderen Anforderungen
+%  werden noch in der Titelzeile dargestellt, falls diese nicht
+%  \textit{none} sind. \tabularnewline leitatt & \fertigkeitLeitAtt &
+%  Das Leitattribut dieser Fertigkeit. Jeder Wert außer \textit{none}
+%  wird in der unmittelbar auf den Titel folgenden Zeile in
+%  \textbf{Fettdruck} an den Anfang gestellt.\tabularnewline
+%  anforderungen & \fertigkeitAnforderungen & Die zum Lernen dieser
+%  Fertigkeit benötigten Voraussetzungen, typischerweise
+%  Mindestattribute. Jeder Wert außer \textit{none} wird in der
+%  unmittelbar auf den Titel folgenden Zeile an den Anfang gestellt,
+%  hinter das Leitattribut. \tabularnewline EW & \fertigkeitEW & Der
+%  Wert |EW| wird als Erfolgswert interpretiert und wörtlich in der
+%  Form \glqq Erfolgswert+\meta{EW}\grqq{} in der Mitte der zweiten
+%  Zeile des Datenblocks, hinter den Voraussetzungen,
+%  abgedruckt.\tabularnewline spielbeginn & \fertigkeitEW & Der Wert
+%  |spielbeginn| wird als Erfolgswert nach Erlernen zu Spielbeginn
+%  interpretiert und als erster von zwei Werten wörtlich innerhalb der
+%  Klammer (+\meta{spielbeginn}/\dots) am Ende der zweiten Zeile des
+%  Datenblocks abgedruckt. \tabularnewline maximum & \fertigkeitEW &
+%  Der Wert |maximum| wird als maximal erreichbarer Erfolgswert
+%  interpretiert und als zweiter der beiden Werte wörtlich innerhalb
+%  der Klammer (\dots/\meta{maximum}) am Ende der zweiten Zeile des
+%  Datenblocks abgedruckt. \tabularnewline
+% FP & \fertigkeitFP & Die
+%  zum Erlernen der Grundkenntnisse in dieser Fertigkeit benötigten
+%  Erfahrungspunkte. Jede ganze Zahl wird vollständig als
+%  Standardkosten, halbiert und abgerundet und als Grundkosten sowie
+%  verdoppelt als Ausnahmekosten abgedruckt. Angabe von \textit{hide}
+%  führt dazu, dass die Zeile mit den Lernkosten wie auch der Großteil
+%  des gesamten Datenblocks nicht abgedruckt wird. Dies ist in der
+%  unteren Hälfte des Beispiels in Abbildung~\ref{fig:fertigkeit} zu
+%  sehen. Das Verhalten für Angaben außer ganzen Zahlen und
+%  \textit{hide} ist nicht definiert. \tabularnewline G & \fertigkeitG
+%  & Diejenigen Abenteurertypen, die diese Fertigkeit zu Grundkosten
+%  lernen können.\tabularnewline S & \fertigkeitS & Diejenigen
+%  Abenteurertypen, die diese Fertigkeit zu Standardkosten lernen
+%  können.\tabularnewline A & \fertigkeitA & Diejenigen
+%  Abenteurertypen, die diese Fertigkeit zu Ausnahmekosten lernen
+%  können.
+%\end{longtable}}
+%\end{widecenter}
+%
 %
 % \begin{figure}
 % \centering
@@ -680,11 +795,10 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %   zauberArtigMMoreEW & \bestZauberArtigMMoreEW & Der zugehörige
 %   Erfolgswert. Es gelten die Anmerkungen zu |zauberArtigEW|.
 %   \tabularnewline bes & \bestBes & Die Besonderheiten werden nach
-%   dem Kürzel \textbf{Bes.:} in einem eigenen Absatz
-%   dargestellt. Nachfolgende Zeilen erhalten einen hängenden Einzug.
+%   dem Kürzel \glqq\textbf{Bes.:}\grqq{} in einem eigenen Absatz
+%   dargestellt. Jede Angabe außer \textit{none} wird wörtlich abgedruckt. Nachfolgende Zeilen erhalten einen hängenden Einzug.
 %   \tabularnewline aura & \bestAura & Die Aura des Wesens. Jede
-%   Angabe außer \textit{none} wird nach dem Wort \textsc{Aura} (in
-%   Kapitälchen) mit einem Gedankenstrich \glqq--\grqq{} an die
+%   Angabe außer \textit{none} wird nach dem Wort \glqq\textsc{Aura}\grqq{}  mit einem Gedankenstrich \glqq--\grqq{} an die
 %   \textbf{Besonderheiten} angehängt.  \tabularnewline vorkommen &
 %   \bestVork & Das Vorkommen einer Art wird nur im
 %   |\bestiarium|-Layout dargestellt. Angaben sollten in Stichwortform
@@ -803,6 +917,87 @@ ABENTEUER
 %
 % \subsection{Das Fantasy Rollenspiel}
 %
+% \begin{macro}{\fertigkeit}
+%   Allgemeine Fertigkeiten werden im \textsc{Dfr4} auf ganz
+%   charakteristische Weise gesetzt. Zunächst definieren wir unter
+%   Verwendung des Paketes |xkeyval| lokale Kommandos, welche (als
+%   \glqq\textit{Variablen}\grqq) fungieren und die dem Kommando im
+%   optionalen Argument übergebenen Werte speichern.
+%    \begin{macrocode}
+\define@key{fertigkeit}{name}{\def\fertigkeitName{#1}}
+\define@key{fertigkeit}{entry}{\def\fertigkeitEntry{#1}}
+\define@key{fertigkeit}{kategorie}{\def\fertigkeitKategorie{#1}}
+\define@key{fertigkeit}{leitAtt}{\def\fertigkeitLeitAtt{#1}}
+\define@key{fertigkeit}{anforderungen}{\def\fertigkeitAnforderungen{#1}}
+\define@key{fertigkeit}{EW}{\def\fertigkeitEW{#1}}
+\define@key{fertigkeit}{ungelernt}{\def\fertigkeitUngelernt{#1}}
+\define@key{fertigkeit}{spielbeginn}{\def\fertigkeitSpielbeginn{#1}}
+\define@key{fertigkeit}{maximum}{\def\fertigkeitMaximum{#1}}
+\define@key{fertigkeit}{FP}{\def\fertigkeitFP{#1}}
+\define@key{fertigkeit}{G}{\def\fertigkeitG{#1}}
+\define@key{fertigkeit}{S}{\def\fertigkeitS{#1}}
+\define@key{fertigkeit}{A}{\def\fertigkeitA{#1}}
+%    \end{macrocode}
+% Wir definieren zusätzlich \textit{default}-Werte für die Variablen,
+% für den Fall, dass sie nicht aufgerufen werden.
+%    \begin{macrocode}
+\savekeys{fertigkeit}{name, entry, kategorie, leitAtt, anforderungen, EW, ungelernt, spielbeginn, maximum, FP, G, S, A}
+\presetkeys{fertigkeit}{name=Fähigkeit, entry=none, kategorie=none, leitAtt=none, anforderungen=none, EW=4, ungelernt=none, spielbeginn=5, maximum=20, FP=hide, G=niemand, S=niemand, A=niemand}{}
+%    \end{macrocode}
+% Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
+% Seitenumbruch, um unschöne Umbrüche im Layout selbst zu vermindern.
+%    \begin{macrocode}
+\newcommand*\fertigkeit[2][]{%
+\pagebreak[2]
+%    \end{macrocode}
+% Anschließend wird der Befehl |setkeys| aufgerufen, um auf die zuvor
+% definierten Kommandos zurückgreifen zu können.
+%    \begin{macrocode}
+\setkeys{fertigkeit}{#1}{
+%    \end{macrocode}
+% Wenn |\fertigkeitFP| \textit{hide} ist, müssen die FP nicht ausgelesen
+% werden. Andernfalls werden Counter für Standard- und Ausnahmekosten
+% definiert und nach der für Fähigkeiten üblichen Formel aus den
+% Standardkosten berechnet.
+%    \begin{macrocode}
+\ifthenelse{\equal{\fertigkeitFP}{hide}}{}{
+  \setcounter{midgard@StandardKosten}{\fertigkeitFP}%
+  \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
+  \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*2}%
+}%
+\ifthenelse{\equal{\fertigkeitEntry}{none}}{%
+  \addcontentsline{toc}{subsubsection}{\fertigkeitName}
+}{%
+  \addcontentsline{toc}{subsubsection}{\fertigkeitEntry}
+}
+\par\noindent\textbf{\fertigkeitName}%
+\ifthenelse{\equal{\fertigkeitFP}{hide}}{+\fertigkeitEW}{}%
+\ifthenelse{\equal{\fertigkeitKategorie}{none}}{}{~(\fertigkeitKategorie)}%
+\ifthenelse{\equal{\fertigkeitFP}{hide}}{%
+  \ifthenelse{\equal{\fertigkeitLeitAtt}{none}}{}{\hfill\fertigkeitLeitAtt\hfill}
+  \ifthenelse{\equal{\fertigkeitAnforderungen}{none}}{}{\hfill{\fertigkeitAnforderungen}\hfill}
+}{%
+  \ifthenelse{\equal{\fertigkeitUngelernt}{none}}{}{\hfill ungelernt+(\fertigkeitUngelernt)}\par\vspace{\midgardskip}
+  \begin{small}
+  \ifthenelse{\equal{\fertigkeitLeitAtt}{none}}{}{\textbf{\fertigkeitLeitAtt}}%
+  \ifthenelse{\equal{\fertigkeitAnforderungen}{none}}{}{%
+  \ifthenelse{\equal{\fertigkeitLeitAtt}{none}}{}{, }{\fertigkeitAnforderungen}}\hfill Erfolgswert+\fertigkeitEW\hfill (+\fertigkeitSpielbeginn/+\fertigkeitMaximum)\par\vspace{\midgardskip}
+    \noindent%
+    \ifthenelse{\equal{\fertigkeitG}{niemand}}%
+    {niemand }%
+    {\textbf{\themidgard@GrundKosten :} \nolinebreak \fertigkeitG} -- %
+    \ifthenelse{\equal{\fertigkeitS}{niemand}}%
+    {niemand }%
+    {\textbf{\themidgard@StandardKosten :} \nolinebreak \fertigkeitS} -- %
+    \ifthenelse{\equal{\fertigkeitA}{niemand}}%
+    {niemand }%
+    {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \fertigkeitA}\par
+  \end{small}\vspace{\midgardskip}
+}}\par}
+%    \end{macrocode}
+% \end{macro}
+% 
+% 
 % \begin{macro}{\waffenfertigkeit}
 %   Waffenfertigkeiten werden im \textsc{Dfr4} auf ganz
 %   charakteristische Weise gesetzt. Zunächst definieren wir lokale
@@ -870,9 +1065,7 @@ ABENTEUER
   {\textbf{\themidgard@StandardKosten :} \nolinebreak \weaponS} -- %
   \ifthenelse{\equal{\weaponA}{niemand}}%
   {niemand }%
-  {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \weaponA}%
-  \newline%
-  \vspace{-1em}%
+  {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \weaponA}\par
 }
 \end{small}
 }}
@@ -1166,7 +1359,6 @@ ABENTEUER
 %
 % \subsection{Bestiarium}
 %
-% \begin{macro}{\bestiarium}
 %    \begin{macrocode}
 \define@key{best}{name}{\def\bestName{#1}}
 \define@key{best}{typ}{\def\bestTyp{#1}}
@@ -1222,7 +1414,12 @@ ABENTEUER
   zauberMoreEW=0, zauberMMoreEW=0, zauberArtigEW=0,
   zauberArtigMoreEW=0, zauberArtigMMoreEW=0, bes=none, vorkommen=none,
   energy=0 }{}
-
+%    \end{macrocode}
+%
+% \begin{macro}{\bestiarium}
+%  Wir benutzen das Paket |mdframed|, um eine Box darzustellen.
+% 
+%    \begin{macrocode}
 \mdfdefinestyle{bestbox}{%
   skipabove=0em,
   skipbelow=0em,
@@ -1230,6 +1427,11 @@ ABENTEUER
   innerbottommargin=5pt,%
   innerleftmargin=5pt,%
   innerrightmargin=10pt}
+%    \end{macrocode}
+%
+% Wir definieren das Kommando.
+% 
+%    \begin{macrocode}
 \newcommand*\bestiarium[2][]{%
 \setkeys{best}{#1}{
 \par\setlength\parskip{0pt}\par
@@ -1306,8 +1508,11 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifthenelse{\equal{\bestEnergie}{
 }%
 
 }%
-
-%%% inline creature data
+%    \end{macrocode}
+%\end{macro}
+%\begin{macro}{\best}
+% Wir definieren das Kommando.
+%    \begin{macrocode}
 \newcommand*\best[2][]{%
 \pagebreak[3]
 \setkeys{best}{#1}{
