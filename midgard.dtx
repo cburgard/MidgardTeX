@@ -977,11 +977,13 @@ ABENTEUER
   \ifthenelse{\equal{\fertigkeitLeitAtt}{none}}{}{\hfill\fertigkeitLeitAtt\hfill}
   \ifthenelse{\equal{\fertigkeitAnforderungen}{none}}{}{\hfill{\fertigkeitAnforderungen}\hfill}
 }{%
-  \ifthenelse{\equal{\fertigkeitUngelernt}{none}}{}{\hfill ungelernt+(\fertigkeitUngelernt)}\par\vspace{\midgardskip}
+  \ifthenelse{\equal{\fertigkeitUngelernt}{none}}{}{\hfill ungelernt+(\fertigkeitUngelernt)}%
+  \par\vspace{\midgardskip}
   \begin{small}
   \ifthenelse{\equal{\fertigkeitLeitAtt}{none}}{}{\textbf{\fertigkeitLeitAtt}}%
   \ifthenelse{\equal{\fertigkeitAnforderungen}{none}}{}{%
-  \ifthenelse{\equal{\fertigkeitLeitAtt}{none}}{}{, }{\fertigkeitAnforderungen}}\hfill Erfolgswert+\fertigkeitEW\hfill (+\fertigkeitSpielbeginn/+\fertigkeitMaximum)\par\vspace{\midgardskip}
+  \ifthenelse{\equal{\fertigkeitLeitAtt}{none}}{}{, }{\fertigkeitAnforderungen}}\hfill Erfolgswert+\fertigkeitEW\hfill% 
+  (+\fertigkeitSpielbeginn/+\fertigkeitMaximum)\par\vspace{\midgardskip}
     \noindent%
     \ifthenelse{\equal{\fertigkeitG}{niemand}}%
     {niemand }%
