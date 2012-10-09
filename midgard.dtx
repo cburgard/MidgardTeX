@@ -1438,12 +1438,12 @@ ABENTEUER
 % 
 %    \begin{macrocode}
 \mdfdefinestyle{bestbox}{%
-  skipabove=0em,
-  skipbelow=0em,
-  innertopmargin=5pt,%
-  innerbottommargin=6pt,%
-  innerleftmargin=5pt,%
-  innerrightmargin=10pt}
+  skipabove=0.7em plus 0.3em minus 0.2em,%
+  skipbelow=0.2em plus 0.5em minus 0.2em,%
+  innertopmargin=0.5em,%
+  innerbottommargin=0.6em,%
+  innerleftmargin=1ex,%
+  innerrightmargin=2ex}
 %    \end{macrocode}
 %
 % Wir definieren das Kommando.
@@ -1456,7 +1456,6 @@ ABENTEUER
   \pagebreak[2]
 }{%
   \pagebreak[3]
-  \vspace{0.7em plus 0.3em minus 0.2em}%
   \begin{mdframed}[style=bestbox]%
 }%
 \setlength{\leftskip}{1ex}
@@ -1515,12 +1514,10 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifthenelse{\equal{\bestEnergie}{
            {}%
            {\textbf{Vorkommen:} \bestVork}%
 \ifthenelse{\equal{#2}{noframe}}{%
-   \vspace{0.5em plus 1.0em minus 0.1em}%
   \pagebreak[2]
 }{%
   \end{mdframed}%
   \pagebreak[3]
-  \vspace{0.5em plus 0.5em minus 0.2em}%
 }%
 }%
 \@afterindentfalse%
