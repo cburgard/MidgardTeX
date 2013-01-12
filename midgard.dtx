@@ -876,13 +876,18 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %   Kreaturen häufig im Text-Modus gesetzt werden. Daher definieren
 %   wir hier entsprechende Kommandos.
 %    \begin{macrocode}
-\def\textinfty{\ensuremath{\infty}}
-\def\textstar{\ensuremath{\star}}
-\def\texttimes{\ensuremath{\times}}
-\def\textdagger{\ensuremath{\dagger}}
-\def\textddagger{\ensuremath{\ddagger}}
-\newcommand{\texthigh}[1]{\ensuremath{{}^{\textup{#1}}}}
-\newcommand{\textfrac}[2]{\ensuremath{\frac{#1}{#2}}}
+\AtBeginDocument{\global\def\textinfty{\ensuremath{\infty}}
+  \global\def\textstar{\ensuremath{\star}}
+  \global\def\texttimes{\ensuremath{\times}}
+  \global\def\textdagger{\ensuremath{\dagger}}
+  \global\def\textddagger{\ensuremath{\ddagger}}
+  \newcommand{\texthigh}[1]{\ensuremath{{}^{\textup{#1}}}}
+  \newcommand{\textfrac}[2]{\ensuremath{\frac{#1}{#2}}}
+}
+\DeclareUnicodeCharacter{1D9C}{\ensuremath{^c}}
+\DeclareUnicodeCharacter{1DA0}{\ensuremath{^f}}
+\DeclareUnicodeCharacter{00BC}{\ensuremath{\nicefrac{1}{4}}}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\midgardabenteuer}
@@ -1389,6 +1394,8 @@ ABENTEUER
 \define@key{best}{EP}  {\def\bestEP  {#1}}
 \define@key{best}{LP}  {\def\bestLP  {#1}}
 \define@key{best}{energy}  {\def\bestEnergie  {#1}}
+\define@key{best}{initiative}  {\def\bestInitiative  {#1}}
+\define@key{best}{raufen}  {\def\bestRaufen  {#1}}
 \define@key{best}{AP}  {\def\bestAP  {#1}}
 \define@key{best}{Gw}  {\def\bestGw  {#1}}
 \define@key{best}{St}  {\def\bestSt  {#1}}
@@ -1420,7 +1427,7 @@ ABENTEUER
   zauberMore, zauberMMore, zauberArtig, zauberArtigMore,
   zauberArtigMMore, zauberEW,
   zauberMoreEW, zauberMMoreEW, zauberArtigEW, zauberArtigMoreEW,
-  zauberArtigMMoreEW, bes, vorkommen, energy }
+  zauberArtigMMoreEW, bes, vorkommen, energy, initiative,raufen }
 
 \presetkeys{best}{ name=Wesen, grad=0, modus=none, typ=none,
   mag=false, aura=none, size=normal, addendum=none, variant=none,
@@ -1430,7 +1437,7 @@ ABENTEUER
   zauberArtigMore=none, zauberArtigMMore=none, zauberEW=0,
   zauberMoreEW=0, zauberMMoreEW=0, zauberArtigEW=0,
   zauberArtigMoreEW=0, zauberArtigMMoreEW=0, bes=none, vorkommen=none,
-  energy=0 }{}
+  energy=0, initiative=none,raufen=none }{}
 %    \end{macrocode}
 %
 % \begin{macro}{\bestiarium}
@@ -1488,7 +1495,10 @@ Grad \bestGrad%
 Gw \bestGw \> St \bestSt \> B\,\bestB \> \textbf{\bestRK}\\
 Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifthenelse{\equal{\bestEnergie}{0}}{}{\> \textsc{E} \bestEnergie}
 \end{spacelesstabbing}\par
-\textbf{Angriff:} \sloppy \bestAngriff\par
+\textbf{Angriff:} \sloppy \bestAngriff%
+\ifthenelse{\equal{\bestRaufen}{none}}{}{ -- Raufen+\bestRaufen}%
+\ifthenelse{\equal{\bestInitiative}{none}}{}{ -- \textsc{Initiative}+\bestInitiative}%
+\par
 \ifthenelse{\equal{\bestBes}{none}}%
            {\ifthenelse{\equal{\bestAura}{none}}{}{\textbf{\textsc{Aura:}} \bestAura\par}}%
            {\textbf{Bes.:} \bestBes \ifthenelse{\equal{\bestAura}{none}}{}{ -- \textbf{\textsc{Aura:}} \bestAura} \par}%
@@ -1550,7 +1560,10 @@ Grad \bestGrad%
 \noindent\bestLP~LP, \bestAP~AP -- \bestRK~-- St~\bestSt, Gw~\bestGw, B\,\bestB \ifthenelse{\equal{\bestEnergie}{0}}{}{, \textsc{E}\,\bestEnergie}\par%
 \setlength{\leftskip}{1ex}
 \setlength{\parindent}{-1ex}
-\textbf{Angriff:} \bestAngriff~-- \textsc{Abwehr}+\bestAbwehr, \textsc{Resistenz}+\bestResistenz%
+\textbf{Angriff:} \bestAngriff%
+\ifthenelse{\equal{\bestRaufen}{none}}{}{ -- Raufen+\bestRaufen}%
+\ifthenelse{\equal{\bestInitiative}{none}}{}{ -- \textsc{Initiative}+\bestInitiative}%
+~-- \textsc{Abwehr}+\bestAbwehr, \textsc{Resistenz}+\bestResistenz%
 \ifthenelse{\equal{\bestBes}{none}}{%
   \ifthenelse{\equal{\bestAura}{none}}{}{\par\textbf{\textsc{Aura:}} \bestAura}%
 }{%
