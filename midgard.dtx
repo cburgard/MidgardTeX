@@ -890,6 +890,12 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
 %    \end{macrocode}
 % \end{macro}
+%\begin{macro}{\HUGE}
+% In Midgardpublikationen werden oft sehr große Schriftgrößen verwendet. Daher definieren wir ein neues Schriftgrößenkommando, um diesen Extra-Größen gerecht zu werden.
+% \begin{macrocode}
+\newcommand{\HUGE}{\fontsize{36}{36}\selectfont}
+% \end{macrocode}
+%\end{macro}
 % \begin{macro}{\midgardabenteuer}
 %   Die offiziellen Publikationen zeigen auf der dem
 %   Inhaltsverzeichnis vorgeschalteten Titelseite häufig einen
@@ -909,6 +915,22 @@ ABENTEUER
 } 
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\midgardquellenbuch}
+%   Ähnlich verhält es sich mit Quellenbüchern.
+% \begin{macrocode}
+\newcommand\midgardquellenbuch{%
+\textbf{\fontsize{48}{0}\selectfont M}
+\hspace{-6pt}
+\begin{minipage}{138pt}
+\vspace{-8pt}
+\centering \noindent{\HUGE \textbf{IDGAR}}\\
+\bfseries \LARGE Quellenbuch
+\end{minipage}
+\hspace{-6pt}
+\textbf{\fontsize{48}{0}\selectfont D}
+}
+% \end{macrocode}
+%\end{macro}
 % \begin{macro}{beispiel}
 %   In offiziellen Veröffentlichungen werden Beispiele in leicht grau
 %   hinterlegte Rundboxen gesetzt. Dies versuchen wir mit dem Paket
@@ -1462,7 +1484,11 @@ ABENTEUER
 \ifthenelse{\equal{#2}{noframe}}{%
   \pagebreak[2]
 }{%
-  \pagebreak[3]
+  \ifthenelse{\equal{#2}{float}}{%
+    \begin{figure}
+  }{%
+    \pagebreak[3]
+  }
   \begin{mdframed}[style=bestbox]%
 }%
 \setlength{\leftskip}{1ex}
@@ -1527,7 +1553,12 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifthenelse{\equal{\bestEnergie}{
   \pagebreak[2]
 }{%
   \end{mdframed}%
-  \pagebreak[3]
+  \ifthenelse{\equal{#2}{float}}{%
+    \vspace{-1.5em}
+    \end{figure}
+  }{%
+    \pagebreak[3]
+  }
 }%
 }%
 \@afterindentfalse%
