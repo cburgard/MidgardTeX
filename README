@@ -1,0 +1,16 @@
+This file belongs to the 'midgard'-package for LaTeX2e. It comes with
+extensive documentation. Please use it!
+
+To render the documentation midgard.pdf, call
+
+   pdflatex midgard.dtx
+
+To generate the midgard.sty file, call
+
+   pdflatex midgard.ins
+
+You can then move or link the midgard.sty file into your texmf
+directory or locally into the directory where the tex file lives that
+is using the package.
+
+Have a lot of fun!
