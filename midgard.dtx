@@ -50,6 +50,7 @@
 \usepackage{array}
 \usepackage{longtable}
 \usepackage{boxedminipage}
+\usepackage{hyperref}
 \newenvironment{widecenter}{%
   \begin{adjustwidth}{0.5\textwidth-0.5\paperwidth+1cm}{0.5\textwidth-0.5\paperwidth+1cm}
   \setlength\LTleft{0pt plus 1fill minus 1fill}%
@@ -830,6 +831,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \RequirePackage[framemethod=tikz]{mdframed}
 \usetikzlibrary{shadows}
 \RequirePackage{calc}
+\RequirePackage{etextools}
 %    \end{macrocode}
 %   Die folgenden Counter weden benötigt um die Grund-, und
 %   Ausnahmekosten von Zaubern und Fähigkeiten nur aus der Angabe von
@@ -839,6 +841,41 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \newcounter{midgard@StandardKosten}
 \newcounter{midgard@AusnahmeKosten}
 %    \end{macrocode}
+%
+%
+%\begin{macro}{\hashstring}
+%    Der Befehl |\hashstring| wird intern verwendet, um Querverweise 
+%    \textit{automagisch} zu handhaben. Er implementiert ein simples 
+%    hashing-verfahren, bei dem jedem Argument zum Zeitpunkt des ersten 
+%    Aufrufs eine Nummer zugewiesen wird, zu der das Argument dann zu 
+%    jedem späteren Zeitpunkt expandiert.
+%    \begin{macrocode} 
+\newcounter{@hash@id}
+\newcommand\hashstring[1]{%
+  \ifcsname\detokenize{hash@#1}\endcsname%
+  \else%
+  \typeout{info: assigning 'hash:\the@hash@id'  to hash@#1}%
+  \expandafter\xdef\csname\detokenize{hash@#1}\endcsname{\the@hash@id}%
+  \stepcounter{@hash@id}%
+  \fi%
+}%
+\newcommand\gethash[1]{hash:\csname\detokenize{hash@#1}\endcsname}%
+%    \end{macrocode}
+%    Um auf das hashing tatsächlich zu verwenden, muss später nurnoch 
+%    |hyperref| mit dem expandierten Argument aufgerufen werden.
+%    \begin{macrocode}
+\newcommand\midgard@htarget[1]{%
+  \@ifundefined{hyper@@anchor}{}{%
+    \hashstring{midgard@#1}%
+    \Hy@raisedlink{\hypertarget{midgard:\gethash{midgard@#1}}{}}%
+}}%
+\newcommand\midgard@hlink[1]{%
+  \@ifundefined{hyper@@anchor}{#1}{%
+    \hashstring{midgard@#1}%
+    \hyperlink{midgard:\gethash{midgard@#1}}{#1}%
+}}%
+%    \end{macrocode}
+%\end{macro}
 %
 %\begin{macro}{\midgardskip}
 %   Der Befehl |\midgardskip| wird verwendet, um intern an
@@ -860,9 +897,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \setlength{\topsep}{-\parskip}
 \setlength{\parskip}{0pt}
 \setlength{\parsep}{0pt}
-\setlength{\headsep}{0pt}
 \setlength{\topskip}{0pt}
-\setlength{\topmargin}{0pt}
 \setlength{\partopsep}{0pt}
 \setlength{\textfloatsep}{0pt}
   \tabbing%
@@ -1131,6 +1166,12 @@ ABENTEUER
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\zauberref}
+%   Mit dem |\zauberref|-Kommando erlauben wir einfaches refernzieren auf Zauber.
+%   \begin{macrocode}
+\newcommand*\zauberref[1]{{\itshape \protect\midgard@hlink{#1}}}%
+%   \end{macrocode}
+% \end{macro}
 % \begin{macro}{\zauber}
 %   Um die Umgebung für das Arkanums-Artige Layout neuer Zauber zu
 %   setzen, wird das Paket |xkeyval| verwendet. Zunächst werden
@@ -1184,7 +1225,7 @@ ABENTEUER
 % Zeilen zu erzeugen..
 %    \begin{macrocode}
 \newcommand*\zauber[2][]{%
-\pagebreak[2]\addvspace{1em}
+  \pagebreak[2]\addvspace{1em}
 \setkeys{zauber}{#1}{\begingroup
 %    \end{macrocode}
 % Wenn |\zauberFP| \textit{hide} ist, müssen die FP nicht ausgelesen
@@ -1215,7 +1256,7 @@ ABENTEUER
 % das Thaumatographie-Feld |\zauberth| gesetzt werden, ihrerseits
 % wieder mit einem |\hfill| maximal weit auseinandergeschoben.
 %    \begin{macrocode}
-{\noindent \bfseries \large \zaubername}
+{\expandnext{\midgard@htarget}{\zaubername}\noindent \bfseries \large  \zaubername }
 \hfill\makebox[3em][l]{
       \ifthenelse{\equal{\zauberscroll}{true}}%
                  {}%
