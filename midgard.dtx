@@ -93,98 +93,72 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \OnlyDescription
 \DocInput{midgard.dtx}
 \end{document}
-%</driver>
-% \fi
-%
-% \CheckSum{0}
-%
-% \changes{v1.0}{2012/05/23}{Ursprüngliche Version}
-%
-% \GetFileInfo {midgard.sty}
-%
+%</driver> \fi \CheckSum{0} \changes{v1.0}{2012/05/23}{Ursprüngliche
+% Version} \GetFileInfo {midgard.sty}
 % \DoNotIndex{\#,\$,\%,\&,\@,\\,\{,\},\^,\_,\~,\,,\=,\>}
-% \DoNotIndex{\@ne}                                            
-% \DoNotIndex{\advance,\begingroup,\catcode,\closein}          
+% \DoNotIndex{\@ne}
+% \DoNotIndex{\advance,\begingroup,\catcode,\closein}
 % \DoNotIndex{\closeout,\day,\def,\edef,\else,\empty,\endgroup}
 % \DoNotIndex{\begin,\end,\leftskip,\let,\linewidth,\newcommand,\newcounter,\newenvironment,\newline,\noindent,\parindent,\parsep,\parskip,\partopsep,\setcounter,\setlength,\textbf,\textit,\textsf,\textsc,\text...,\large,\Large,\small,\footnotesize,\itshape,\bfseries,\par,\textup,\times,\topmargin,\topsep,\topskip,\LARGE,\headsep,\equal,\value,\frac,\ifthenelse}
-%
 % \title{Das \textsf{ midgard } Paket\thanks{Dieses Dokument bezieht
 % sich auf \textsf{ midgard }~\fileversion, datiert~\filedate.}}
 % \author{ Carsten Burgard \\ \texttt{ carsten.burgard@gmail.com }}
-%
-% \maketitle
-%\selectlanguage{ngerman}%
-%\begin {abstract}
-%  \textsc{Midgard} ist ein deutsches Pen-\&-Paper Fantasy Rollenspiel, das
-%  seit 1981 erscheint und damit das erste deutsche
-%  Fantasy-Rollenspiel überhaupt war.  Dieses \LaTeX{}-Paket versucht,
-%  das Layout der offiziellen, häufig mit propietären
-%  Textsatzprogrammen gesetzten \textsc{Midgard}-Publikationen der vierten
-%  Auflage so gut es geht nachzuahmen. Zu diesem Zweck werden einige
-%  Kommandos und Umgebungen definiert. Insbesondere wurde versucht,
-%  ein störungsfreies und vollautomatisches Zwei-Spalten-Layout zu
-%  erlauben.
-%\end{abstract}
-%\selectlanguage{english}%
-%\begin{abstract}
-%  \textsc{Midgard} is a german pen \& paper roleplay game. This
-%  \LaTeX{} package tries to resemble the layout of the official
-%  publications of this game and make it possible to write your own
-%  documents in a similar style and layout. Different commands and
-%  environments are defined to fit this purpose. The package and the
-%  documentation is -- apart from this paragraph -- entirely written
-%  in german, as is is the game itself. A translation of this package
-%  into other languages is not planned, since there is little use for
-%  this package outside the entirely german-speaking fanbase of the
-%  game itself.
-%\end {abstract}
-%\selectlanguage{ngerman}%
-%
-% \section{Einleitung}
-%
-% Spielleiter verbringen mitunter viel Zeit mit ihrer
-% Kampagnenplanung. Es gibt zwar inzwischen eine große Zahl von
-% Abenteuern, sei es im Internet zum freien oder kostenpflichtigen
-% Download oder in gedruckter Form, als Hefte oder Teile von
-% Quellenbüchern -- doch letzten Endes kommt man nicht umhin, immer
-% wieder Zeit aufzuwenden, um eigene Abenteuer oder Regelerweiterungen
-% zu entwickeln. Oft jedoch ist die Hemmschwelle groß, die eigenen
-% Ideen anderen zugänglich zu machen -- denn das würde bedeuten, dass
-% man sie zunächst einigermaßen ordentlich aufschreiben muss. Viel
-% Zeit geht dabei verloren, die Werte von neuen Zaubern oder Kreaturen
-% abzutippen und in eine einigermaßen ansehnliche, wenn nicht sogar
-% mit den offiziellen Schreibweisen konforme Form zu bringen.
-%
-% Dieses Paket versucht, diese Hemmschwelle zu senken, indem es
-% Kommandos und Umgebungen zur Verfügung stellt, die es erlauben, auf
-% einfach und -- hoffentlich -- intuitive Weise ein Layout zu
-% erzielen, das dem der offiziellen Veröffentlichungen so nahe wie
-% möglich kommt. Ich möchte jedoch nicht verhehlen, dass ich bei
-% einigen Details auch bewusst vom offiziellen Layout abweiche, um das
-% Layout unter Verwendung der Kapazitäten von \LaTeX{} noch
-% ansehnlicher zu machen. Die folgende Liste enthält die von mir
-% bewusst abweichend implementierten Details.
-%
-%\begin{itemize}
-%\item Alle sonst in GROSSBUCHSTABEN geschriebenen Begriffe, wie
-%  Verweise auf Quellenbücher und Regelwerke, werden stattdessen in
-%  \textsc{Kapitälchen} gesetzt, um sie weniger blockig wirken zu
-%  lassen.
-%\item Wenn die Felder \glqq Besonderheiten\grqq{} und \glqq
-%  Angriff\grqq{} von Kreaturendaten so lang sind, dass sie
-%  Zeilenumbrüche verursachen, erhalten die nachfolgenden Zeilen einen
-%  leichten hängenden Einzug.
-%\item Die Werte von Kreaturen enthalten ein zusätzliches Feld \glqq
-%  Aura\grqq, das im Anschluss an die Besonderheiten in die gleiche
-%  Zeile gedruckt wird.
-%\end{itemize}
-%
-% \section{Anleitung}
-% Neben einigen mehr oder minder trivialen Kommandos besteht eine der
-% Hauptleistungen dieses Pakets in der Implementierung der Kommandos
-% |\fertigkeit|, |\waffenfertigkeit|, |\zauber|, |\zauberwerkstatt|
-% und |\bestiarium| (bzw.~|\best|), welche ein den offiziellen
-% Publikationen nachempfundenes Layout der entsprechenden Datenblöcke
+% \maketitle \selectlanguage{ngerman}% \begin {abstract}
+% \textsc{Midgard} ist ein deutsches Pen-\&-Paper Fantasy Rollenspiel,
+% das seit 1981 erscheint und damit das erste deutsche
+% Fantasy-Rollenspiel überhaupt war.  Dieses \LaTeX{}-Paket versucht,
+% das Layout der offiziellen, häufig mit propietären
+% Textsatzprogrammen gesetzten \textsc{Midgard}-Publikationen der
+% vierten Auflage so gut es geht nachzuahmen. Zu diesem Zweck werden
+% einige Kommandos und Umgebungen definiert. Insbesondere wurde
+% versucht, ein störungsfreies und vollautomatisches
+% Zwei-Spalten-Layout zu erlauben.  \end{abstract}
+% \selectlanguage{english}% \begin{abstract} \textsc{Midgard} is a
+% german pen \& paper roleplay game. This \LaTeX{} package tries to
+% resemble the layout of the official publications of this game and
+% make it possible to write your own documents in a similar style and
+% layout. Different commands and environments are defined to fit this
+% purpose. The package and the documentation is -- apart from this
+% paragraph -- entirely written in german, as is is the game itself. A
+% translation of this package into other languages is not planned,
+% since there is little use for this package outside the entirely
+% german-speaking fanbase of the game itself.  \end {abstract}
+% \selectlanguage{ngerman}% \section{Einleitung} Spielleiter
+% verbringen mitunter viel Zeit mit ihrer Kampagnenplanung. Es gibt
+% zwar inzwischen eine große Zahl von Abenteuern, sei es im Internet
+% zum freien oder kostenpflichtigen Download oder in gedruckter Form,
+% als Hefte oder Teile von Quellenbüchern -- doch letzten Endes kommt
+% man nicht umhin, immer wieder Zeit aufzuwenden, um eigene Abenteuer
+% oder Regelerweiterungen zu entwickeln. Oft jedoch ist die
+% Hemmschwelle groß, die eigenen Ideen anderen zugänglich zu machen --
+% denn das würde bedeuten, dass man sie zunächst einigermaßen
+% ordentlich aufschreiben muss. Viel Zeit geht dabei verloren, die
+% Werte von neuen Zaubern oder Kreaturen abzutippen und in eine
+% einigermaßen ansehnliche, wenn nicht sogar mit den offiziellen
+% Schreibweisen konforme Form zu bringen.  Dieses Paket versucht,
+% diese Hemmschwelle zu senken, indem es Kommandos und Umgebungen zur
+% Verfügung stellt, die es erlauben, auf einfach und -- hoffentlich --
+% intuitive Weise ein Layout zu erzielen, das dem der offiziellen
+% Veröffentlichungen so nahe wie möglich kommt. Ich möchte jedoch
+% nicht verhehlen, dass ich bei einigen Details auch bewusst vom
+% offiziellen Layout abweiche, um das Layout unter Verwendung der
+% Kapazitäten von \LaTeX{} noch ansehnlicher zu machen. Die folgende
+% Liste enthält die von mir bewusst abweichend implementierten
+% Details.  \begin{itemize} \item Alle sonst in GROSSBUCHSTABEN
+% geschriebenen Begriffe, wie Verweise auf Quellenbücher und
+% Regelwerke, werden stattdessen in \textsc{Kapitälchen} gesetzt, um
+% sie weniger blockig wirken zu lassen.  \item Wenn die Felder \glqq
+% Besonderheiten\grqq{} und \glqq Angriff\grqq{} von Kreaturendaten so
+% lang sind, dass sie Zeilenumbrüche verursachen, erhalten die
+% nachfolgenden Zeilen einen leichten hängenden Einzug.  \item Die
+% Werte von Kreaturen enthalten ein zusätzliches Feld \glqq Aura\grqq,
+% das im Anschluss an die Besonderheiten in die gleiche Zeile gedruckt
+% wird.  \end{itemize} \section{Anleitung} Neben einigen mehr oder
+% minder trivialen Kommandos besteht eine der Hauptleistungen dieses
+% Pakets in der Implementierung der Kommandos |\fertigkeit|,
+% |\waffenfertigkeit|, |\zauber|, |\zauberwerkstatt| und |\bestiarium|
+% (bzw.~|\best|), welche ein den offiziellen Publikationen
+% nachempfundenes Layout der entsprechenden Datenblöcke
 % erlauben. Intern wird hierzu das Paket |xkeyval| verwendet, welches
 % die Übergabe einer durch Kommas getrennten Liste von
 % Schlüssel-Wert-Paaren im optionalen Argument eines Kommandos
@@ -194,92 +168,58 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \meta{Schlüssel}|=|\meta{Wert}|,|\dots|]{}|. Dies gilt analog für
 % die anderen Kommandos zum Textsatz von Datenblöcken. Das Layout und
 % die Spezifikationen der Schlüssel-Wert-Paare werden im folgenden
-% jeweils detailliert beschrieben.
-%
-% \subsection{Allgemeines}
-% 
+% jeweils detailliert beschrieben.  \subsection{Allgemeines}
 % \DescribeMacro{\midgardabenteuer} Auf der Titelseite von offiziellen
 % \textsc{Midgard}-Abenteuern sind oft die Worte \glqq Midgard
 % Abenteuer\grqq{} in einer dekorativen Weise angebracht. Einen
 % ähnlichen Schriftzug wie den in offiziellen Abenteuern abgedruckten
 % liefert das Kommando |\midgardabenteuer|, dessen Ergebnis in
 % Abbildung~\ref{fig:midgardabenteuer} dargestellt wird. Je nach
-% Kontext sollte es mit |\centering| auf der Seite zentriert werden.
-%
-% \begin{figure}[H]
-% \centering
-% \midgardabenteuer
-% \caption{Schriftzug auf der Titelseite von Abenteuern\label{fig:midgardabenteuer}}
-% \end{figure}
-%
+% Kontext sollte es mit |\centering| auf der Seite zentriert
+% werden.  \begin{figure}[H] \centering
+% \midgardabenteuer \caption{Schriftzug auf der Titelseite von
+% Abenteuern\label{fig:midgardabenteuer}} \end{figure}
 % \DescribeEnv{beispiel} Gerade im Grundregelwerk \glqq
 % \textsc{Midgard} -- Das Fantasy Rollenspiel\grqq{} finden sich immer
 % wieder Beispiel-Passagen, welche die konkrete Verwendung bestimmter
 % Regeln demonstrieren sollen. Diese sind typischerweise in leicht
 % grau hinterlegte, abgerundete Boxen abgedruckt. Dies versucht die
 % Umgebung |beispiel| nachzuempfinden. Das Ergebnis ist in
-% Abbildung~\ref{fig:beispiel} dargestellt.
-%
-% \begin{figure}[H]
-% \centering
-% \begin{beispiel}
-%   In einer solchen \textit{Beispiel-Box} können erklärende
-%   Textpassagen abgedruckt werden. Die Breite expandiert dabei
-%   automatisch auf den gesamten zugänglichen Bereich. Soll sie
-%   künstlich eingeschränkt werden, kann hierfür die Standard-Umgebung
-%   |minipage| verwendet werden.
-% \end{beispiel}\vspace{\abovecaptionskip}
-% \caption{Die Umgebung \textsf{beispiel} \label{fig:beispiel}}
-% \end{figure}
-%
+% Abbildung~\ref{fig:beispiel} dargestellt.  \begin{figure}[H]
+% \centering \begin{beispiel} In einer solchen \textit{Beispiel-Box}
+% können erklärende Textpassagen abgedruckt werden. Die Breite
+% expandiert dabei automatisch auf den gesamten zugänglichen
+% Bereich. Soll sie künstlich eingeschränkt werden, kann hierfür die
+% Standard-Umgebung |minipage| verwendet
+% werden.  \end{beispiel}\vspace{\abovecaptionskip} \caption{Die
+% Umgebung \textsf{beispiel} \label{fig:beispiel}} \end{figure}
 % \DescribeMacro{\midgardskip} Die Länge |\midgardskip| wird intern
 % verwendet, um innerhalb verschiedener Makros etwas vertikalen Platz
-% zu erzeugen. Standardmäßig ist sie etwa identisch mit |\smallskip|, was zu
-% einem etwas kompakteren Layout der Befehle als im offiziellen
+% zu erzeugen. Standardmäßig ist sie etwa identisch mit |\smallskip|,
+% was zu einem etwas kompakteren Layout der Befehle als im offiziellen
 % Regelwerk führt, kann jedoch umdefiniert werden, um zusätzlichen
 % Platz zu erzeugen. Das Layout in den offiziellen Regelwerken
-% entspricht etwa einer Einstellung von |0.7em|.
-%
-%
-%
-% \subsection{Das Fantasy Rollenspiel}
-%
-% \begin{figure}
-% \centering
-% \begin{minipage}{1.0\textwidth}
-%   \fertigkeit[name=Schleucheln, kategorie=Kampf, ungelernt=0,
-%   leitAtt=Gs\,91, anforderungen={Gw\,81, \itshape Schleichen+12,
-%   Meucheln+12}, FP=200, G=As, S={\textsc{Käm} a.~As}, A={alle
-%   anderen}]{}
-%   Der Kämpfer kann gleichzeitig \textit{Schleichen} und
-%   \textit{Meucheln}.  
-%   
-%   \bigskip 
-%   
-%   \fertigkeit[name=Atmen, EW=20,
-%   anforderungen={Wk 01}]{}
-%   Jeder Mensch kann atmen. Ein kritischer Fehler führt zum Verschlucken.
-% \end{minipage}\par
-% \bigskip\hrule\bigskip\par
-% \begin{minipage}{0.9\textwidth}
-% \begin{verbatim}
-%   \fertigkeit[name=Schleucheln, kategorie=Kampf, ungelernt=0,
-%   leitAtt=Gs\,91, anforderungen={Gw\,81, \itshape Schleichen+12,
-%   Meucheln+12}, FP=200, G=As, S={\textsc{Käm} a.~As}, A={alle
-%   anderen}]{}
-%   Der Kämpfer kann gleichzeitig \textit{Schleichen} und
-%   \textit{Meucheln}.  
-%   
-%   \bigskip 
-%   
-%   \fertigkeit[name=Atmen, EW=20, anforderungen={Wk 01}]{}
-%   Jeder Mensch kann atmen. Ein kritischer Fehler führt zum Verschlucken.
-% \end{verbatim}
-% \end{minipage}
-% \caption{Ein dem \textsc{Dfr4} nachempfundenes Layout für
-% Allgemeine Fertigkeiten\label{fig:fertigkeit}}
-% \end{figure}
-%
+% entspricht etwa einer Einstellung von |0.7em|.  \subsection{Das
+% Fantasy Rollenspiel} \begin{figure}
+% \centering \begin{minipage}{1.0\textwidth}
+% \fertigkeit[name=Schleucheln, kategorie=Kampf, ungelernt=0,
+% leitAtt=Gs\,91, anforderungen={Gw\,81, \itshape Schleichen+12,
+% Meucheln+12}, FP=200, G=As, S={\textsc{Käm} a.~As}, A={alle
+% anderen}]{} Der Kämpfer kann gleichzeitig \textit{Schleichen} und
+% \textit{Meucheln}.  \bigskip \fertigkeit[name=Atmen, EW=20,
+% anforderungen={Wk 01}]{} Jeder Mensch kann atmen. Ein kritischer
+% Fehler führt zum
+% Verschlucken.  \end{minipage}\par \bigskip\hrule\bigskip\par \begin{minipage}{0.9\textwidth} \begin{verbatim}
+% \fertigkeit[name=Schleucheln, kategorie=Kampf, ungelernt=0,
+% leitAtt=Gs\,91, anforderungen={Gw\,81, \itshape Schleichen+12,
+% Meucheln+12}, FP=200, G=As, S={\textsc{Käm} a.~As}, A={alle
+% anderen}]{} Der Kämpfer kann gleichzeitig \textit{Schleichen} und
+% \textit{Meucheln}.  \bigskip \fertigkeit[name=Atmen, EW=20,
+% anforderungen={Wk 01}]{} Jeder Mensch kann atmen. Ein kritischer
+% Fehler führt zum
+% Verschlucken.  \end{verbatim} \end{minipage} \caption{Ein dem
+% \textsc{Dfr4} nachempfundenes Layout für Allgemeine
+% Fertigkeiten\label{fig:fertigkeit}} \end{figure}
 % \DescribeMacro{\fertigkeit} Mit dem Kommando
 % |\fertigkeit[|\meta{Schlüssel}|=|\meta{Wert}|]{}| kann ein dem
 % \textsc{Dfr4} nachempfundenes Layout von allgemeinen Fähigkeiten
@@ -290,100 +230,80 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % dar. Letzteres wurde erzielt, indem der Wert |FP| auf \textit{hide}
 % gesetzt bzw.~auf seinem Standard-Wert belassen wurde. Die
 % Tabelle~\ref{tbl:fertigkeit} enthält eine vollständige Liste aller
-% implementierten Schlüssel-Wert-Paare.
-%
-%
-%\begin{widecenter}
-%\setkeys{fertigkeit}{}{
-%\begin{longtable}{>{\sf}l | >{\itshape}c | p{12cm}}
-%  \caption{Vollständige Liste der Schlüssel und Felder des \textsf{fertigkeit}-Kommandos\label{tbl:fertigkeit}}\\
-%  \rm\bfseries Schlüssel & default & \bfseries Wirkung
-%  \tabularnewline\hline name & \fertigkeitName & Der Name der
-%  Fertigkeit wird durch \textbf{Fettdruck} hervorgehoben in der
-%  Titelzeile dargestellt. Eine Besonderheit besteht, wenn |FP| nicht
-%  gesetzt ist -- dann ist die Fähigkeit nicht lernbar und hat daher
-%  einen fixen Erfolgswert, der dann unmittelbar auf den Namen folgend
-%  dargestellt wird.\tabularnewline entry & \fertigkeitEntry & Eintrag
-%  dieser Fähigkeit im Inhaltsverzeichnis.  Bei \textit{none} wird der
-%  mit \meta{name} gesetzte Name der Fertigkeit
-%  verwendet. \tabularnewline kategorie & \fertigkeitKategorie & Die
-%  Kategorie der Fähigkeit, etwa \glqq Sozial\grqq{} oder \glqq
-%  Bewegung\grqq{}. Jeder Wert außer \textit{none} wird in der
-%  Titelzeile hinter dem Namen der Fähigkeit in Klammern
-%  abgedruckt. \tabularnewline ungelernt & \fertigkeitUngelernt & Der
-%  ungelernte Erfolgswert für diese Fertigkeit. Jeder Wert außer
-%  \textit{none} wird als Erfolgswert interpretiert und in der Form
-%  \glqq ungelernt+(\meta{ungelernt})\grqq{} am Ende der Titelzeile
-%  abgedruckt. Der Löwenanteil des folgenden Datenblocks wird dann
-%  ignoriert und nur das Leitattribut und die anderen Anforderungen
-%  werden noch in der Titelzeile dargestellt, falls diese nicht
-%  \textit{none} sind. \tabularnewline leitatt & \fertigkeitLeitAtt &
-%  Das Leitattribut dieser Fertigkeit. Jeder Wert außer \textit{none}
-%  wird in der unmittelbar auf den Titel folgenden Zeile in
-%  \textbf{Fettdruck} an den Anfang gestellt.\tabularnewline
-%  anforderungen & \fertigkeitAnforderungen & Die zum Lernen dieser
-%  Fertigkeit benötigten Voraussetzungen, typischerweise
-%  Mindestattribute. Jeder Wert außer \textit{none} wird in der
-%  unmittelbar auf den Titel folgenden Zeile an den Anfang gestellt,
-%  hinter das Leitattribut. \tabularnewline EW & \fertigkeitEW & Der
-%  Wert |EW| wird als Erfolgswert interpretiert und wörtlich in der
-%  Form \glqq Erfolgswert+\meta{EW}\grqq{} in der Mitte der zweiten
-%  Zeile des Datenblocks, hinter den Voraussetzungen,
-%  abgedruckt.\tabularnewline spielbeginn & \fertigkeitEW & Der Wert
-%  |spielbeginn| wird als Erfolgswert nach Erlernen zu Spielbeginn
-%  interpretiert und als erster von zwei Werten wörtlich innerhalb der
-%  Klammer (+\meta{spielbeginn}/\dots) am Ende der zweiten Zeile des
-%  Datenblocks abgedruckt. \tabularnewline maximum & \fertigkeitEW &
-%  Der Wert |maximum| wird als maximal erreichbarer Erfolgswert
-%  interpretiert und als zweiter der beiden Werte wörtlich innerhalb
-%  der Klammer (\dots/+\meta{maximum}) am Ende der zweiten Zeile des
-%  Datenblocks abgedruckt. \tabularnewline FP & \fertigkeitFP & Die
-%  zum Erlernen der Grundkenntnisse in dieser Fertigkeit benötigten
-%  Erfahrungspunkte. Jede ganze Zahl wird vollständig als
-%  Standardkosten, halbiert und abgerundet und als Grundkosten sowie
-%  verdoppelt als Ausnahmekosten abgedruckt. Angabe von \textit{hide}
-%  führt dazu, dass die Zeile mit den Lernkosten wie auch der Großteil
-%  des gesamten Datenblocks nicht abgedruckt wird. Dies ist in der
-%  unteren Hälfte des Beispiels in Abbildung~\ref{fig:fertigkeit} zu
-%  sehen. Das Verhalten für Angaben außer ganzen Zahlen und
-%  \textit{hide} ist nicht definiert. \tabularnewline G & \fertigkeitG
-%  & Diejenigen Abenteurertypen, die diese Fertigkeit zu Grundkosten
-%  lernen können.\tabularnewline S & \fertigkeitS & Diejenigen
-%  Abenteurertypen, die diese Fertigkeit zu Standardkosten lernen
-%  können.\tabularnewline A & \fertigkeitA & Diejenigen
-%  Abenteurertypen, die diese Fertigkeit zu Ausnahmekosten lernen
-%  können.
-%\end{longtable}}
-%\end{widecenter}
-%
-%
-% \begin{figure}
-% \centering
-% \begin{minipage}{0.6\textwidth}
-%   \waffenfertigkeit[ name=Spazierstockwerfen, schaden=1W6,
-%   reichweite={5-10/11-20/21-30\,m}, voraussetzungen={St\,31,
-%   Gw\,11}, grundkenntnisse=Alltagsgegenstände,
-%   beispiele={Handtasche, Stuhl}, FP=500, G=ältere Herren,
-%   S=Wanderer, A=niemand]{} \par Beschreibungstext der
-%   Waffenfähigkeit
-% \end{minipage}\par
-% \bigskip\hrule\bigskip\par
-% \begin{minipage}{0.6\textwidth}
-% \begin{verbatim}
-% \waffenfertigkeit[ name=Spazierstockwerfen, 
-% schaden=1W6, reichweite={5-10/11-20/21-30\,m}, 
-% voraussetzungen={St\,31, Gs\,11}, 
-% grundkenntnisse=Alltagsgegenstände,
-% beispiele={Handtasche, Stuhl}, 
-% FP=500, G=ältere Herren,
-% S=Wanderer, A=niemand]{}
-% Beschreibungstext der Waffenfähigkeit
-% \end{verbatim}
-% \end{minipage}
-% \caption{Ein dem \textsc{Dfr4} nachempfundenes Layout für
-% Waffenfertigkeiten\label{fig:waffe}}
-% \end{figure}
-%
+% implementierten Schlüssel-Wert-Paare.  \begin{widecenter}
+% \setkeys{fertigkeit}{}{ \begin{longtable}{>{\sf}l | >{\itshape}c |
+% p{12cm}} \caption{Vollständige Liste der Schlüssel und Felder des
+% \textsf{fertigkeit}-Kommandos\label{tbl:fertigkeit}}\\ \rm\bfseries
+% Schlüssel & default & \bfseries Wirkung \tabularnewline\hline name &
+% \fertigkeitName & Der Name der Fertigkeit wird durch
+% \textbf{Fettdruck} hervorgehoben in der Titelzeile dargestellt. Eine
+% Besonderheit besteht, wenn |FP| nicht gesetzt ist -- dann ist die
+% Fähigkeit nicht lernbar und hat daher einen fixen Erfolgswert, der
+% dann unmittelbar auf den Namen folgend dargestellt
+% wird.\tabularnewline entry & \fertigkeitEntry & Eintrag dieser
+% Fähigkeit im Inhaltsverzeichnis.  Bei \textit{none} wird der mit
+% \meta{name} gesetzte Name der Fertigkeit verwendet. \tabularnewline
+% kategorie & \fertigkeitKategorie & Die Kategorie der Fähigkeit, etwa
+% \glqq Sozial\grqq{} oder \glqq Bewegung\grqq{}. Jeder Wert außer
+% \textit{none} wird in der Titelzeile hinter dem Namen der Fähigkeit
+% in Klammern abgedruckt. \tabularnewline ungelernt &
+% \fertigkeitUngelernt & Der ungelernte Erfolgswert für diese
+% Fertigkeit. Jeder Wert außer \textit{none} wird als Erfolgswert
+% interpretiert und in der Form \glqq
+% ungelernt+(\meta{ungelernt})\grqq{} am Ende der Titelzeile
+% abgedruckt. Der Löwenanteil des folgenden Datenblocks wird dann
+% ignoriert und nur das Leitattribut und die anderen Anforderungen
+% werden noch in der Titelzeile dargestellt, falls diese nicht
+% \textit{none} sind. \tabularnewline leitatt & \fertigkeitLeitAtt &
+% Das Leitattribut dieser Fertigkeit. Jeder Wert außer \textit{none}
+% wird in der unmittelbar auf den Titel folgenden Zeile in
+% \textbf{Fettdruck} an den Anfang gestellt.\tabularnewline
+% anforderungen & \fertigkeitAnforderungen & Die zum Lernen dieser
+% Fertigkeit benötigten Voraussetzungen, typischerweise
+% Mindestattribute. Jeder Wert außer \textit{none} wird in der
+% unmittelbar auf den Titel folgenden Zeile an den Anfang gestellt,
+% hinter das Leitattribut. \tabularnewline EW & \fertigkeitEW & Der
+% Wert |EW| wird als Erfolgswert interpretiert und wörtlich in der
+% Form \glqq Erfolgswert+\meta{EW}\grqq{} in der Mitte der zweiten
+% Zeile des Datenblocks, hinter den Voraussetzungen,
+% abgedruckt.\tabularnewline spielbeginn & \fertigkeitEW & Der Wert
+% |spielbeginn| wird als Erfolgswert nach Erlernen zu Spielbeginn
+% interpretiert und als erster von zwei Werten wörtlich innerhalb der
+% Klammer (+\meta{spielbeginn}/\dots) am Ende der zweiten Zeile des
+% Datenblocks abgedruckt. \tabularnewline maximum & \fertigkeitEW &
+% Der Wert |maximum| wird als maximal erreichbarer Erfolgswert
+% interpretiert und als zweiter der beiden Werte wörtlich innerhalb
+% der Klammer (\dots/+\meta{maximum}) am Ende der zweiten Zeile des
+% Datenblocks abgedruckt. \tabularnewline FP & \fertigkeitFP & Die zum
+% Erlernen der Grundkenntnisse in dieser Fertigkeit benötigten
+% Erfahrungspunkte. Jede ganze Zahl wird vollständig als
+% Standardkosten, halbiert und abgerundet und als Grundkosten sowie
+% verdoppelt als Ausnahmekosten abgedruckt. Angabe von \textit{hide}
+% führt dazu, dass die Zeile mit den Lernkosten wie auch der Großteil
+% des gesamten Datenblocks nicht abgedruckt wird. Dies ist in der
+% unteren Hälfte des Beispiels in Abbildung~\ref{fig:fertigkeit} zu
+% sehen. Das Verhalten für Angaben außer ganzen Zahlen und
+% \textit{hide} ist nicht definiert. \tabularnewline G & \fertigkeitG
+% & Diejenigen Abenteurertypen, die diese Fertigkeit zu Grundkosten
+% lernen können.\tabularnewline S & \fertigkeitS & Diejenigen
+% Abenteurertypen, die diese Fertigkeit zu Standardkosten lernen
+% können.\tabularnewline A & \fertigkeitA & Diejenigen
+% Abenteurertypen, die diese Fertigkeit zu Ausnahmekosten lernen
+% können.  \end{longtable}} \end{widecenter} \begin{figure}
+% \centering \begin{minipage}{0.6\textwidth} \waffenfertigkeit[
+% name=Spazierstockwerfen, schaden=1W6,
+% reichweite={5-10/11-20/21-30\,m}, voraussetzungen={St\,31, Gw\,11},
+% grundkenntnisse=Alltagsgegenstände, beispiele={Handtasche, Stuhl},
+% FP=500, G=ältere Herren, S=Wanderer, A=niemand]{} \par
+% Beschreibungstext der
+% Waffenfähigkeit \end{minipage}\par \bigskip\hrule\bigskip\par \begin{minipage}{0.6\textwidth} \begin{verbatim}
+% \waffenfertigkeit[ name=Spazierstockwerfen, schaden=1W6,
+% reichweite={5-10/11-20/21-30\,m}, voraussetzungen={St\,31, Gs\,11},
+% grundkenntnisse=Alltagsgegenstände, beispiele={Handtasche, Stuhl},
+% FP=500, G=ältere Herren, S=Wanderer, A=niemand]{} Beschreibungstext
+% der Waffenfähigkeit \end{verbatim} \end{minipage} \caption{Ein dem
+% \textsc{Dfr4} nachempfundenes Layout für
+% Waffenfertigkeiten\label{fig:waffe}} \end{figure}
 % \DescribeMacro{\waffenfertigkeit} Mit dem Kommando
 % |\waffenfertigkeit[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}|
 % kann ein dem \textsc{Dfr4} nachempfundener Textsatz für
@@ -392,272 +312,233 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % Schlüsseln ist in Tabelle \ref{tbl:waffe} abgedruckt. Die Spalte
 % \textit{default} beinhaltet dabei denjenigen Wert, den das
 % entsprechende Feld annimmt, wenn der Wert nicht aktiv gesetzt wird.
-%
 % \DescribeMacro{\weapon} Aus Bequemlichkeits- und
 % Kompatibilitätsgründen wird auch das Makro |\weapon| angeboten, das
-% sich in jeder Hinsicht aber genauso wie |\waffenfertigkeit| verhält.
-%
-%\begin{widecenter}
-%\setkeys{weapon}{}{
-%\begin{longtable}{>{\sf}l | >{\itshape}c | p{12cm}}
-%  \caption{Vollständige Liste der Schlüssel und Felder des \textsf{waffenfertigkeit}-Kommandos\label{tbl:waffe}}\\
-%  \rm\bfseries Schlüssel & default & \bfseries Wirkung
-%  \tabularnewline\hline name & \weaponName & Der Name der
-%  Waffenfertigkeit wird durch \textbf{Fettdruck} hervorgehoben in der
-%  Titelzeile dargestellt.\tabularnewline entry & \weaponEntry &
-%  Eintrag dieser Waffenfähigkeit im Inhaltsverzeichnis.  Bei
-%  \textit{none} wird der mit \meta{name} gesetzte Name der
-%  Waffenfertigkeit verwendet. So ist es möglich, z.\,B.~die
-%  \glqq\textbf{Schwere Armbrust}\grqq{} als \glqq\textbf{Armbrust,
-%  schwere}\grqq{} im Inhaltsverzeichnis zu führen.  \tabularnewline
-%  schaden & \weaponDamage & Der Schaden, den die Waffe
-%  angerichtet. Er wird in Klammern hinter dem Namen der Waffe
-%  abgedruckt. \tabularnewline reichweite & \weaponRange & Die
-%  Reichweite wird an den rechten Rand der Titelteile abgedruckt. Der
-%  \textit{default}-Eintrag ist die leere Zeichenkette
-%  \glqq\grqq{}. \tabularnewline voraussetzungen & \weaponPremise &
-%  Die zum Lernen dieser Waffenfähigkeit benötigten Voraussetzungen,
-%  typischerweise Mindestattribute. Sie werden in der unmittelbar auf
-%  den Titel folgenden Zeile an den Anfang gestellt. \tabularnewline
-%  grundkenntnisse & \weaponBasics & Zum Verwenden der Waffe benötigte
-%  Grundkenntnisse. Sie werden \textbf{fettgedruckt} in der zweiten
-%  Zeile nach dem Titel dargestellt. \tabularnewline FP & \weaponFP &
-%  Die zum Erlernen der Grundkenntnisse in dieser Waffenfertigkeit
-%  benötigten Erfahrungspunkte. Jede ganze Zahl wird vollständig als
-%  Standardkosten, halbiert und abgerundet und als Grundkosten sowie
-%  verdoppelt als Ausnahmekosten abgedruckt. Angabe von \textit{hide}
-%  führt dazu, dass die Zeile mit den Lernkosten wie auch die
-%  Schwierigkeit der Waffe nicht abgedruckt wird. Das Verhalten für
-%  Angaben außer ganzen Zahlen und \textit{hide} ist nicht
-%  definiert. \tabularnewline schwierigkeit & \weaponDifficulty & Die
-%  Schwierigkeit dieser Waffenfähigkeit, die sich in den Kosten zum
-%  Steigern des Erfolgswertes niederschlägt. Sie wird in Normaldruck,
-%  mit dem vorangestellten Wort \glqq Schwierigkeit\grqq{} in
-%  \textit{kursiv}, in der Zeile vor den Lernkosten abgedruckt -- aber
-%  nur dann, wenn |FP| nicht auf \textit{hide} gesetzt
-%  ist. \tabularnewline G & \weaponG & Diejenigen Abenteurertypen, die
-%  diese Waffenfertigkeit zu Grundkosten lernen können.\tabularnewline
-%  S & \weaponS & Diejenigen Abenteurertypen, die diese
-%  Waffenfertigkeit zu Standardkosten lernen können.\tabularnewline A
-%  & \weaponA & Diejenigen Abenteurertypen, die diese Waffenfertigkeit
-%  zu Ausnahmekosten lernen können.
-%\end{longtable}}
-%\end{widecenter}
-%
-%
-% \subsection{Arkanum}
-%
-% \begin{figure}
-% \begin{widecenter}
-% \begin{minipage}{8cm}
-%   \zauber[name=Neuer Zauber, scroll=false, stufe=1,
-%   art=Gestenzauber, prozess=Veränden, agens=Holz, reagens=Erde,
-%   AP=1, Zd=1\,sec, Rw=30\,m, Wz=Geist, Wb=Zauberer, Wd=\textinfty,
-%   Ur=druidisch, FP=100, G={Dr, Th}, th=S, S={Hl, Hx, \textsc{Pri} a.~T},
-%   A=niemand, anmerkung={nur zu Demonstrationszwecken},
-%   material={Haare eines Hundes}, matpreis={1~KS},
-%   matannotation={wird nur bei krit.~Fehler verbraucht}
-%   ]{} \par Beschreibungstext des Zaubers
-% \end{minipage}
-% \hspace{0.5cm}\vrule\hspace{0.5cm}
-% \begin{minipage}{8cm}
-% \begin{verbatim}
-%\zauber[name=Neuer Zauber, scroll=false,th=S,
-%  anmerkung={nur zu Demonstrationszwecken},
-%  stufe=1,art=Gestenzauber,
-%  prozess=Veränden,agens=Holz,reagens=Erde
-%  AP=1, Zd=1\,sec, Rw=30\,m,
-%  Wz=Geist, Wb=Zauberer, Wd=\textinfty,
-%  Ur=druidisch, FP=100,
-%  S={Hl, Hx, \textsc{Pri} a.~T},
-%  G={Dr, Th}, A=niemand, 
-%  material={Haare eines Hundes}, 
-%  matpreis={1~KS}, 
-%  matannotation={wird nur bei krit.~Fehler
-%   verbraucht}
-% ]{}
-% 
-% Beschreibungstext des Zaubers
-% \end{verbatim}
-% \end{minipage}
-% \end{widecenter}
-% \caption{Ein dem Arkanum nachempfundenes Layout für Zauber\label{fig:zauber}}
-% \end{figure}
-% 
-% \DescribeMacro{\zauber} Mit dem Kommando
-% |\zauber[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}| kann ein dem
-% Layout des Arkanums nachempfundener Textsatz der Werte eines Zaubers
-% erzeugt werden. Das Ergebnis ist im Abbildung~\ref{fig:zauber}
-% dargestellt. Die vollständige Liste mit Schlüsseln ist in Tabelle
-% \ref{tbl:zauber} abgedruckt. Die Spalte \textit{default} beinhaltet
-% dabei denjenigen Wert, den das entsprechende Feld annimmt, wenn der
-% Wert nicht aktiv gesetzt wird.
-%
+% sich in jeder Hinsicht aber genauso wie |\waffenfertigkeit|
+% verhält.  \begin{widecenter}
+% \setkeys{weapon}{}{ \begin{longtable}{>{\sf}l | >{\itshape}c |
+% p{12cm}} \caption{Vollständige Liste der Schlüssel und Felder des
+% \textsf{waffenfertigkeit}-Kommandos\label{tbl:waffe}}\\ \rm\bfseries
+% Schlüssel & default & \bfseries Wirkung \tabularnewline\hline name &
+% \weaponName & Der Name der Waffenfertigkeit wird durch
+% \textbf{Fettdruck} hervorgehoben in der Titelzeile
+% dargestellt.\tabularnewline entry & \weaponEntry & Eintrag dieser
+% Waffenfähigkeit im Inhaltsverzeichnis.  Bei \textit{none} wird der
+% mit \meta{name} gesetzte Name der Waffenfertigkeit verwendet. So ist
+% es möglich, z.\,B.~die \glqq\textbf{Schwere Armbrust}\grqq{} als
+% \glqq\textbf{Armbrust, schwere}\grqq{} im Inhaltsverzeichnis zu
+% führen.  \tabularnewline schaden & \weaponDamage & Der Schaden, den
+% die Waffe angerichtet. Er wird in Klammern hinter dem Namen der
+% Waffe abgedruckt. \tabularnewline reichweite & \weaponRange & Die
+% Reichweite wird an den rechten Rand der Titelteile abgedruckt. Der
+% \textit{default}-Eintrag ist die leere Zeichenkette
+% \glqq\grqq{}. \tabularnewline voraussetzungen & \weaponPremise & Die
+% zum Lernen dieser Waffenfähigkeit benötigten Voraussetzungen,
+% typischerweise Mindestattribute. Sie werden in der unmittelbar auf
+% den Titel folgenden Zeile an den Anfang gestellt. \tabularnewline
+% grundkenntnisse & \weaponBasics & Zum Verwenden der Waffe benötigte
+% Grundkenntnisse. Sie werden \textbf{fettgedruckt} in der zweiten
+% Zeile nach dem Titel dargestellt. \tabularnewline FP & \weaponFP &
+% Die zum Erlernen der Grundkenntnisse in dieser Waffenfertigkeit
+% benötigten Erfahrungspunkte. Jede ganze Zahl wird vollständig als
+% Standardkosten, halbiert und abgerundet und als Grundkosten sowie
+% verdoppelt als Ausnahmekosten abgedruckt. Angabe von \textit{hide}
+% führt dazu, dass die Zeile mit den Lernkosten wie auch die
+% Schwierigkeit der Waffe nicht abgedruckt wird. Das Verhalten für
+% Angaben außer ganzen Zahlen und \textit{hide} ist nicht
+% definiert. \tabularnewline schwierigkeit & \weaponDifficulty & Die
+% Schwierigkeit dieser Waffenfähigkeit, die sich in den Kosten zum
+% Steigern des Erfolgswertes niederschlägt. Sie wird in Normaldruck,
+% mit dem vorangestellten Wort \glqq Schwierigkeit\grqq{} in
+% \textit{kursiv}, in der Zeile vor den Lernkosten abgedruckt -- aber
+% nur dann, wenn |FP| nicht auf \textit{hide} gesetzt
+% ist. \tabularnewline G & \weaponG & Diejenigen Abenteurertypen, die
+% diese Waffenfertigkeit zu Grundkosten lernen können.\tabularnewline
+% S & \weaponS & Diejenigen Abenteurertypen, die diese
+% Waffenfertigkeit zu Standardkosten lernen können.\tabularnewline A &
+% \weaponA & Diejenigen Abenteurertypen, die diese Waffenfertigkeit zu
+% Ausnahmekosten lernen
+% können.  \end{longtable}} \end{widecenter} \subsection{Arkanum} \begin{figure} \begin{widecenter} \begin{minipage}{8cm}
+% \zauber[name=Neuer Zauber, scroll=false, stufe=1, art=Gestenzauber,
+% prozess=Veränden, agens=Holz, reagens=Erde, AP=1, Zd=1\,sec,
+% Rw=30\,m, Wz=Geist, Wb=Zauberer, Wd=\textinfty, Ur=druidisch,
+% FP=100, G={Dr, Th}, th=S, S={Hl, Hx, \textsc{Pri} a.~T}, A=niemand,
+% anmerkung={nur zu Demonstrationszwecken}, material={Haare eines
+% Hundes}, matpreis={1~KS}, matannotation={wird nur bei krit.~Fehler
+% verbraucht} ]{} \par Beschreibungstext des
+% Zaubers \end{minipage} \hspace{0.5cm}\vrule\hspace{0.5cm} \begin{minipage}{8cm} \begin{verbatim}
+% \zauber[name=Neuer Zauber, scroll=false,th=S, anmerkung={nur zu
+% Demonstrationszwecken}, stufe=1,art=Gestenzauber,
+% prozess=Veränden,agens=Holz,reagens=Erde AP=1, Zd=1\,sec, Rw=30\,m,
+% Wz=Geist, Wb=Zauberer, Wd=\textinfty, Ur=druidisch, FP=100, S={Hl,
+% Hx, \textsc{Pri} a.~T}, G={Dr, Th}, A=niemand, material={Haare eines
+% Hundes}, matpreis={1~KS}, matannotation={wird nur bei krit.~Fehler
+% verbraucht} ]{} Beschreibungstext des
+% Zaubers \end{verbatim} \end{minipage} \end{widecenter} \caption{Ein
+% dem Arkanum nachempfundenes Layout für
+% Zauber\label{fig:zauber}} \end{figure} \DescribeMacro{\zauber} Mit
+% dem Kommando |\zauber[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}|
+% kann ein dem Layout des Arkanums nachempfundener Textsatz der Werte
+% eines Zaubers erzeugt werden. Das Ergebnis ist im
+% Abbildung~\ref{fig:zauber} dargestellt. Die vollständige Liste mit
+% Schlüsseln ist in Tabelle \ref{tbl:zauber} abgedruckt. Die Spalte
+% \textit{default} beinhaltet dabei denjenigen Wert, den das
+% entsprechende Feld annimmt, wenn der Wert nicht aktiv gesetzt wird.
 % \DescribeMacro{\zaubervariante} Das Kommando
 % |\zaubervariante{|\meta{Variante}|}| soll benutzt werden um am Ende
 % einer Zauberbeschreibung die Variationen des Zaubers für
 % verschiedene Zaubererklassen genauer zu beschreiben, etwa
 % |\zaubervariante{Thaumaturgie}| für einen Abschnitt, der mit
 % \glqq\textbf{\textsc{Thaumaturgie}:} \dots\grqq{} beginnt.
-%
 % \DescribeMacro{\zaubermittel} Mit dem Kommando
 % |\zaubermittel[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}| kann
 % analog ein dem Layout des Arkanums nachempfundener Textsatz der
 % Werte eines Zaubermittels erzeugt werden.
-%
 % \DescribeMacro{\zauberwerkstatt} Aus Gründen der Bequemlichkeit und
 % Kompatibilität definieren wir zusätzlich das Kommando
 % |\zauberwerkstatt[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}|,
 % welches sich jedoch genauso verhält wie
 % |\zaubermittel[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}|.
-%
-% \FloatBarrier
-%
-%\begin{widecenter}
-% \setkeys{zauber}{}{
-%\begin{longtable}{>{\sf}l | >{\itshape}c | p{12cm}}
-%  \caption{Vollständige Liste der Schlüssel und Felder des \textsf{zauber}-Kommandos\label{tbl:zauber}}\\
-%  \rm\bfseries Schlüssel & default & \bfseries Wirkung
-%  \tabularnewline\hline name & \zaubername & Der Name des Zaubers
-%  wird mit \textbf{Fettdruck} und leicht größerer Schriftart
-%  hervorgehoben in der Titelzeile dargestellt.  \tabularnewline entry
-%  & \zauberentry & Eintrag dieses Zaubers im Inhaltsverzeichnis. Bei
-%  \textit{none} wird der mit \meta{name} gesetzte Name des Zaubers
-%  verwendet. So ist es möglich, z.\,B.~die \glqq\textbf{Blaue
-%  Bannsphäre}\grqq{} als \glqq\textbf{Bannsphäre, Blaue}\grqq{} im
-%  Inhaltsverzeichnis zu führen.  \tabularnewline scroll &
-%  \zauberscroll & Bool'sche Angabe, ob dieser Zauber von Schriftrolle
-%  gelernt werden kann. Jeder andere Wert außer \textit{true} führt
-%  dazu, dass das
-%  Schriftrollensymbol \includegraphics[height=0.7em]{pics/scroll} in
-%  der Kopfzeile abgedruckt wird.\tabularnewline th & \zauberth &
-%  Information über die thaumaturgische Variante des Zaubers, wird
-%  typischerweise auf \textit{R} oder \textit{S} für Runenstäbe
-%  bzw.~Siegelzauber gesetzt. Tatsächlich wird aber jede Angabe außer
-%  \textit{none} in der Kopfzeile abgedruckt. Länge Angaben sollten
-%  vermieden werden, da diese zu unerwünschten Zeilenüberläufen führen
-%  können! \tabularnewline anmerkung & \zauberAnmerkung & Anmerkungen
-%  zum Zauber, etwa zur Quelle, aus welcher der Zauber stammt. Jeder
-%  Wert außer \textit{none} wird unterhalb der Titelzeile klein,
-%  linksbündig, fett und kursiv agbedruckt. \tabularnewline art &
-%  \zauberart & Art des Zaubers, z.\,B.~\textbf{Gedankenzauber},
-%  \textbf{Wortzauber} oder \textbf{Gestenzauber}. Jede Angabe wird
-%  vor dem Wort \glqq der\grqq{} in der Zeile \glqq Gestenzauber der
-%  Stufe 1\grqq{} im Beispiel (Abbildung~\ref{fig:zauber})
-%  abgedruckt. \tabularnewline stufe & \zauberstufe & Stufe des
-%  Zaubers. Jede Angabe außer \textit{GM} wird mit dem vorangestellten
-%  Wort \glqq Stufe\grqq{} wörtlich abgedruckt, während \textit{GM} zu
-%  \glqq Großen Magie\grqq{} (z.\,B.~in \glqq Gestenzauber der
-%  \textbf{Großen Magie}\grqq{}) expandiert wird \tabularnewline
-%  material & \zaubermaterial & Jedes Zaubermaterial außer
-%  \textit{none} wird in kursiv unterhalb der Zeile mit Art und Stufe
-%  des Zaubers abgedruckt. Ist das \meta{material} \textit{none},
-%  werden die Angaben \meta{matpreis} und \meta{matannotation}
-%  ignoriert. \tabularnewline matpreis & \zaubermatpreis & Der
-%  Materialpreis. Jede Angabe außer \textit{none} wird hinter dem
-%  Zaubermaterial in normalschrift und geklammert
-%  abgedruckt. \tabularnewline matannotation & \zaubermatannotation &
-%  Weitere Anmerkungen zum Zaubermaterial, beispielsweise
-%  \glqq\textbf{wird nicht verbraucht}\grqq{} oder \glqq\textbf{wird
-%  nur bei kritischem Fehler verbraucht}\grqq{}. Jede Angabe außer
-%  \textit{none} wird am Ende der \glqq Zaubermaterial-Zeile\grqq{},
-%  mit einem Semikolon abgetrennt, abgedruckt. Bei Zaubern, die
-%  mehrere Zaubermaterialien mit separaten Preisangaben haben,
-%  empfiehlt es sich, den entsprechenden Passus unmittelbar in
-%  \meta{material} zu schreiben und die Felder \meta{matkosten} und
-%  \meta{matannotation} zu ignorieren. \tabularnewline prozess &
-%  \zauberprozess & Der Prozess-Anteil der Zauberformel. Jede Angabe
-%  wird wörtlich vor dem
-%  Symbol \includegraphics[height=0.7em]{pics/box} in der Zauberformel
-%  abgedruckt.\tabularnewline agens & \zauberagens & Der Agens-Anteil
-%  der Zauberformel. Jede Angabe wird wörtlich zwischen den
-%  Symbol \includegraphics[height=0.7em]{pics/box}
-%  und \includegraphics[height=0.7em]{pics/arrow} in der Zauberformel
-%  abgedruckt.\tabularnewline reagens & \zauberreagens & Der
-%  Regens-Anteil der Zauberformel. Jede Angabe wird wörtlich zwischen
-%  hinter dem Symbol \includegraphics[height=0.7em]{pics/arrow} in der
-%  Zauberformel abgedruckt.\tabularnewline AP & \zauberAP & Die
-%  AP-Kosten des Zaubers. Jede Angabe außer \textit{hide} wird
-%  wörtlich abgedruckt, während \textit{hide} dazu führt, dass die
-%  Zeile nicht gedruckt wird.\tabularnewline GZ & \zauberGZ & Die
-%  Gefährdungszahl des Zaubers (nur bei Zaubern der finsteren Magie,
-%  siehe \textit{Hexenzauber \& Druidenkraft}). Jede Angabe außer
-%  \textit{hide} wird wörtlich abgedruckt, während \textit{hide} dazu
-%  führt, dass die Zeile nicht gedruckt wird.\tabularnewline Zd &
-%  \zauberZd & Die Zauberdauer. Jede Angabe außer \textit{hide} wird
-%  wörtlich abgedruckt, während \textit{hide} dazu führt, dass die
-%  Zeile nicht gedruckt wird.\tabularnewline Rw & \zauberRw & Die
-%  Reichweite des Zaubers. Jede Angabe außer \textit{hide} wird
-%  wörtlich abgedruckt, während \textit{hide} dazu führt, dass die
-%  Zeile nicht gedruckt wird.\tabularnewline Wz & \zauberWz & Das
-%  Wirkungsziel des Zaubers. Jede Angabe außer \textit{hide} wird
-%  wörtlich abgedruckt, während \textit{hide} dazu führt, dass die
-%  Zeile nicht gedruckt wird.\tabularnewline Wb & \zauberWb & Der
-%  Wirkungsbereich des Zaubers. Jede Angabe außer \textit{hide} wird
-%  wörtlich abgedruckt, während \textit{hide} dazu führt, dass die
-%  Zeile nicht gedruckt wird.\tabularnewline Wd & \zauberWd & Die
-%  Wirkungsdauer des Zaubers. Jede Angabe außer \textit{hide} wird
-%  wörtlich abgedruckt, während \textit{hide} dazu führt, dass die
-%  Zeile nicht gedruckt wird.\tabularnewline Ur & \zauberUr & Der
-%  Ursprung des Zaubers, etwa \textbf{dämonisch} oder
-%  \textbf{elementar}. Jede Angabe außer \textit{hide} wird wörtlich
-%  abgedruckt, während \textit{hide} dazu führt, dass die Zeile nicht
-%  gedruckt wird.\tabularnewline FP & \zauberFP & Die FP-Kosten des
-%  Zaubers. Jede ganze Zahl wird vollständig als Standardkosten,
-%  halbiert und abgerundet und als Grundkosten sowie verfünffacht als
-%  Ausnahmekosten abgedruckt. Angabe von \textit{hide} führt dazu,
-%  dass die Zeile mit den Lernkosten nicht abgedruckt wird. Das
-%  Verhalten für Angaben außer ganzen Zahlen und \textit{hide} ist
-%  nicht definiert. \tabularnewline G & \zauberG & Diejenigen
-%  Zaubererklassen, die den Zauber zu Grundkosten lernen
-%  können.\tabularnewline S & \zauberS & Diejenigen Zaubererklassen,
-%  die den Zauber zu Standardkosten lernen können.\tabularnewline A &
-%  \zauberA & Diejenigen Zaubererklassen, die den Zauber zu
-%  Ausnahmekosten lernen können.
-%\end{longtable}}
-%\end{widecenter}
-%
-%
-%  \subsection{Bestiarium}
-%
-% \begin{figure}
-% \begin{verbatim}
-%   \bestiarium[ name=Kreatur, mag=true, typ=Humanoid, grad=3, In=m30,
-%   LP=3W6, AP=3W6+2, MW=18, EP=5, Gw=80, St=70, B=24, RK=KR,
-%   abwehr=12, resistenz=13/15/11, angriff={Keule+8 (1W6+1) --
-%   Raufen+8 (1W6-2)}, zauberEW=12, zauber={Bannen von Dunkelheit,
-%   Schlaf -- Niessalz}, zauberArtigEW=18, zauberArtig={Heilen von
-%   Wunden \textup{(jede Runde auf sich selbst)}}, bes=kann nur mit
-%   magischen Waffen verletzt werden, aura=dämonisch,
-%   vorkommen=überall]{}
-% \end{verbatim}
-% \hrule
-% \hfill
-% \begin{minipage}{0.45\textwidth}
-%   \bestiarium[ name=Kreatur, mag=true, typ=Humanoid, grad=3, In=m30,
-%   LP=3W6, AP=3W6+2, MW=18, EP=5, Gw=80, St=70, B=24, RK=KR,
-%   abwehr=12, resistenz=13/15/11, angriff={Keule+8 (1W6+1) --
-%   Raufen+8 (1W6-2)}, zauberEW=12, zauber={Bannen von Dunkelheit,
-%   Schlaf -- Niessalz}, zauberArtigEW=18, zauberArtig={Heilen von
-%   Wunden \textup{(jede Runde auf sich selbst)}}, bes=kann nur mit
-%   magischen Waffen verletzt werden, aura=dämonisch,
-%   vorkommen=überall]{}
-% \end{minipage}\hfill
-% \begin{minipage}{0.45\textwidth}
-%   \best[ name=Kreatur, mag=true, typ=Humanoid, grad=3, In=m30,
-%   LP=3W6, AP=3W6+2, MW=18, EP=5, Gw=80, St=70, B=24, RK=KR,
-%   abwehr=12, resistenz=13/15/11, angriff={Keule+8 (1W6+1) --
-%   Raufen+8 (1W6-2)}, zauberEW=12, zauber={Bannen von Dunkelheit,
-%   Schlaf -- Niessalz}, zauberArtigEW=18, zauberArtig={Heilen von
-%   Wunden \textup{(jede Runde auf sich selbst)}}, bes=kann nur mit
-%   magischen Waffen verletzt werden, aura=dämonisch,
-%   vorkommen=überall]{}
-% \end{minipage}
-% \hfill~
-%
-% \caption{Ein dem Bestiarium nachempfundenes Layout für Kreaturendaten\label{fig:bestiarium}}
-% \end{figure}
-% 
+% \FloatBarrier \begin{widecenter}
+% \setkeys{zauber}{}{ \begin{longtable}{>{\sf}l | >{\itshape}c |
+% p{12cm}} \caption{Vollständige Liste der Schlüssel und Felder des
+% \textsf{zauber}-Kommandos\label{tbl:zauber}}\\ \rm\bfseries
+% Schlüssel & default & \bfseries Wirkung \tabularnewline\hline name &
+% \zaubername & Der Name des Zaubers wird mit \textbf{Fettdruck} und
+% leicht größerer Schriftart hervorgehoben in der Titelzeile
+% dargestellt.  \tabularnewline entry & \zauberentry & Eintrag dieses
+% Zaubers im Inhaltsverzeichnis. Bei \textit{none} wird der mit
+% \meta{name} gesetzte Name des Zaubers verwendet. So ist es möglich,
+% z.\,B.~die \glqq\textbf{Blaue Bannsphäre}\grqq{} als
+% \glqq\textbf{Bannsphäre, Blaue}\grqq{} im Inhaltsverzeichnis zu
+% führen.  \tabularnewline scroll & \zauberscroll & Bool'sche Angabe,
+% ob dieser Zauber von Schriftrolle gelernt werden kann. Jeder andere
+% Wert außer \textit{true} führt dazu, dass das Schriftrollensymbol
+% \includegraphics[height=0.7em]{pics/scroll} in der Kopfzeile
+% abgedruckt wird.\tabularnewline th & \zauberth & Information über
+% die thaumaturgische Variante des Zaubers, wird typischerweise auf
+% \textit{R} oder \textit{S} für Runenstäbe bzw.~Siegelzauber
+% gesetzt. Tatsächlich wird aber jede Angabe außer \textit{none} in
+% der Kopfzeile abgedruckt. Länge Angaben sollten vermieden werden, da
+% diese zu unerwünschten Zeilenüberläufen führen können!
+% \tabularnewline anmerkung & \zauberAnmerkung & Anmerkungen zum
+% Zauber, etwa zur Quelle, aus welcher der Zauber stammt. Jeder Wert
+% außer \textit{none} wird unterhalb der Titelzeile klein,
+% linksbündig, fett und kursiv agbedruckt. \tabularnewline art &
+% \zauberart & Art des Zaubers, z.\,B.~\textbf{Gedankenzauber},
+% \textbf{Wortzauber} oder \textbf{Gestenzauber}. Jede Angabe wird vor
+% dem Wort \glqq der\grqq{} in der Zeile \glqq Gestenzauber der Stufe
+% 1\grqq{} im Beispiel (Abbildung~\ref{fig:zauber})
+% abgedruckt. \tabularnewline stufe & \zauberstufe & Stufe des
+% Zaubers. Jede Angabe außer \textit{GM} wird mit dem vorangestellten
+% Wort \glqq Stufe\grqq{} wörtlich abgedruckt, während \textit{GM} zu
+% \glqq Großen Magie\grqq{} (z.\,B.~in \glqq Gestenzauber der
+% \textbf{Großen Magie}\grqq{}) expandiert wird \tabularnewline
+% material & \zaubermaterial & Jedes Zaubermaterial außer
+% \textit{none} wird in kursiv unterhalb der Zeile mit Art und Stufe
+% des Zaubers abgedruckt. Ist das \meta{material} \textit{none},
+% werden die Angaben \meta{matpreis} und \meta{matannotation}
+% ignoriert. \tabularnewline matpreis & \zaubermatpreis & Der
+% Materialpreis. Jede Angabe außer \textit{none} wird hinter dem
+% Zaubermaterial in Normalschrift und geklammert
+% abgedruckt. \tabularnewline matannotation & \zaubermatannotation &
+% Weitere Anmerkungen zum Zaubermaterial, beispielsweise
+% \glqq\textbf{wird nicht verbraucht}\grqq{} oder \glqq\textbf{wird
+% nur bei kritischem Fehler verbraucht}\grqq{}. Jede Angabe außer
+% \textit{none} wird am Ende der \glqq Zaubermaterial-Zeile\grqq{},
+% mit einem Semikolon abgetrennt, abgedruckt. Bei Zaubern, die mehrere
+% Zaubermaterialien mit separaten Preisangaben haben, empfiehlt es
+% sich, den entsprechenden Passus unmittelbar in \meta{material} zu
+% schreiben und die Felder \meta{matkosten} und \meta{matannotation}
+% zu ignorieren.  feld & \beschwoerungsfeld & Bei Beschwörungen
+% verwendetes Feld. Jede Angabe außer \textit{none} wird unterhalb der
+% Material-Zeile in Kursiv abgedruckt abgedruckt, wobei die
+% Bezeichnung \textit{Köder} in Fettdruck vornangestellt wird. Ist er
+% Köder \textit{none}, wird die Angabe zum \meta{feldpreis}
+% ignoriert. \tabularnewline feldpreis & \beschwoerungsfeldpreis & Der
+% Preis des Beschwörungsfelds.  Jede Angabe außer \textit{none} wird
+% hinter dem Beschwörungsfeld in Normalschrift und geklammert
+% abgedruckt. \tabularnewline koeder & \beschwoerungskoeder & Bei
+% Beschwörungen verwendete Köder. Jede Angabe außer \textit{none} wird
+% unterhalb der Material-Zeile in Normalschrift abgedruckt. Ist er
+% Köder \textit{none}, wird die Angabe zum \meta{koederpreis}
+% ignoriert. \tabularnewline koederpreis & \beschwoerungskoederpreis &
+% Der Preis des Köders.  Jede Angabe außer \textit{none} wird hinter
+% dem Köder in Normalschrift und geklammert
+% abgedruckt. \tabularnewline \tabularnewline prozess & \zauberprozess
+% & Der Prozess-Anteil der Zauberformel. Jede Angabe wird wörtlich vor
+% dem Symbol \includegraphics[height=0.7em]{pics/box} in der
+% Zauberformel abgedruckt.\tabularnewline agens & \zauberagens & Der
+% Agens-Anteil der Zauberformel. Jede Angabe wird wörtlich zwischen
+% den Symbol \includegraphics[height=0.7em]{pics/box} und
+% \includegraphics[height=0.7em]{pics/arrow} in der Zauberformel
+% abgedruckt.\tabularnewline reagens & \zauberreagens & Der
+% Regens-Anteil der Zauberformel. Jede Angabe wird wörtlich zwischen
+% hinter dem Symbol \includegraphics[height=0.7em]{pics/arrow} in der
+% Zauberformel abgedruckt.\tabularnewline AP & \zauberAP & Die
+% AP-Kosten des Zaubers. Jede Angabe außer \textit{hide} wird wörtlich
+% abgedruckt, während \textit{hide} dazu führt, dass die Zeile nicht
+% gedruckt wird.\tabularnewline GZ & \zauberGZ & Die Gefährdungszahl
+% des Zaubers (nur bei Zaubern der finsteren Magie, siehe
+% \textit{Hexenzauber \& Druidenkraft}). Jede Angabe außer
+% \textit{hide} wird wörtlich abgedruckt, während \textit{hide} dazu
+% führt, dass die Zeile nicht gedruckt wird.\tabularnewline Zd &
+% \zauberZd & Die Zauberdauer. Jede Angabe außer \textit{hide} wird
+% wörtlich abgedruckt, während \textit{hide} dazu führt, dass die
+% Zeile nicht gedruckt wird.\tabularnewline Rw & \zauberRw & Die
+% Reichweite des Zaubers. Jede Angabe außer \textit{hide} wird
+% wörtlich abgedruckt, während \textit{hide} dazu führt, dass die
+% Zeile nicht gedruckt wird.\tabularnewline Wz & \zauberWz & Das
+% Wirkungsziel des Zaubers. Jede Angabe außer \textit{hide} wird
+% wörtlich abgedruckt, während \textit{hide} dazu führt, dass die
+% Zeile nicht gedruckt wird.\tabularnewline Wb & \zauberWb & Der
+% Wirkungsbereich des Zaubers. Jede Angabe außer \textit{hide} wird
+% wörtlich abgedruckt, während \textit{hide} dazu führt, dass die
+% Zeile nicht gedruckt wird.\tabularnewline Wd & \zauberWd & Die
+% Wirkungsdauer des Zaubers. Jede Angabe außer \textit{hide} wird
+% wörtlich abgedruckt, während \textit{hide} dazu führt, dass die
+% Zeile nicht gedruckt wird.\tabularnewline Ur & \zauberUr & Der
+% Ursprung des Zaubers, etwa \textbf{dämonisch} oder
+% \textbf{elementar}. Jede Angabe außer \textit{hide} wird wörtlich
+% abgedruckt, während \textit{hide} dazu führt, dass die Zeile nicht
+% gedruckt wird.\tabularnewline FP & \zauberFP & Die FP-Kosten des
+% Zaubers. Jede ganze Zahl wird vollständig als Standardkosten,
+% halbiert und abgerundet und als Grundkosten sowie verfünffacht als
+% Ausnahmekosten abgedruckt. Angabe von \textit{hide} führt dazu, dass
+% die Zeile mit den Lernkosten nicht abgedruckt wird. Das Verhalten
+% für Angaben außer ganzen Zahlen und \textit{hide} ist nicht
+% definiert. \tabularnewline G & \zauberG & Diejenigen
+% Zaubererklassen, die den Zauber zu Grundkosten lernen
+% können.\tabularnewline S & \zauberS & Diejenigen Zaubererklassen,
+% die den Zauber zu Standardkosten lernen können.\tabularnewline A &
+% \zauberA & Diejenigen Zaubererklassen, die den Zauber zu
+% Ausnahmekosten lernen
+% können.  \end{longtable}} \end{widecenter} \subsection{Bestiarium} \begin{figure} \begin{verbatim}
+% \bestiarium[ name=Kreatur, mag=true, typ=Humanoid, grad=3, In=m30,
+% LP=3W6, AP=3W6+2, MW=18, EP=5, Gw=80, St=70, B=24, RK=KR, abwehr=12,
+% resistenz=13/15/11, angriff={Keule+8 (1W6+1) -- Raufen+8 (1W6-2)},
+% zauberEW=12, zauber={Bannen von Dunkelheit, Schlaf -- Niessalz},
+% zauberArtigEW=18, zauberArtig={Heilen von Wunden \textup{(jede Runde
+% auf sich selbst)}}, bes=kann nur mit magischen Waffen verletzt
+% werden, aura=dämonisch, vorkommen=überall]{} \end{verbatim} \hrule
+% \hfill \begin{minipage}{0.45\textwidth} \bestiarium[ name=Kreatur,
+% mag=true, typ=Humanoid, grad=3, In=m30, LP=3W6, AP=3W6+2, MW=18,
+% EP=5, Gw=80, St=70, B=24, RK=KR, abwehr=12, resistenz=13/15/11,
+% angriff={Keule+8 (1W6+1) -- Raufen+8 (1W6-2)}, zauberEW=12,
+% zauber={Bannen von Dunkelheit, Schlaf -- Niessalz},
+% zauberArtigEW=18, zauberArtig={Heilen von Wunden \textup{(jede Runde
+% auf sich selbst)}}, bes=kann nur mit magischen Waffen verletzt
+% werden, aura=dämonisch,
+% vorkommen=überall]{} \end{minipage}\hfill \begin{minipage}{0.45\textwidth}
+% \best[ name=Kreatur, mag=true, typ=Humanoid, grad=3, In=m30, LP=3W6,
+% AP=3W6+2, MW=18, EP=5, Gw=80, St=70, B=24, RK=KR, abwehr=12,
+% resistenz=13/15/11, angriff={Keule+8 (1W6+1) -- Raufen+8 (1W6-2)},
+% zauberEW=12, zauber={Bannen von Dunkelheit, Schlaf -- Niessalz},
+% zauberArtigEW=18, zauberArtig={Heilen von Wunden \textup{(jede Runde
+% auf sich selbst)}}, bes=kann nur mit magischen Waffen verletzt
+% werden, aura=dämonisch, vorkommen=überall]{} \end{minipage}
+% \hfill~ \caption{Ein dem Bestiarium nachempfundenes Layout für
+% Kreaturendaten\label{fig:bestiarium}} \end{figure}
 % \DescribeMacro{\bestiarium} Mit dem Kommando |\bestiarium| kann ein
 % an das Bestiarium angelehntes Layout für die Spieldaten von
 % Kreaturen -- komplett mit Box -- erzeugt werden. Ähnlich wie schon
@@ -665,165 +546,149 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % als Schlüssel-Wert-Paare übergeben. Die Verwendung und das Ergebnis
 % sind in Abbildung~\ref{fig:bestiarium} (links) dargestellt. Die
 % vollständige Liste aller Schlüssel und Felder findet sich in
-% Tabelle~\ref{tbl:bestiarium}.
-%
-% \DescribeMacro{\best} Mit |\best| kann die aus einigen Abenteuern
-% und Zauberbeschreibungen bekannte Kurzform von Kreaturendaten
-% erzeugt werden, die ohne Box auskommt. Die Verwendung ist identisch
-% mit der des Kommandos |\bestiarium|, das Ergebnis ist ebenfalls sind
-% in Abbildung~\ref{fig:bestiarium} (rechts) dargestellt. Die
+% Tabelle~\ref{tbl:bestiarium}.  \DescribeMacro{\best} Mit |\best|
+% kann die aus einigen Abenteuern und Zauberbeschreibungen bekannte
+% Kurzform von Kreaturendaten erzeugt werden, die ohne Box
+% auskommt. Die Verwendung ist identisch mit der des Kommandos
+% |\bestiarium|, das Ergebnis ist ebenfalls sind in
+% Abbildung~\ref{fig:bestiarium} (rechts) dargestellt. Die
 % vollständige Liste aller Schlüssel und Felder findet sich in
-% Tabelle~\ref{tbl:bestiarium}.
-%
-%\begin{widecenter}
-%\setkeys{best}{}{%
-%\begin{longtable}{>{\sf}l | >{\itshape}c | p{12cm}}
-%  \caption{Vollständige Liste der Schlüssel und Felder des \textsf{zauber}-Kommandos\label{tbl:bestiarium}}\\
-%  \rm\bfseries Schlüssel & default & \bfseries
-%  Wirkung\tabularnewline\hline name & \bestName & Der Name des Wesens
-%  \tabularnewline mag & \bestMag & Falls |mag| \textit{true} ist,
-%  wird das
-%  Schriftrollensymbol \includegraphics[height=0.7em]{pics/scroll}
-%  hinter nem Namen angezeigt.  \tabularnewline addendum & \bestAdd &
-%  Bei einigen Wesen gibt es einen Namenszusatz, welcher nötigenfalls
-%  \textbf{nach} dem gegebenenfalls vorhandenen Schriftrollensymbol
-%  dargestellt werden soll, bei einem Drachen etwa der Zusatz \glqq
-%  uralter\grqq{} (für die Ausgabe \textbf{Drache
+% Tabelle~\ref{tbl:bestiarium}.  \begin{widecenter}
+% \setkeys{best}{}{% \begin{longtable}{>{\sf}l | >{\itshape}c |
+% p{12cm}} \caption{Vollständige Liste der Schlüssel und Felder des
+% \textsf{zauber}-Kommandos\label{tbl:bestiarium}}\\ \rm\bfseries
+% Schlüssel & default & \bfseries Wirkung\tabularnewline\hline name &
+% \bestName & Der Name des Wesens \tabularnewline mag & \bestMag &
+% Falls |mag| \textit{true} ist, wird das Schriftrollensymbol
+% \includegraphics[height=0.7em]{pics/scroll} hinter nem Namen
+% angezeigt.  \tabularnewline addendum & \bestAdd & Bei einigen Wesen
+% gibt es einen Namenszusatz, welcher nötigenfalls \textbf{nach} dem
+% gegebenenfalls vorhandenen Schriftrollensymbol dargestellt werden
+% soll, bei einem Drachen etwa der Zusatz \glqq uralter\grqq{} (für
+% die Ausgabe \textbf{Drache
 % }\includegraphics[height=0.7em]{pics/scroll}\textbf{, uralter})
-%   . Jede Angabe außer \textit{none} wird deshalb in Fettdruck und
-%   mit Komma abgetrennt hinter dem Namen und dem eventuell
-%   vorhandenen Schriftrollensymbol ausgegeben.  \tabularnewline grad
-%   & \bestGrad & Der Grad des Wesens wird in Klammern hinter dem
-%   Namen angezeigt \tabularnewline typ & \bestTyp & Der \glqq
-%   Typ\grqq{} gibt an, zu welcher Kategorie die Kreatur gehört, etwa
-%   \glqq Dämon\grqq oder \glqq Humanoid\grqq{}. Jeder Werte außer
-%   \textit{none} wird vor dem Grad des Wesens innerhalb der gleichen
-%   Parenthese abgedruckt.  \tabularnewline modus & \bestModus & Der
-%   \glqq Modus\grqq{} gibt die Erscheinungsform des Wesens an. Einige
-%   Wesen besitzen verschiedene Zustände, etwa \textbf{Werwesen} oder
-%   \textbf{Abbadonspinnen}. Bei währen dann \textit{in
-%   Menschengestalt} bzw.~textit{in Wergestalt} sowie
-%   \textit{körperlich} bzw.~\textit{auf Seelenreise} angebrachte
-%   Einträge für |modus|. Jede Angabe außer \textit{none} wird
-%   unmittelbar vor der Klammer in der Titelzeile abgedruckt.
-%   \tabularnewline variant & \bestVariant & Einige Wesen gibt es in
-%   verschiedenen Varianten, wobei die Variante jedoch weder (wie bei
-%   |modus|) eine temporäre Form noch (wie bei |addendum|) ein
-%   Namenszusatz ist. Beispiele hierfür wären die Angaben der
-%   Tierzahlen für verschieden große Schwärme oder, etwa bei
-%   Krokodilen, verschiedene Körpergrößen. Die \glqq Variante\grqq{}
-%   wird noch zwischen dem |addendum| und dem |modus| in Normalschrift
-%   ausgegeben.  \tabularnewline size & \bestSize & Die Größenordnung
-%   des Wesens, etwa \textit{Groß} oder \textit{Riesig} (als
-%   Regelausdruck). Jede Angabe außer \textit{none} wird mit einem
-%   Gedankenstrich abgetrennt hinter dem Grad innerhalb der selben
-%   Parenthese abgedruckt.  \tabularnewline LP & \bestLP & Die
-%   Lebenspunkte eines Wesens. Neben Würfelausdrücken können hier
-%   \textinfty{} (|\textinfty|), * (|*|) oder \textstar{}
-%   (|\textstar|) sowie - (|-|) geeignete Ausdrücke sein. Jede Angabe
-%   wird wörtlich übernommen.  \tabularnewline AP & \bestAP & Die
-%   Lebenspunkte eines Wesens. Neben Würfelausdrücken können hier
-%   \textinfty{} (|\textinfty|), * (|*|) oder \textstar{}
-%   (|\textstar|) sowie - (|-|) geeignete Ausdrücke sein. Jede Angabe
-%   wird wörtlich übernommen.  \tabularnewline RK & \bestRK & Die
-%   Rüstungsklasse des Wesens, typischerweise eine aus \textbf{OR},
-%   \textbf{TR}, \textbf{LR}, \textbf{KR}, \textbf{PR}, \textbf{VR}
-%   oder \textbf{RR}, alternativ auch \textbf{*R}. Jede angabe wird
-%   wörtlich übernommen.  \tabularnewline EP & \bestEP & Der
-%   EP-Multiplikator des Wesens wird wörtlich übernommen, aber nur im
-%   |\bestiarium|-Layout abgedruckt.  \tabularnewline In & \bestIn &
-%   Die Intelligenz des Wesens wird wörtlich übernommen, aber nur im
-%   |\bestiarium|-Layout abgedruckt. Angemessen sind Angaben wie
-%   \textit{t35} oder \textit{m05}.  \tabularnewline St & \bestSt &
-%   Die Stärke des Wesens wird wörtlich übernommen. Neben
-%   Zahlenangaben wie \textit{01} oder \textit{100} ist auch ein Stern
-%   (* oder \textstar) möglich, etwa für Schwarmwesen.
-%   \tabularnewline Gw & \bestGw & Die Stärke des Wesens wird wörtlich
-%   übernommen.  \tabularnewline B & \bestB & Die Bewegungsweite des
-%   Wesens wird wörtlich übernommen. Unterschiedliche Bewegungsweiten
-%   für verschiedene Fortbewegungsarten können mit einem einfachen
-%   Querstrich (|/|) abgetrennt werden.  \tabularnewline MW & \bestMW
-%   & Für den Moralwert des Wesens wird jede Angabe außer
-%   \textit{none} als EW interpretiert und in der Form \glqq
-%   MW+\meta{MW}\grqq{} abgedruckt.  \tabularnewline abwehr &
-%   \bestAbwehr & Für die Abwehr des Wesens wird jede Angabe als EW
-%   interpretiert und in der Form \glqq Abwehr+\meta{abwehr}\grqq{}
-%   abgedruckt. Falls die Angabe keinen Sinn macht, ist ein Stern (*
-%   oder \textstar) zu verwenden.  \tabularnewline resistenz &
-%   \bestResistenz & Für die Resistenzen des Wesens wird jede Angabe
-%   als EW interpretiert und in der Form \glqq
-%   Resistenz+\meta{resistenz}\grqq{} abgedruckt. Die
-%   unterschiedlichen Resistenzen sollten in der Form
-%   |resistenz=10/12/10| angegeben werden. Falls die Angabe keinen
-%   Sinn macht, ist ein Stern (* oder \textstar) zu verwenden
-%   \tabularnewline angriff & \bestAngriff & Die Angriffsmöglichkeiten
-%   des Wesens sollten hier im für das Regelwerk üblichen Format
-%   angegeben werden. Durch Komma abgetrennte Einträge \textbf{müssen}
-%   von geschweiften Klammern|{|\dots|}| umschlossen
-%   werden. Abwehrwaffen, besondere Angriffsmöglichkeiten und
-%   \textit{Raufen} sind jeweils mit einem Gedankenstrich
-%   \glqq--\grqq{} abgetrennt mit einzubinden. Der Ausdruck wird nach
-%   dem Wort \textbf{Angriff:} in einem eigenen Absatz
-%   dargestellt. Nachfolgende Zeilen erhalten einen hängenden Einzug.
-%   \tabularnewline zauber & \bestZauber & Die Zauberfähigkeiten des
-%   Wesens. Jede Angabe außer \textit{none} wird kursiv hinter dem Erfolgswert dargestellt (siehe nächster Eintrag). Wie schon bei |angriff| sind die einzelnen Einträge durch Kommas abzutrennen und durch geschweifte Klammern |{|\dots|}| zu umschließen.  \tabularnewline zauberEW &
-%   \bestZauberEW & Der Zaubererfolgswert wird in der Form \glqq
-%   Zaubern+\meta{zauberEW}:\grqq{} dargestellt und vor den
-%   Zauberfähigkeiten abgedruckt.  \tabularnewline zauberMore &
-%   \bestZauberMore & Falls ein Wesen verschiedene Zaubererfolgswerte
-%   für verschiedene Zauberfähigkeiten besitzt, bietet dieses Feld die
-%   Möglichkeit, einen weiteren Eintrag zu bilden.  \tabularnewline
-%   zauberMoreEW & \bestZauberMoreEW & Der Zaubererfolgswert für die
-%   weiteren Zauberfähigkeiten.  \tabularnewline zauberMMore &
-%   \bestZauberMMore & Dieses Feld bietet die Möglichkeit für einen
-%   dritten Eintrag von Zauberfähigkeiten.  \tabularnewline
-%   zauberMMoreEW & \bestZauberMMoreEW & Der Erfolgswert für den
-%   dritten \textit{Zaubern}-Eintrag.  \tabularnewline zauberArtig &
-%   \bestZauberArtig & Angeborene Fähigkeiten, die wie Zauber wirken,
-%   werden ebenfalls in \textit{Kursiv} dargestellt. Einschränkungen
-%   und Kommentare sind hier geklammert im Normaldruck üblich, was in
-%   der Form 
-%   |zauberArtig={Versetzen \textup{(sich selbst bis zu 50\,km)}}| 
-%   realisiert werden kann.  \tabularnewline zauberArtigEW
-%   & \bestZauberArtigEW & Die Erfolgswerte für die Anwendung
-%   zauberartiger, angeborener magischer Fähigkeiten werden in
-%   (verkehrten) \guillemotright französischen
-%   Anführungszeichen\guillemotleft{} abgedruckt.  \tabularnewline
-%   zauberArtigMore & \bestZauberArtigMore & Ein weiteres Feld für
-%   mehr zauberartige, angeborene Fertigkeiten. Es gelten im Übrigen
-%   die Anmerkungen zu |zauberArtig|.  \tabularnewline
-%   zauberArtigMoreEW & \bestZauberArtigMoreEW & Der zugehörige
-%   Erfolgswert. Es gelten die Anmerkungen zu |zauberArtigEW|.
-%   \tabularnewline zauberArtigMMore & \bestZauberArtigMMore & Ein
-%   weiteres Feld für mehr zauberartige, angeborene Fertigkeiten. Es
-%   gelten im Übrigen die Anmerkungen zu |zauberArtig|. \tabularnewline
-%   zauberArtigMMoreEW & \bestZauberArtigMMoreEW & Der zugehörige
-%   Erfolgswert. Es gelten die Anmerkungen zu |zauberArtigEW|.
-%   \tabularnewline bes & \bestBes & Die Besonderheiten werden nach
-%   dem Kürzel \glqq\textbf{Bes.:}\grqq{} in einem eigenen Absatz
-%   dargestellt. Jede Angabe außer \textit{none} wird wörtlich abgedruckt. Nachfolgende Zeilen erhalten einen hängenden Einzug.
-%   \tabularnewline aura & \bestAura & Die Aura des Wesens. Jede
-%   Angabe außer \textit{none} wird nach dem Wort \glqq\textsc{Aura}\grqq{}  mit einem Gedankenstrich \glqq--\grqq{} an die
-%   \textbf{Besonderheiten} angehängt.  \tabularnewline vorkommen &
-%   \bestVork & Das Vorkommen einer Art wird nur im
-%   |\bestiarium|-Layout dargestellt. Angaben sollten in Stichwortform
-%   erfolgen, durch Kommas abgetrennt und von geschweiften Klammern
-%   |{|\dots|}| umschlossen.\tabularnewline energy & \bestEnergie &
-%   Falls das \textsc{Energie}-Kampfsystem (Hausregelwerk) verwendet
-%   wird, kann hier die Energie der Lebewesen angegeben werden.
-%   \tabularnewline
-%\end{longtable}
-%}
-%\end{widecenter}
-%
-% \StopEventually{\PrintIndex}
-%
-% \clearpage
-%
-% \section{Implementierung}
-%
-%
-%    \begin{macrocode}
+% . Jede Angabe außer \textit{none} wird deshalb in Fettdruck und mit
+% Komma abgetrennt hinter dem Namen und dem eventuell vorhandenen
+% Schriftrollensymbol ausgegeben.  \tabularnewline grad & \bestGrad &
+% Der Grad des Wesens wird in Klammern hinter dem Namen angezeigt
+% \tabularnewline typ & \bestTyp & Der \glqq Typ\grqq{} gibt an, zu
+% welcher Kategorie die Kreatur gehört, etwa \glqq Dämon\grqq oder
+% \glqq Humanoid\grqq{}. Jeder Werte außer \textit{none} wird vor dem
+% Grad des Wesens innerhalb der gleichen Parenthese abgedruckt.
+% \tabularnewline modus & \bestModus & Der \glqq Modus\grqq{} gibt die
+% Erscheinungsform des Wesens an. Einige Wesen besitzen verschiedene
+% Zustände, etwa \textbf{Werwesen} oder \textbf{Abbadonspinnen}. Bei
+% währen dann \textit{in Menschengestalt} bzw.~textit{in Wergestalt}
+% sowie \textit{körperlich} bzw.~\textit{auf Seelenreise} angebrachte
+% Einträge für |modus|. Jede Angabe außer \textit{none} wird
+% unmittelbar vor der Klammer in der Titelzeile abgedruckt.
+% \tabularnewline variant & \bestVariant & Einige Wesen gibt es in
+% verschiedenen Varianten, wobei die Variante jedoch weder (wie bei
+% |modus|) eine temporäre Form noch (wie bei |addendum|) ein
+% Namenszusatz ist. Beispiele hierfür wären die Angaben der Tierzahlen
+% für verschieden große Schwärme oder, etwa bei Krokodilen,
+% verschiedene Körpergrößen. Die \glqq Variante\grqq{} wird noch
+% zwischen dem |addendum| und dem |modus| in Normalschrift ausgegeben.
+% \tabularnewline size & \bestSize & Die Größenordnung des Wesens,
+% etwa \textit{Groß} oder \textit{Riesig} (als Regelausdruck). Jede
+% Angabe außer \textit{none} wird mit einem Gedankenstrich abgetrennt
+% hinter dem Grad innerhalb der selben Parenthese abgedruckt.
+% \tabularnewline LP & \bestLP & Die Lebenspunkte eines Wesens. Neben
+% Würfelausdrücken können hier \textinfty{} (|\textinfty|), * (|*|)
+% oder \textstar{} (|\textstar|) sowie - (|-|) geeignete Ausdrücke
+% sein. Jede Angabe wird wörtlich übernommen.  \tabularnewline AP &
+% \bestAP & Die Lebenspunkte eines Wesens. Neben Würfelausdrücken
+% können hier \textinfty{} (|\textinfty|), * (|*|) oder \textstar{}
+% (|\textstar|) sowie - (|-|) geeignete Ausdrücke sein. Jede Angabe
+% wird wörtlich übernommen.  \tabularnewline RK & \bestRK & Die
+% Rüstungsklasse des Wesens, typischerweise eine aus \textbf{OR},
+% \textbf{TR}, \textbf{LR}, \textbf{KR}, \textbf{PR}, \textbf{VR} oder
+% \textbf{RR}, alternativ auch \textbf{*R}. Jede angabe wird wörtlich
+% übernommen.  \tabularnewline EP & \bestEP & Der EP-Multiplikator des
+% Wesens wird wörtlich übernommen, aber nur im |\bestiarium|-Layout
+% abgedruckt.  \tabularnewline In & \bestIn & Die Intelligenz des
+% Wesens wird wörtlich übernommen, aber nur im |\bestiarium|-Layout
+% abgedruckt. Angemessen sind Angaben wie \textit{t35} oder
+% \textit{m05}.  \tabularnewline St & \bestSt & Die Stärke des Wesens
+% wird wörtlich übernommen. Neben Zahlenangaben wie \textit{01} oder
+% \textit{100} ist auch ein Stern (* oder \textstar) möglich, etwa für
+% Schwarmwesen.  \tabularnewline Gw & \bestGw & Die Stärke des Wesens
+% wird wörtlich übernommen.  \tabularnewline B & \bestB & Die
+% Bewegungsweite des Wesens wird wörtlich übernommen. Unterschiedliche
+% Bewegungsweiten für verschiedene Fortbewegungsarten können mit einem
+% einfachen Querstrich (|/|) abgetrennt werden.  \tabularnewline MW &
+% \bestMW & Für den Moralwert des Wesens wird jede Angabe außer
+% \textit{none} als EW interpretiert und in der Form \glqq
+% MW+\meta{MW}\grqq{} abgedruckt.  \tabularnewline abwehr &
+% \bestAbwehr & Für die Abwehr des Wesens wird jede Angabe als EW
+% interpretiert und in der Form \glqq Abwehr+\meta{abwehr}\grqq{}
+% abgedruckt. Falls die Angabe keinen Sinn macht, ist ein Stern (*
+% oder \textstar) zu verwenden.  \tabularnewline resistenz &
+% \bestResistenz & Für die Resistenzen des Wesens wird jede Angabe als
+% EW interpretiert und in der Form \glqq
+% Resistenz+\meta{resistenz}\grqq{} abgedruckt. Die unterschiedlichen
+% Resistenzen sollten in der Form |resistenz=10/12/10| angegeben
+% werden. Falls die Angabe keinen Sinn macht, ist ein Stern (* oder
+% \textstar) zu verwenden \tabularnewline angriff & \bestAngriff & Die
+% Angriffsmöglichkeiten des Wesens sollten hier im für das Regelwerk
+% üblichen Format angegeben werden. Durch Komma abgetrennte Einträge
+% \textbf{müssen} von geschweiften Klammern|{|\dots|}| umschlossen
+% werden. Abwehrwaffen, besondere Angriffsmöglichkeiten und
+% \textit{Raufen} sind jeweils mit einem Gedankenstrich \glqq--\grqq{}
+% abgetrennt mit einzubinden. Der Ausdruck wird nach dem Wort
+% \textbf{Angriff:} in einem eigenen Absatz dargestellt. Nachfolgende
+% Zeilen erhalten einen hängenden Einzug.  \tabularnewline zauber &
+% \bestZauber & Die Zauberfähigkeiten des Wesens. Jede Angabe außer
+% \textit{none} wird kursiv hinter dem Erfolgswert dargestellt (siehe
+% nächster Eintrag). Wie schon bei |angriff| sind die einzelnen
+% Einträge durch Kommas abzutrennen und durch geschweifte Klammern
+% |{|\dots|}| zu umschließen.  \tabularnewline zauberEW &
+% \bestZauberEW & Der Zaubererfolgswert wird in der Form \glqq
+% Zaubern+\meta{zauberEW}:\grqq{} dargestellt und vor den
+% Zauberfähigkeiten abgedruckt.  \tabularnewline zauberMore &
+% \bestZauberMore & Falls ein Wesen verschiedene Zaubererfolgswerte
+% für verschiedene Zauberfähigkeiten besitzt, bietet dieses Feld die
+% Möglichkeit, einen weiteren Eintrag zu bilden.  \tabularnewline
+% zauberMoreEW & \bestZauberMoreEW & Der Zaubererfolgswert für die
+% weiteren Zauberfähigkeiten.  \tabularnewline zauberMMore &
+% \bestZauberMMore & Dieses Feld bietet die Möglichkeit für einen
+% dritten Eintrag von Zauberfähigkeiten.  \tabularnewline
+% zauberMMoreEW & \bestZauberMMoreEW & Der Erfolgswert für den dritten
+% \textit{Zaubern}-Eintrag.  \tabularnewline zauberArtig &
+% \bestZauberArtig & Angeborene Fähigkeiten, die wie Zauber wirken,
+% werden ebenfalls in \textit{Kursiv} dargestellt. Einschränkungen und
+% Kommentare sind hier geklammert im Normaldruck üblich, was in der
+% Form |zauberArtig={Versetzen \textup{(sich selbst bis zu 50\,km)}}|
+% realisiert werden kann.  \tabularnewline zauberArtigEW &
+% \bestZauberArtigEW & Die Erfolgswerte für die Anwendung
+% zauberartiger, angeborener magischer Fähigkeiten werden in
+% (verkehrten) \guillemotright französischen
+% Anführungszeichen\guillemotleft{} abgedruckt.  \tabularnewline
+% zauberArtigMore & \bestZauberArtigMore & Ein weiteres Feld für mehr
+% zauberartige, angeborene Fertigkeiten. Es gelten im Übrigen die
+% Anmerkungen zu |zauberArtig|.  \tabularnewline zauberArtigMoreEW &
+% \bestZauberArtigMoreEW & Der zugehörige Erfolgswert. Es gelten die
+% Anmerkungen zu |zauberArtigEW|.  \tabularnewline zauberArtigMMore &
+% \bestZauberArtigMMore & Ein weiteres Feld für mehr zauberartige,
+% angeborene Fertigkeiten. Es gelten im Übrigen die Anmerkungen zu
+% |zauberArtig|. \tabularnewline zauberArtigMMoreEW &
+% \bestZauberArtigMMoreEW & Der zugehörige Erfolgswert. Es gelten die
+% Anmerkungen zu |zauberArtigEW|.  \tabularnewline bes & \bestBes &
+% Die Besonderheiten werden nach dem Kürzel \glqq\textbf{Bes.:}\grqq{}
+% in einem eigenen Absatz dargestellt. Jede Angabe außer \textit{none}
+% wird wörtlich abgedruckt. Nachfolgende Zeilen erhalten einen
+% hängenden Einzug.  \tabularnewline aura & \bestAura & Die Aura des
+% Wesens. Jede Angabe außer \textit{none} wird nach dem Wort
+% \glqq\textsc{Aura}\grqq{} mit einem Gedankenstrich \glqq--\grqq{} an
+% die \textbf{Besonderheiten} angehängt.  \tabularnewline vorkommen &
+% \bestVork & Das Vorkommen einer Art wird nur im |\bestiarium|-Layout
+% dargestellt. Angaben sollten in Stichwortform erfolgen, durch Kommas
+% abgetrennt und von geschweiften Klammern |{|\dots|}|
+% umschlossen.\tabularnewline energy & \bestEnergie & Falls das
+% \textsc{Energie}-Kampfsystem (Hausregelwerk) verwendet wird, kann
+% hier die Energie der Lebewesen angegeben werden.
+% \tabularnewline \end{longtable} } \end{widecenter}
+% \StopEventually{\PrintIndex} \clearpage \section{Implementierung} \begin{macrocode}
 \RequirePackage{setspace}
 \RequirePackage{xkeyval}
 \RequirePackage{ifthen}
@@ -919,10 +784,42 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
   \newcommand{\texthigh}[1]{\ensuremath{{}^{\textup{#1}}}}
   \newcommand{\textfrac}[2]{\ensuremath{\frac{#1}{#2}}}
 }
-\DeclareUnicodeCharacter{1D9C}{\ensuremath{^c}}
-\DeclareUnicodeCharacter{1DA0}{\ensuremath{^f}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\DeclareUnicodeCharacter}
+% Bestimmte Sonderzeichen werden oft in Midgard-Dokumenten
+% verwendet. Um der Bequemlichkeit willen wollen wir auch das Einfügen
+% dieser Sonderzeichen direkt in den \LaTeX Quellcode erlauben.
+%    \begin{macrocode}
+\DeclareUnicodeCharacter{1D9C}{\ensuremath{^\textrm{c}}}
+\DeclareUnicodeCharacter{1DA0}{\ensuremath{^\textrm{f}}}
+\DeclareUnicodeCharacter{1D56}{\ensuremath{^\textrm{p}}}
+\DeclareUnicodeCharacter{02E2}{\ensuremath{^\textrm{s}}}
 \DeclareUnicodeCharacter{00BC}{\ensuremath{\nicefrac{1}{4}}}
 \DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hyphenation}
+% Das Midgard-Regelwerk verwendet einige sehr ungewöhnliche Begriffe,
+% die sich mit den gängigen Silbentrennungsregeln nicht umbrechen
+% lassen. Für diese definieren wir daher die Silbentrennungsregeln
+% manuell.
+%    \begin{macrocode}
+\hyphenation{%
+  Dverg-ar Hu-ne Hu-nen Fro-de-volk Spae-folk%
+  % Dvergar
+  Hrim-dverg Fell-dverg Glod-dverg Shu-Hou Vin-dverg Sael-dverg%
+  % Hunen
+  Hrim-hune Fjall-hune Har-kar-hune Schu-Dschu-Ren Gjorn-hune Mar-hune%
+  % Frodevolk
+  I-sing Duns-krat Hark-buar Tschun-Hai-Dsu Myrk-nir Fos-se-mand%
+  % Dämonen
+  In-dru-val Du-ne-brast Trus-can Ha-le-bant Ka-li-gin Me-gant Co-lus-car%
+  % Spaefolk
+  Kall-bjargi Ler-gris Ben-Scheng Ka-ring Mok-kurb-jar-gi%
+  Sval-grim Haug-ska-di El-dring Chang-Li-Wu Nerf-ling Jarn-bani%
+  Snaer-ha-mir Fen-grip Hyrr-bau-ti Schen-Dschi-Gun Thrym-bar Kall-rani%
+}
 %    \end{macrocode}
 % \end{macro}
 %\begin{macro}{\HUGE}
@@ -1188,6 +1085,10 @@ ABENTEUER
 \define@key{zauber}{material}{\def\zaubermaterial{#1}}
 \define@key{zauber}{matpreis}{\def\zaubermatpreis{#1}}
 \define@key{zauber}{matannotation}{\def\zaubermatannotation{#1}}
+\define@key{zauber}{koeder}{\def\beschwoerungskoeder{#1}}
+\define@key{zauber}{koederpreis}{\def\beschwoerungskoederpreis{#1}}
+\define@key{zauber}{feld}{\def\beschwoerungsfeld{#1}}
+\define@key{zauber}{feldpreis}{\def\beschwoerungsfeldpreis{#1}}
 \define@key{zauber}{prozess}{\def\zauberprozess{#1}}
 \define@key{zauber}{agens}{\def\zauberagens{#1}}
 \define@key{zauber}{reagens}{\def\zauberreagens{#1}}
@@ -1207,11 +1108,15 @@ ABENTEUER
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
 \savekeys{zauber}{name, entry, scroll, th, anmerkung, art, stufe,
-  material, matpreis, matannotation, prozess, agens, reagens, AP, GZ,
+  material, matpreis, koeder, koederpreis, feld, feldpreis, matannotation, 
+  prozess, agens, reagens, AP, GZ,
   Zd, Rw, Wz, Wb, Wd, Ur, FP, G, S, A}
+
 \presetkeys{zauber}{name=Zauber, entry=none, scroll=true, th=none,
-  anmerkung=none, art=Zauber, stufe=1, material=none, matpreis=none,
-  matannotation=none, prozess=Prozess, agens=Agens, reagens=Reagens,
+  anmerkung=none, art=Zauber, stufe=1, 
+  material=none, matpreis=none, matannotation=none, 
+  koeder=none, koederpreis=none, feld=none, feldpreis=none,
+  prozess=Prozess, agens=Agens, reagens=Reagens,
   AP=0, GZ=hide, Zd=keine, Rw=-, Wz=-, Wb=-, Wd=-, Ur={n.\,A.},
   FP=hide, G=niemand, S=niemand, A=niemand}{}
 %    \end{macrocode}
@@ -1256,19 +1161,20 @@ ABENTEUER
 % das Thaumatographie-Feld |\zauberth| gesetzt werden, ihrerseits
 % wieder mit einem |\hfill| maximal weit auseinandergeschoben.
 %    \begin{macrocode}
-{\expandnext{\midgard@htarget}{\zaubername}\noindent \bfseries \large  \zaubername }
-\hfill\makebox[3em][l]{
-      \ifthenelse{\equal{\zauberscroll}{true}}%
-                 {}%
-                 {\includegraphics[height=1.0em]{pics/scroll}}%
-                 \hfill
-      \ifthenelse{\equal{\zauberth}{none}}%
-                 {}%
-                 {\textbf{\zauberth}}%
-                 }%
-\setlength{\parindent}{-1ex}\par
-\setlength{\leftskip}{1ex}\par
-\setlength{\parskip}{0pt}\par
+\noindent\makebox[\linewidth]{\parbox[b]{0.85\linewidth}{\raggedright\rightskip=0pt plus 0.2\linewidth\sloppy\expandnext{\midgard@htarget}{\zaubername}\noindent \bfseries \large  \zaubername}%
+\hfill%
+\ifthenelse{\equal{\zauberscroll}{true}}%
+           {}%
+           {\includegraphics[height=0.8em]{pics/scroll}}%
+\hfill%
+\ifthenelse{\equal{\zauberth}{none}}%
+           {}%
+           {\textbf{\zauberth}}%
+}\par%
+\setlength{\parindent}{-1ex}%
+\setlength{\leftskip}{1ex}%
+\setlength{\parskip}{0pt}%
+\par
 %    \end{macrocode}
 % Falls |\zauberAnmerkung| gesetzt ist, wird sie jetzt klein, fett und
 % kursiv abgedruckt.
@@ -1309,6 +1215,20 @@ ABENTEUER
             {}%
             {; \zaubermatannotation}%
           }\par%
+\ifthenelse{\equal{\beschwoerungsfeld}{none}}%
+           {}%
+           {\beschwoerungsfeld%
+             \ifthenelse{\equal{\beschwoerungsfeldpreis}{none}}%
+                        {}%
+                        { (\beschwoerungsfeldpreis)}%
+           }\par%
+\ifthenelse{\equal{\beschwoerungskoeder}{none}}%
+           {}%
+           {\textbf{Köder:} \textit{\beschwoerungskoeder}%
+             \ifthenelse{\equal{\beschwoerungskoederpreis}{none}}%
+                        {}%
+                        { (\beschwoerungskoederpreis)}%
+           }\par%
 %    \end{macrocode}
 % Die Zauberformel wird mit etwas Abstand gedruckt, dazwischen jeweils
 % die Symbole \includegraphics[height=0.7em]{pics/box}
