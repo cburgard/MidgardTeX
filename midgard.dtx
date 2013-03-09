@@ -99,7 +99,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \DoNotIndex{\@ne}
 % \DoNotIndex{\advance,\begingroup,\catcode,\closein}
 % \DoNotIndex{\closeout,\day,\def,\edef,\else,\empty,\endgroup}
-% \DoNotIndex{\begin,\end,\leftskip,\let,\linewidth,\newcommand,\newcounter,\newenvironment,\newline,\noindent,\parindent,\parsep,\parskip,\partopsep,\setcounter,\setlength,\textbf,\textit,\textsf,\textsc,\text...,\large,\Large,\small,\footnotesize,\itshape,\bfseries,\par,\textup,\times,\topmargin,\topsep,\topskip,\LARGE,\headsep,\equal,\value,\frac,\ifthenelse}
+% \DoNotIndex{\begin,\end,\leftskip,\let,\linewidth,\newcommand,\newcounter,\newenvironment,\newline,\noindent,\parindent,\parsep,\parskip,\partopsep,\setcounter,\setlength,\textbf,\textit,\textsf,\textsc,\text...,\large,\Large,\small,\footnotesize,\itshape,\bfseries,\par,\textup,\times,\topmargin,\topsep,\topskip,\LARGE,\headsep,\equal,\value,\frac,\ifdefstr}
 % \title{Das \textsf{ midgard } Paket\thanks{Dieses Dokument bezieht
 % sich auf \textsf{ midgard }~\fileversion, datiert~\filedate.}}
 % \author{ Carsten Burgard \\ \texttt{ carsten.burgard@gmail.com }}
@@ -691,7 +691,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \StopEventually{\PrintIndex} \clearpage \section{Implementierung} \begin{macrocode}
 \RequirePackage{setspace}
 \RequirePackage{xkeyval}
-\RequirePackage{ifthen}
+\RequirePackage{etoolbox}
 \RequirePackage{graphicx}
 \RequirePackage[framemethod=tikz]{mdframed}
 \usetikzlibrary{shadows}
@@ -706,7 +706,24 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \newcounter{midgard@StandardKosten}
 \newcounter{midgard@AusnahmeKosten}
 %    \end{macrocode}
-%
+%   Analog verwenden wir einige boolsche Variablen, um das verwendete
+%   Regelsystem zu kontrollieren.
+%    \begin{macrocode}
+\newtoggle{useEnergy}
+\newtoggle{useInitiative}
+\newcommand{\EnergieSystem}{%
+  \typeout{package MIDGARD info: Verwende jetzt das Energie-System}%
+  \global\toggletrue{useEnergy}%
+  \global\toggletrue{useInitiative}%
+}
+\newcommand{\DFR}{%
+  \typeout{package MIDGARD info: Verwende jetzt das DFR}%
+  \global\togglefalse{useEnergy}%
+  \global\togglefalse{useInitiative}%
+}
+\DFR
+%    \end{macrocode}
+%\end{macro}
 %
 %\begin{macro}{\hashstring}
 %    Der Befehl |\hashstring| wird intern verwendet, um Querverweise 
@@ -768,6 +785,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
   \tabbing%
 }
 {\endtabbing}
+\newcommand{\unraggedright}{\raggedright\rightskip=0pt plus 0.2\linewidth\sloppy}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\text...}
@@ -923,38 +941,38 @@ ABENTEUER
 % definiert und nach der für Fähigkeiten üblichen Formel aus den
 % Standardkosten berechnet.
 %    \begin{macrocode}
-\ifthenelse{\equal{\fertigkeitFP}{hide}}{}{
+\ifdefstring{\fertigkeitFP}{hide}{}{
   \setcounter{midgard@StandardKosten}{\fertigkeitFP}%
   \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
   \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*2}%
 }%
-\ifthenelse{\equal{\fertigkeitEntry}{none}}{%
+\ifdefstring{\fertigkeitEntry}{none}{%
   \addcontentsline{toc}{subsubsection}{\fertigkeitName}
 }{%
   \addcontentsline{toc}{subsubsection}{\fertigkeitEntry}
 }
 \par\noindent\textbf{\fertigkeitName}%
-\ifthenelse{\equal{\fertigkeitFP}{hide}}{+\fertigkeitEW}{}%
-\ifthenelse{\equal{\fertigkeitKategorie}{none}}{}{~(\fertigkeitKategorie)}%
-\ifthenelse{\equal{\fertigkeitFP}{hide}}{%
-  \ifthenelse{\equal{\fertigkeitLeitAtt}{none}}{}{\hfill\fertigkeitLeitAtt\hfill}
-  \ifthenelse{\equal{\fertigkeitAnforderungen}{none}}{}{\hfill{\fertigkeitAnforderungen}\hfill}
+\ifdefstring{\fertigkeitFP}{hide}{+\fertigkeitEW}{}%
+\ifdefstring{\fertigkeitKategorie}{none}{}{~(\fertigkeitKategorie)}%
+\ifdefstring{\fertigkeitFP}{hide}{%
+  \ifdefstring{\fertigkeitLeitAtt}{none}{}{\hfill\fertigkeitLeitAtt\hfill}
+  \ifdefstring{\fertigkeitAnforderungen}{none}{}{\hfill{\fertigkeitAnforderungen}\hfill}
 }{%
-  \ifthenelse{\equal{\fertigkeitUngelernt}{none}}{}{\hfill ungelernt+(\fertigkeitUngelernt)}%
+  \ifdefstring{\fertigkeitUngelernt}{none}{}{\hfill ungelernt+(\fertigkeitUngelernt)}%
   \par\vspace{\midgardskip}
   \begin{small}
-  \ifthenelse{\equal{\fertigkeitLeitAtt}{none}}{}{\textbf{\fertigkeitLeitAtt}}%
-  \ifthenelse{\equal{\fertigkeitAnforderungen}{none}}{}{%
-  \ifthenelse{\equal{\fertigkeitLeitAtt}{none}}{}{, }{\fertigkeitAnforderungen}}\hfill Erfolgswert+\fertigkeitEW\hfill% 
+  \ifdefstring{\fertigkeitLeitAtt}{none}}{}{\textbf{\fertigkeitLeitAtt}%
+  \ifdefstring{\fertigkeitAnforderungen}{none}{}{%
+  \ifdefstring{\fertigkeitLeitAtt}{none}}{}{, }{\fertigkeitAnforderungen}\hfill Erfolgswert+\fertigkeitEW\hfill% 
   (+\fertigkeitSpielbeginn/+\fertigkeitMaximum)\par\vspace{\midgardskip}
     \noindent%
-    \ifthenelse{\equal{\fertigkeitG}{niemand}}%
+    \ifdefstring{\fertigkeitG}{niemand}%
     {niemand }%
     {\textbf{\themidgard@GrundKosten :} \nolinebreak \fertigkeitG} -- %
-    \ifthenelse{\equal{\fertigkeitS}{niemand}}%
+    \ifdefstring{\fertigkeitS}{niemand}%
     {niemand }%
     {\textbf{\themidgard@StandardKosten :} \nolinebreak \fertigkeitS} -- %
-    \ifthenelse{\equal{\fertigkeitA}{niemand}}%
+    \ifdefstring{\fertigkeitA}{niemand}%
     {niemand }%
     {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \fertigkeitA}\par
   \end{small}\vspace{\midgardskip}
@@ -1005,12 +1023,12 @@ ABENTEUER
 % definiert und nach der für Fähigkeiten üblichen Formel aus den
 % Standardkosten berechnet.
 %    \begin{macrocode}
-\ifthenelse{\equal{\weaponFP}{hide}}{}{
+\ifdefstring{\weaponFP}{hide}{}{
   \setcounter{midgard@StandardKosten}{\weaponFP}%
   \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
   \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*2}%
 }%
-\ifthenelse{\equal{\weaponEntry}{none}}{%
+\ifdefstring{\weaponEntry}{none}{%
   \addcontentsline{toc}{subsubsection}{\weaponName}
 }{%
   \addcontentsline{toc}{subsubsection}{\weaponEntry}
@@ -1020,17 +1038,17 @@ ABENTEUER
 \begin{small}
 \noindent\weaponPremise \hspace{1cm} Erfolgswert+4\par%
 \noindent\textbf{\weaponBasics} \textit{(\weaponExamples)}
-\ifthenelse{\equal{\weaponFP}{hide}}{%
+\ifdefstring{\weaponFP}{hide}{%
 }{%
   \newline\noindent\textit{Schwierigkeit:} \weaponDifficulty\\%
   \noindent%
-  \ifthenelse{\equal{\weaponG}{niemand}}%
+  \ifdefstring{\weaponG}{niemand}%
   {niemand }%
   {\textbf{\themidgard@GrundKosten :} \nolinebreak \weaponG} -- %
-  \ifthenelse{\equal{\weaponS}{niemand}}%
+  \ifdefstring{\weaponS}{niemand}%
   {niemand }%
   {\textbf{\themidgard@StandardKosten :} \nolinebreak \weaponS} -- %
-  \ifthenelse{\equal{\weaponA}{niemand}}%
+  \ifdefstring{\weaponA}{niemand}%
   {niemand }%
   {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \weaponA}\par
 }
@@ -1078,6 +1096,7 @@ ABENTEUER
 \define@key{zauber}{name}{\def\zaubername{#1}}
 \define@key{zauber}{entry}{\def\zauberentry{#1}}
 \define@key{zauber}{anmerkung}{\def\zauberAnmerkung{#1}}
+\define@key{zauber}{untertitel}{\def\zauberUntertitel{#1}}
 \define@key{zauber}{scroll}{\def\zauberscroll{#1}}
 \define@key{zauber}{th}{\def\zauberth{#1}}
 \define@key{zauber}{art}{\def\zauberart{#1}}
@@ -1095,6 +1114,7 @@ ABENTEUER
 \define@key{zauber}{AP}{\def\zauberAP{#1}}
 \define@key{zauber}{GZ}{\def\zauberGZ{#1}}
 \define@key{zauber}{Zd}{\def\zauberZd{#1}}
+\define@key{zauber}{E}{\def\zauberE{#1}}
 \define@key{zauber}{Rw}{\def\zauberRw{#1}}
 \define@key{zauber}{Wz}{\def\zauberWz{#1}}
 \define@key{zauber}{Wb}{\def\zauberWb{#1}}
@@ -1107,17 +1127,16 @@ ABENTEUER
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
-\savekeys{zauber}{name, entry, scroll, th, anmerkung, art, stufe,
+\savekeys{zauber}{name, entry, scroll, th, anmerkung, untertitel, art, stufe,
   material, matpreis, koeder, koederpreis, feld, feldpreis, matannotation, 
-  prozess, agens, reagens, AP, GZ,
+  prozess, agens, reagens, AP, GZ, E,
   Zd, Rw, Wz, Wb, Wd, Ur, FP, G, S, A}
-
 \presetkeys{zauber}{name=Zauber, entry=none, scroll=true, th=none,
-  anmerkung=none, art=Zauber, stufe=1, 
+  anmerkung=none, untertitel=none, art=Zauber, stufe=1, 
   material=none, matpreis=none, matannotation=none, 
   koeder=none, koederpreis=none, feld=none, feldpreis=none,
   prozess=Prozess, agens=Agens, reagens=Reagens,
-  AP=0, GZ=hide, Zd=keine, Rw=-, Wz=-, Wb=-, Wd=-, Ur={n.\,A.},
+  AP=0, GZ=hide, Zd=keine, Rw=-, E=hide, Wz=-, Wb=-, Wd=-, Ur={n.\,A.},
   FP=hide, G=niemand, S=niemand, A=niemand}{}
 %    \end{macrocode}
 % Das |zauber|-Kommando wird eingeleitet mit etwas vertikalem Platz,
@@ -1138,7 +1157,7 @@ ABENTEUER
 % definiert und nach der für Zauber üblichen Formel aus den
 % Standardkosten berechnet.
 %    \begin{macrocode}
-\ifthenelse{\equal{\zauberFP}{hide}}{}{
+\ifdefstring{\zauberFP}{hide}{}{
   \setcounter{midgard@StandardKosten}{\zauberFP}%
   \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
   \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
@@ -1148,39 +1167,42 @@ ABENTEUER
 % Gliederungsebene |subsubsection| zum Inhaltsverzeichnis
 % hinzugefügt. Andernfalls geschieht dasselbe mit |\zauberentry|.
 %    \begin{macrocode}
-\ifthenelse{\equal{\zauberentry}{none}}{%
+\ifdefstring{\zauberentry}{none}{%
         \addcontentsline{toc}{subsubsection}{\zaubername}
         }{%
         \addcontentsline{toc}{subsubsection}{\zauberentry}
         }
 %    \end{macrocode}
 % Zunächst wird der Name des Zaubers gedruckt. Dann wird zunächst
-% |\hfill| benutzt, um an das Ende der Zeile vorzurücken. Eine
-% |\makebox| umschließt dann ein Areal, in dem falls nötig, das
-% Schriftrollen-Symbol \includegraphics[height=0.7em]{pics/scroll} und
-% das Thaumatographie-Feld |\zauberth| gesetzt werden, ihrerseits
-% wieder mit einem |\hfill| maximal weit auseinandergeschoben.
+% |\hfill| benutzt, um an das Ende der Zeile vorzurücken. 
 %    \begin{macrocode}
-\noindent\makebox[\linewidth]{\parbox[b]{0.85\linewidth}{\raggedright\rightskip=0pt plus 0.2\linewidth\sloppy\expandnext{\midgard@htarget}{\zaubername}\noindent \bfseries \large  \zaubername}%
+\noindent\makebox[\linewidth]{\parbox[b]{0.85\linewidth}{\unraggedright\expandnext{\midgard@htarget}{\zaubername}\noindent \bfseries \large  \zaubername}%
 \hfill%
-\ifthenelse{\equal{\zauberscroll}{true}}%
+\ifdefstring{\zauberscroll}{true}%
            {}%
            {\includegraphics[height=0.8em]{pics/scroll}}%
 \hfill%
-\ifthenelse{\equal{\zauberth}{none}}%
+\ifdefstring{\zauberth}{none}%
            {}%
            {\textbf{\zauberth}}%
 }\par%
 \setlength{\parindent}{-1ex}%
 \setlength{\leftskip}{1ex}%
+\setlength{\rightskip}{0pt plus 0.2\linewidth}%
 \setlength{\parskip}{0pt}%
 \par
 %    \end{macrocode}
 % Falls |\zauberAnmerkung| gesetzt ist, wird sie jetzt klein, fett und
 % kursiv abgedruckt.
 %    \begin{macrocode}
-\ifthenelse{\equal{\zauberAnmerkung}{none}}{}%
-{{\footnotesize\bfseries\itshape\zauberAnmerkung}\par}%
+\ifdefstring{\zauberAnmerkung}{none}{}%
+{{\par\footnotesize\bfseries\itshape\zauberAnmerkung\par}}%
+%    \end{macrocode}
+% Falls |\zauberUntertitel| gesetzt ist, wird sie jetzt klein, fett und
+% kursiv abgedruckt.
+%    \begin{macrocode}
+\ifdefstring{\zauberUntertitel}{none}{}%
+{{\par\itshape\zauberUntertitel\par}}%
 %    \end{macrocode}
 % Wir unterdrücken einen Zeilenumbruch unmittelbar nach der
 % Titelzeile. 
@@ -1193,7 +1215,7 @@ ABENTEUER
 %    \begin{macrocode}
 \vspace{\midgardskip}\par
 \zauberart~%
-\ifthenelse{\equal{\zauberstufe}{GM}}%
+\ifdefstring{\zauberstufe}{GM}%
            {der Großen Magie}%
            {der Stufe \zauberstufe}%
 \par
@@ -1205,27 +1227,27 @@ ABENTEUER
 % \textit{none} sind -- |\zaubermatpreis| und |\zaubermatannotation|,
 % ersteres geklammert, letzteres durch Semikolon abgetrennt.
 %    \begin{macrocode}
-\ifthenelse{\equal{\zaubermaterial}{none}}%
+\ifdefstring{\zaubermaterial}{none}%
           {}%
           {\textit{\zaubermaterial}%
-            \ifthenelse{\equal{\zaubermatpreis}{none}}%
+            \ifdefstring{\zaubermatpreis}{none}%
             {}%
             { (\zaubermatpreis)}%
-            \ifthenelse{\equal{\zaubermatannotation}{none}}%
+            \ifdefstring{\zaubermatannotation}{none}%
             {}%
             {; \zaubermatannotation}%
           }\par%
-\ifthenelse{\equal{\beschwoerungsfeld}{none}}%
+\ifdefstring{\beschwoerungsfeld}{none}%
            {}%
            {\beschwoerungsfeld%
-             \ifthenelse{\equal{\beschwoerungsfeldpreis}{none}}%
+             \ifdefstring{\beschwoerungsfeldpreis}{none}%
                         {}%
                         { (\beschwoerungsfeldpreis)}%
            }\par%
-\ifthenelse{\equal{\beschwoerungskoeder}{none}}%
+\ifdefstring{\beschwoerungskoeder}{none}%
            {}%
            {\textbf{Köder:} \textit{\beschwoerungskoeder}%
-             \ifthenelse{\equal{\beschwoerungskoederpreis}{none}}%
+             \ifdefstring{\beschwoerungskoederpreis}{none}%
                         {}%
                         { (\beschwoerungskoederpreis)}%
            }\par%
@@ -1248,14 +1270,15 @@ ABENTEUER
 %    \begin{macrocode}
 \begin{spacelesstabbing}%
 \textbf{Wirkungsbereich:}\hspace{1ex} \= anytext \kill
-\ifthenelse{\equal{\zauberAP}{hide}}{}{\textbf{AP-Verbrauch:} \> \zauberAP\\}%
-\ifthenelse{\equal{\zauberGZ}{hide}}{}{\textbf{Gefährdungszahl:} \> \zauberGZ\\}%
-\ifthenelse{\equal{\zauberZd}{hide}}{}{\textbf{Zauberdauer:} \> \zauberZd\\}%
-\ifthenelse{\equal{\zauberRw}{hide}}{}{\textbf{Reichweite:} \> \zauberRw\\}%
-\ifthenelse{\equal{\zauberWz}{hide}}{}{\textbf{Wirkungsziel:} \> \zauberWz\\}%
-\ifthenelse{\equal{\zauberWb}{hide}}{}{\textbf{Wirkungsbereich:} \> \zauberWb\\}%
-\ifthenelse{\equal{\zauberWd}{hide}}{}{\textbf{Wirkungsdauer:} \> \zauberWd\\}%
-\ifthenelse{\equal{\zauberUr}{hide}}{}{\textbf{Ursprung:} \> \zauberUr\\}
+\ifdefstring{\zauberAP}{hide}{}{\textbf{AP-Verbrauch:} \> \zauberAP\\}%
+\ifdefstring{\zauberGZ}{hide}{}{\textbf{Gefährdungszahl:} \> \zauberGZ\\}%
+\ifboolexpr{ test {\ifdefstring{\zauberZd}{hide}} or ( togl {useEnergy} and not test {\ifdefstring{\zauberE}{hide}} ) }{}{\textbf{Zauberdauer:} \> \zauberZd\\}%
+\ifboolexpr{ togl {useEnergy} and not test {\ifdefstring{\zauberE}{hide}}}{\textbf{Energie} \> \zauberE\\}{}%
+\ifdefstring{\zauberRw}{hide}{}{\textbf{Reichweite:} \> \zauberRw\\}%
+\ifdefstring{\zauberWz}{hide}{}{\textbf{Wirkungsziel:} \> \zauberWz\\}%
+\ifdefstring{\zauberWb}{hide}{}{\textbf{Wirkungsbereich:} \> \zauberWb\\}%
+\ifdefstring{\zauberWd}{hide}{}{\textbf{Wirkungsdauer:} \> \zauberWd\\}%
+\ifdefstring{\zauberUr}{hide}{}{\textbf{Ursprung:} \> \zauberUr\\}
 \end{spacelesstabbing}\vspace{-1.0em}\par%
 %    \end{macrocode}
 % Wir unterdrücken wiederum etwas vertikalen Platz und drucken dann,
@@ -1264,14 +1287,14 @@ ABENTEUER
 % auch die Kosten selbst nicht abgedruckt werden sollen.
 %    \begin{macrocode}
 \vspace{1.0\midgardskip}\par
-\ifthenelse{\equal{\zauberFP}{hide}}{}{
-  \ifthenelse{\equal{\zauberG}{niemand}}%
+\ifdefstring{\zauberFP}{hide}{}{
+  \ifdefstring{\zauberG}{niemand}%
   {niemand }%
   {\textbf{\themidgard@GrundKosten :} \nolinebreak \zauberG} -- %
-  \ifthenelse{\equal{\zauberS}{niemand}}%
+  \ifdefstring{\zauberS}{niemand}%
   {niemand }%
   {\textbf{\themidgard@StandardKosten :} \nolinebreak \zauberS} -- %
-  \ifthenelse{\equal{\zauberA}{niemand}}%
+  \ifdefstring{\zauberA}{niemand}%
   {niemand }%
   {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zauberA}\par%
   \vspace{1.6\midgardskip}
@@ -1287,7 +1310,137 @@ ABENTEUER
 }%
 %    \end{macrocode}
 %\end{macro}
-%
+% \begin{macro}{\beschwoerung}
+%   Völlig analog definieren wir ein Kommando für das Layout von Beschwörungen.
+%    \begin{macrocode}
+\newcommand*\beschwoerung[2][]{%
+  \pagebreak[2]\addvspace{1em}
+\setkeys{zauber}{#1}{\begingroup
+%    \end{macrocode}
+% Wenn |\zauberFP| \textit{hide} ist, müssen die FP nicht ausgelesen
+% werden. Andernfalls werden Counter für Standard- und Ausnahmekosten
+% definiert und nach der für Zauber üblichen Formel aus den
+% Standardkosten berechnet.
+%    \begin{macrocode}
+\ifdefstring{\zauberFP}{hide}{}{
+  \setcounter{midgard@StandardKosten}{\zauberFP}%
+  \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
+  \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
+}%
+%    \end{macrocode}
+% Wenn |\zauberentry| \textit{none}, wird der |\zaubername| auf der
+% Gliederungsebene |subsubsection| zum Inhaltsverzeichnis
+% hinzugefügt. Andernfalls geschieht dasselbe mit |\zauberentry|.
+%    \begin{macrocode}
+\ifdefstring{\zauberentry}{none}{%
+        \addcontentsline{toc}{subsubsection}{\zaubername}
+        }{%
+        \addcontentsline{toc}{subsubsection}{\zauberentry}
+        }
+%    \end{macrocode}
+% Zunächst wird der Name der Beschwörung gedruckt. Dann wird zunächst
+% |\hfill| benutzt, um an das Ende der Zeile vorzurücken. 
+%    \begin{macrocode}
+\noindent\makebox[\linewidth]{\parbox[b]{0.85\linewidth}{\unraggedright\expandnext{\midgard@htarget}{\zaubername}\noindent \bfseries \large  \zaubername}%
+\hfill%
+\ifdefstring{\zauberscroll}{true}%
+           {}%
+           {\includegraphics[height=0.8em]{pics/scroll}}%
+\hfill}\par%
+\setlength{\parindent}{-1ex}%
+\setlength{\leftskip}{1ex}%
+\setlength{\rightskip}{0pt plus 0.2\linewidth}%
+\setlength{\parskip}{0pt}%
+\nopagebreak\par
+%    \end{macrocode}
+% Falls |\zauberAnmerkung| gesetzt ist, wird sie jetzt klein, fett und
+% kursiv abgedruckt.
+%    \begin{macrocode}
+\ifdefstring{\zauberAnmerkung}{none}{}%
+{{\par\footnotesize\bfseries\itshape\zauberAnmerkung\par}}%
+%    \end{macrocode}
+% Falls |\zauberUntertitel| gesetzt ist, wird sie jetzt klein, fett und
+% kursiv abgedruckt.
+%    \begin{macrocode}
+\ifdefstring{\zauberUntertitel}{none}{}%
+{{\par\itshape\zauberUntertitel\par}}%
+%    \end{macrocode}
+% Wir unterdrücken einen Zeilenumbruch unmittelbar nach der
+% Titelzeile. 
+%    \begin{macrocode}
+\nopagebreak\par%
+%    \end{macrocode}
+% Die Zauberart ist in jedem Fall \glqq Beschwörung\grqq. Ist die Stufe
+% \textit{GM}, so wird der Text \glqq der Großen Magie\grqq{}
+% nachgestellt, andernfalls \glqq der Stufe |\zauberstufe|\grqq{}
+%    \begin{macrocode}
+\vspace{\midgardskip}\par
+Beschwörung~%
+\ifdefstring{\zauberstufe}{GM}%
+           {der Großen Magie}%
+           {der Stufe \zauberstufe}%
+\par
+%    \end{macrocode}
+% Anstelle des Zaubermaterials listen wir den Köder und das
+% Beschwörungsfeld auf.
+%    \begin{macrocode}
+\ifdefstring{\beschwoerungsfeld}{none}%
+           {}%
+           {\beschwoerungsfeld%
+             \ifdefstring{\beschwoerungsfeldpreis}{none}%
+                        {}%
+                        { (\beschwoerungsfeldpreis)}%
+           }\par%
+\ifdefstring{\beschwoerungskoeder}{none}%
+           {}%
+           {\textbf{Köder:} \textit{\beschwoerungskoeder}%
+             \ifdefstring{\beschwoerungskoederpreis}{none}%
+                        {}%
+                        { (\beschwoerungskoederpreis)}%
+           }\par%
+\vspace{1.0\midgardskip}%
+%    \end{macrocode}
+% In einer kompaktifizierten |tabbing|-Umgebung drucken wir die
+% wichtigen Daten jeweils, falls diese nicht auf \textit{hide}
+% gesetzt sind.
+%    \begin{macrocode}
+\begin{spacelesstabbing}%
+\textbf{Wirkungsbereich:}\hspace{1ex} \= anytext \kill
+\ifdefstring{\zauberAP}{hide}{}{\textbf{AP-Verbrauch:} \> \zauberAP\\}%
+\ifdefstring{\zauberGZ}{hide}{}{\textbf{Gefährdungszahl:} \> \zauberGZ\\}%
+\ifdefstring{\zauberZd}{hide}{}{\textbf{Zauberdauer:} \> \zauberZd\\}%
+\ifdefstring{\zauberUr}{hide}{}{\textbf{Ursprung:} \> \zauberUr\\}
+\end{spacelesstabbing}\vspace{-1.0em}\par%
+%    \end{macrocode}
+% Wir unterdrücken wiederum etwas vertikalen Platz und drucken dann,
+% jeweils falls gesetzt, die Lernkosten. Hierbei ist wichtig, dass wir
+% den Fall \textit{niemand} gesondert behandeln, da in diesem Fall
+% auch die Kosten selbst nicht abgedruckt werden sollen.
+%    \begin{macrocode}
+\vspace{1.0\midgardskip}\par
+\ifdefstring{\zauberFP}{hide}{}{
+  \ifdefstring{\zauberG}{niemand}%
+  {niemand }%
+  {\textbf{\themidgard@GrundKosten :} \nolinebreak \zauberG} -- %
+  \ifdefstring{\zauberS}{niemand}%
+  {niemand }%
+  {\textbf{\themidgard@StandardKosten :} \nolinebreak \zauberS} -- %
+  \ifdefstring{\zauberA}{niemand}%
+  {niemand }%
+  {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zauberA}\par%
+  \vspace{1.6\midgardskip}
+}%
+\endgroup}%
+%    \end{macrocode}
+% Abschließend sorgen wir für einen ausreichenden Abstand und
+% verhindern die Einrückung des auf den Datenblock folgenden Absatzes.
+%    \begin{macrocode}
+\@afterindentfalse%
+\@afterheading%
+\par
+}%
+%    \end{macrocode}
+%\end{macro}
 %
 %\begin{macro}{\zaubermittel}
 %  Für die Zaubermittel wählen wir ein ähnliches Vorgehen wie für
@@ -1315,19 +1468,19 @@ ABENTEUER
 \setkeys{zaubermittel}{#1}{
 \setlength{\parindent}{0pt}\par
 %\setlength{\parskip}{0pt}\par
-\ifthenelse{\equal{\zaubermittelFP}{keine}}{}{
+\ifdefstring{\zaubermittelFP}{keine}{}{
   \setcounter{midgard@StandardKosten}{\zaubermittelFP}%
   \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
   \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
 }%
 \vspace{1em}
-\ifthenelse{\equal{\zaubermittelEntry}{none}}{%
+\ifdefstring{\zaubermittelEntry}{none}{%
         \addcontentsline{toc}{subsubsection}{\zaubermittelName}
         }{%
         \addcontentsline{toc}{subsubsection}{\zaubermittelEntry}
       }
 \noindent{\bfseries\zaubermittelName} -- Stufe \zaubermittelStufe%
-\ifthenelse{\equal{\zaubermittelVor}{keine}}{}{\\\textit{\zaubermittelVor}}%
+\ifdefstring{\zaubermittelVor}{keine}{}{\\\textit{\zaubermittelVor}}%
 \par\vspace{0.5em}%
 \begin{spacelesstabbing}%
 \textbf{Zeitaufwand:}\hspace{1ex} \= anytext \kill
@@ -1335,14 +1488,14 @@ ABENTEUER
 \textbf{Kosten:} \> \zaubermittelKosten
 \end{spacelesstabbing}%
 %\vspace{-1em}%
-\ifthenelse{\equal{\zaubermittelFP}{keine}}{}{
-  \ifthenelse{\equal{\zaubermittelG}{niemand}}%
+\ifdefstring{\zaubermittelFP}{keine}{}{
+  \ifdefstring{\zaubermittelG}{niemand}%
   {niemand }%
   {\textbf{\themidgard@GrundKosten :} \nolinebreak \zaubermittelG} -- %
-  \ifthenelse{\equal{\zaubermittelS}{niemand}}%
+  \ifdefstring{\zaubermittelS}{niemand}%
   {niemand }%
   {\textbf{\themidgard@StandardKosten :} \nolinebreak \zaubermittelS} -- %
-  \ifthenelse{\equal{\zaubermittelA}{niemand}}%
+  \ifdefstring{\zaubermittelA}{niemand}%
   {niemand }%
   {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zaubermittelA}%
   \par\vspace{0.5em}%
@@ -1442,10 +1595,10 @@ ABENTEUER
 \newcommand*\bestiarium[2][]{%
 \setkeys{best}{#1}{
 \par\setlength\parskip{0pt}\par
-\ifthenelse{\equal{#2}{noframe}}{%
+\ifdefstring{#2}{noframe}{%
   \pagebreak[2]
 }{%
-  \ifthenelse{\equal{#2}{float}}{%
+  \ifdefstring{#2}{float}{%
     \begin{figure}
   }{%
     \pagebreak[3]
@@ -1458,63 +1611,63 @@ ABENTEUER
 \begin{spacelesstabbing}%
 \hspace{0.3\linewidth} \= \hspace{0.3\linewidth} \= \hspace{0.2\linewidth} \= anything\kill
 \textbf{\bestName}%
-\ifthenelse{\equal{\bestMag}{true}}%
+\ifdefstring{\bestMag}{true}%
            {~\includegraphics[height=0.7em]{pics/scroll}}%
            {}% 
-\ifthenelse{\equal{\bestAdd}{none}}%
+\ifdefstring{\bestAdd}{none}%
            {}%
            {\textbf{,\,\bestAdd}}%
-\ifthenelse{\equal{\bestVariant}{none}}%
+\ifdefstring{\bestVariant}{none}%
            {}%
            {,\,\bestVariant}%
 ~%
-\ifthenelse{\equal{\bestModus}{none}}%
+\ifdefstring{\bestModus}{none}%
            {}
            {\bestModus~}% 
 (%
-\ifthenelse{\equal{\bestTyp}{none}}%
+\ifdefstring{\bestTyp}{none}%
            {}%
            {\bestTyp~}%
 Grad \bestGrad%
-\ifthenelse{\equal{\bestSize}{normal}}{}{ -- \bestSize}%
-) \> \> \> \ifthenelse{\equal{\bestIn}{hide}}{~}{In: \bestIn}\\
-\textbf{LP} \bestLP \> \textbf{AP} \bestAP \> \ifthenelse{\equal{\bestMW}{none}}{}{MW+\bestMW}\> EP \bestEP\\
+\ifdefstring{\bestSize}{normal}{}{ -- \bestSize}%
+) \> \> \> \ifdefstring{\bestIn}{hide}{~}{In: \bestIn}\\
+\textbf{LP} \bestLP \> \textbf{AP} \bestAP \> \ifdefstring{\bestMW}{none}{}{MW+\bestMW}\> EP \bestEP\\
 Gw \bestGw \> St \bestSt \> B\,\bestB \> \textbf{\bestRK}\\
-Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifthenelse{\equal{\bestEnergie}{0}}{}{\> \textsc{E} \bestEnergie}
+Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\> \textsc{E} \bestEnergie}
 \end{spacelesstabbing}\par
 \textbf{Angriff:} \sloppy \bestAngriff%
-\ifthenelse{\equal{\bestRaufen}{none}}{}{ -- Raufen+\bestRaufen}%
-\ifthenelse{\equal{\bestInitiative}{none}}{}{ -- \textsc{Initiative}+\bestInitiative}%
+\ifdefstring{\bestRaufen}{none}{}{ -- Raufen+\bestRaufen}%
+\ifdefstring{\bestInitiative}{none}{}{ -- \textsc{Initiative}+\bestInitiative}%
 \par
-\ifthenelse{\equal{\bestBes}{none}}%
-           {\ifthenelse{\equal{\bestAura}{none}}{}{\textbf{\textsc{Aura:}} \bestAura\par}}%
-           {\textbf{Bes.:} \bestBes \ifthenelse{\equal{\bestAura}{none}}{}{ -- \textbf{\textsc{Aura:}} \bestAura} \par}%
-\ifthenelse{\equal{\bestZauber}{none}}%
+\ifdefstring{\bestBes}{none}%
+           {\ifdefstring{\bestAura}{none}{}{\textbf{\textsc{Aura:}} \bestAura\par}}%
+           {\textbf{Bes.:} \bestBes \ifdefstring{\bestAura}{none}{}{ -- \textbf{\textsc{Aura:} \bestAura} \par}}%
+\ifdefstring{\bestZauber}{none}%
            {}%
            {\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}\par}%
-\ifthenelse{\equal{\bestZauberMore}{none}}%
+\ifdefstring{\bestZauberMore}{none}%
            {}%
            {\textbf{Zaubern+\bestZauberMoreEW:} \textit{\bestZauberMore}\par}%
-\ifthenelse{\equal{\bestZauberMMore}{none}}%
+\ifdefstring{\bestZauberMMore}{none}%
            {}%
            {\textbf{Zaubern+\bestZauberMMoreEW:} \textit{\bestZauberMMore}\par}%
-\ifthenelse{\equal{\bestZauberArtig}{none}}%
+\ifdefstring{\bestZauberArtig}{none}%
            {}%
            {\textbf{\guillemotright Zaubern+\bestZauberArtigEW\guillemotleft:} \textit{\bestZauberArtig}\par}%
-\ifthenelse{\equal{\bestZauberArtigMore}{none}}%
+\ifdefstring{\bestZauberArtigMore}{none}%
            {}%
            {\textbf{\guillemotright Zaubern+\bestZauberArtigMoreEW\guillemotleft:} \textit{\bestZauberArtigMore}\par}%
-\ifthenelse{\equal{\bestZauberArtigMMore}{none}}%
+\ifdefstring{\bestZauberArtigMMore}{none}%
            {}%
            {\textbf{\guillemotright Zaubern+\bestZauberArtigMMoreEW\guillemotleft:} \textit{\bestZauberArtigMMore}\par}%
-\ifthenelse{\equal{\bestVork}{none}}%
+\ifdefstring{\bestVork}{none}%
            {}%
            {\textbf{Vorkommen:} \bestVork}%
-\ifthenelse{\equal{#2}{noframe}}{%
+\ifdefstring{#2}{noframe}{%
   \pagebreak[2]
 }{%
   \end{mdframed}%
-  \ifthenelse{\equal{#2}{float}}{%
+  \ifdefstring{#2}{float}{%
     \vspace{-1.5em}
     \end{figure}
   }{%
@@ -1540,34 +1693,34 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifthenelse{\equal{\bestEnergie}{
 \vspace{0.5em plus 0.5em minus 0.2em}%
 \begin{spacing}{0.5}%
 \noindent \textbf{\bestName}%
-\ifthenelse{\equal{\bestMag}{true}}{~\includegraphics[height=0.7em]{pics/scroll}}{}%
-\ifthenelse{\equal{\bestAdd}{none}}{}{\textbf{,\,\bestAdd}}%
-\ifthenelse{\equal{\bestVariant}{none}}{}{,\,\bestVariant}%
-~\ifthenelse{\equal{\bestModus}{none}}{}{\bestModus~}%
+\ifdefstring{\bestMag}{true}{~\includegraphics[height=0.7em]{pics/scroll}}{}%
+\ifdefstring{\bestAdd}{none}{}{\textbf{,\,\bestAdd}}%
+\ifdefstring{\bestVariant}{none}{}{,\,\bestVariant}%
+~\ifdefstring{\bestModus}{none}{}{\bestModus~}%
 (%
-\ifthenelse{\equal{\bestTyp}{none}}{}{\bestTyp~}%
+\ifdefstring{\bestTyp}{none}{}{\bestTyp~}%
 Grad \bestGrad%
-\ifthenelse{\equal{\bestSize}{normal}}{}{ -- \bestSize}%
+\ifdefstring{\bestSize}{normal}{}{ -- \bestSize}%
 )\par%
-\noindent\bestLP~LP, \bestAP~AP -- \bestRK~-- St~\bestSt, Gw~\bestGw, B\,\bestB \ifthenelse{\equal{\bestEnergie}{0}}{}{, \textsc{E}\,\bestEnergie}\par%
+\noindent\bestLP~LP, \bestAP~AP -- \bestRK~-- St~\bestSt, Gw~\bestGw, B\,\bestB \ifdefstring{\bestEnergie}{0}{}{, \textsc{E}\,\bestEnergie}\par%
 \setlength{\leftskip}{1ex}
 \setlength{\parindent}{-1ex}
 \textbf{Angriff:} \bestAngriff%
-\ifthenelse{\equal{\bestRaufen}{none}}{}{ -- Raufen+\bestRaufen}%
-\ifthenelse{\equal{\bestInitiative}{none}}{}{ -- \textsc{Initiative}+\bestInitiative}%
+\ifdefstring{\bestRaufen}{none}{}{ -- Raufen+\bestRaufen}%
+\ifdefstring{\bestInitiative}{none}{}{ -- \textsc{Initiative}+\bestInitiative}%
 ~-- \textsc{Abwehr}+\bestAbwehr, \textsc{Resistenz}+\bestResistenz%
-\ifthenelse{\equal{\bestBes}{none}}{%
-  \ifthenelse{\equal{\bestAura}{none}}{}{\par\textbf{\textsc{Aura:}} \bestAura}%
+\ifdefstring{\bestBes}{none}{%
+  \ifdefstring{\bestAura}{none}{}{\par\textbf{\textsc{Aura:} \bestAura}}%
 }{%
   \par\textbf{Bes.:} \bestBes%
-  \ifthenelse{\equal{\bestAura}{none}}{}{-- \textbf{\textsc{Aura:}} \bestAura}%
+  \ifdefstring{\bestAura}{none}{}{-- \textbf{\textsc{Aura:} \bestAura}}%
 }%
-\ifthenelse{\equal{\bestZauber}{none}}{}{\par\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}}%
-\ifthenelse{\equal{\bestZauberMore}{none}}{}{\par\textbf{Zaubern+\bestZauberMoreEW:} \textit{\bestZauberMore}}%
-\ifthenelse{\equal{\bestZauberMMore}{none}}{}{\par\textbf{Zaubern+\bestZauberMMoreEW:} \textit{\bestZauberMMore}}%
-\ifthenelse{\equal{\bestZauberArtig}{none}}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigEW\guillemotleft:} \textit{\bestZauberArtig}}%
-\ifthenelse{\equal{\bestZauberArtigMore}{none}}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigMoreEW\guillemotleft:} \textit{\bestZauberArtigMore}}%
-\ifthenelse{\equal{\bestZauberArtigMMore}{none}}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigMMoreEW\guillemotleft:} \textit{\bestZauberArtigMMore}}%
+\ifdefstring{\bestZauber}{none}{}{\par\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}}%
+\ifdefstring{\bestZauberMore}{none}{}{\par\textbf{Zaubern+\bestZauberMoreEW:} \textit{\bestZauberMore}}%
+\ifdefstring{\bestZauberMMore}{none}{}{\par\textbf{Zaubern+\bestZauberMMoreEW:} \textit{\bestZauberMMore}}%
+\ifdefstring{\bestZauberArtig}{none}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigEW\guillemotleft:} \textit{\bestZauberArtig}}%
+\ifdefstring{\bestZauberArtigMore}{none}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigMoreEW\guillemotleft:} \textit{\bestZauberArtigMore}}%
+\ifdefstring{\bestZauberArtigMMore}{none}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigMMoreEW\guillemotleft:} \textit{\bestZauberArtigMMore}}%
 \end{spacing}}\par%
 \vspace{0.5em plus 0.5em minus 0.2em}%
 \pagebreak[3]
