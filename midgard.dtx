@@ -721,6 +721,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
   \global\togglefalse{useEnergy}%
   \global\togglefalse{useInitiative}%
 }
+\newcommand{\EnergieOrDFR}[2]{\iftoggle{useEnergy}{#1}{#2}}
 \DFR
 %    \end{macrocode}
 %\end{macro}
@@ -751,10 +752,10 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
     \hashstring{midgard@#1}%
     \Hy@raisedlink{\hypertarget{midgard:\gethash{midgard@#1}}{}}%
 }}%
-\newcommand\midgard@hlink[1]{%
+\newcommand\midgard@hlink[2]{%
   \@ifundefined{hyper@@anchor}{#1}{%
     \hashstring{midgard@#1}%
-    \hyperlink{midgard:\gethash{midgard@#1}}{#1}%
+    \hyperlink{midgard:\gethash{midgard@#1}}{#2}%
 }}%
 %    \end{macrocode}
 %\end{macro}
@@ -795,7 +796,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %   wir hier entsprechende Kommandos.
 %    \begin{macrocode}
 \AtBeginDocument{\global\def\textinfty{\ensuremath{\infty}}
-  \global\def\textstar{\ensuremath{\star}}
+  \global\def\textstar{\ensuremath{\ast}}
   \global\def\texttimes{\ensuremath{\times}}
   \global\def\textdagger{\ensuremath{\dagger}}
   \global\def\textddagger{\ensuremath{\ddagger}}
@@ -898,6 +899,50 @@ ABENTEUER
 %
 % \subsection{Das Fantasy Rollenspiel}
 %
+% \begin{macro}{\geld}
+%   Die auf Midgard gängige Währung sind Goldstücke (GS), Silberstücke
+%   (SS) und Kupferstücke (KS). Im Standardregelwerk sind die
+%   Umrechnungsfaktoren zwischen den einzelnen Münzsorten jeweils 10,
+%   d.h.~ein Golstück ist soviel wert wie 10\,SS und ein Silberstück
+%   so viel wie 10\,KS. Es gibt jedoch viele Gruppen, die als
+%   Hausregeln mit anderen Umrechnungsfaktoren spielen, beispielsweise
+%   mit 1:100 (statt 1:10). Um dieser Besonderheit Rechnung zu tragen,
+%   definieren wir ein Makro |\geld|, welches eine Anzahl an
+%   Kupferstücken entgegennimmt und die jeweils passenden Beträge an
+%   Gold- und Silberstücken abdruckt.
+%     \begin{macrocode}
+\numgdef{\midgard@CopperPerSilver}{10}
+\numgdef{\midgard@SilverPerGold  }{10}
+\newcommand {\setzeKupferProSilber}[1]{\numgdef{\midgard@CopperPerSilver}{#1}}
+\newcommand {\setzeSilberProGold}[1]{\numgdef{\midgard@CopperPerSilver}{#1}}
+\newcommand{\geld}[1]{%
+  \numdef{\midgard@copperpieces}{#1}%
+  \ifnumless{\midgard@copperpieces}{\midgard@CopperPerSilver}{%
+    \numdef{\midgard@silverpieces}{0}%
+  }{%
+    \numdef{\midgard@silverpieces}{(10*\midgard@copperpieces/\midgard@CopperPerSilver - 5)/10}%
+    \numdef{\midgard@copperpieces}{\midgard@copperpieces - (\midgard@CopperPerSilver * \midgard@silverpieces)}%
+  }%
+  \ifnumless{\midgard@silverpieces}{\midgard@SilverPerGold}{%
+    \numdef{\midgard@goldpieces}{0}%
+  }{%
+    \numdef{\midgard@goldpieces}{(10*\midgard@silverpieces /\midgard@SilverPerGold - 5)/10}%
+    \numdef{\midgard@silverpieces}{\midgard@silverpieces - (\midgard@SilverPerGold * \midgard@goldpieces)}%
+  }%
+  \ifnumgreater{\midgard@goldpieces  }{0}{%
+    \midgard@goldpieces\,GS%
+    \ifnumgreater{\midgard@silverpieces}{0}{ }{}%
+  }{}%
+  \ifnumgreater{\midgard@silverpieces}{0}{%
+    \midgard@silverpieces\,SS%
+    \ifnumgreater{\midgard@copperpieces}{0}{ }{}%
+  }{}%
+  \ifnumgreater{\midgard@copperpieces}{0}{%
+    \midgard@copperpieces\,KS%
+  }{}%
+}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\fertigkeit}
 %   Allgemeine Fertigkeiten werden im \textsc{Dfr4} auf ganz
 %   charakteristische Weise gesetzt. Zunächst definieren wir unter
@@ -1084,7 +1129,7 @@ ABENTEUER
 % \begin{macro}{\zauberref}
 %   Mit dem |\zauberref|-Kommando erlauben wir einfaches refernzieren auf Zauber.
 %   \begin{macrocode}
-\newcommand*\zauberref[1]{{\itshape \protect\midgard@hlink{#1}}}%
+\newcommand*\zauberref[2][]{{\itshape\ifstrempty{#1}{\protect\midgard@hlink{#2}{#2}}{\protect\midgard@hlink{#1}{#2}}}}%%
 %   \end{macrocode}
 % \end{macro}
 % \begin{macro}{\zauber}
@@ -1310,7 +1355,24 @@ ABENTEUER
 }%
 %    \end{macrocode}
 %\end{macro}
-% \begin{macro}{\beschwoerung}
+%\begin{macro}{\zaubersalz}
+% Aus Bequemlichketisgründen definieren wir auch ein Kommando für Zaubersalze, das intern jedoch das Kommando für Zauber aufruft -- mit den voreingestellten Standard-Spieldaten von Zaubersalzen.
+%    \begin{macrocode}
+\newcommand\zaubersalz[2][]{\zauber[
+    name=Zaubersalz,
+    art=Gedankenzauber, 
+    stufe=1, 
+    AP=1, 
+    Rw=500\,m,
+    Zd=1\,sec, 
+    Rw=500\,m,
+    material=Zaubersalz,
+    matpreis=\geld{20},
+    Ur=dämonisch,
+    #1]{#2} }
+%     \end{macrocode}
+%\end{macro}
+%\begin{macro}{\beschwoerung}
 %   Völlig analog definieren wir ein Kommando für das Layout von Beschwörungen.
 %    \begin{macrocode}
 \newcommand*\beschwoerung[2][]{%
@@ -1567,7 +1629,7 @@ Beschwörung~%
 
 \presetkeys{best}{ name=Wesen, grad=0, modus=none, typ=none,
   mag=false, aura=none, size=normal, addendum=none, variant=none,
-  LP=*, AP=*, RK=OR, EP=1, In=t01, St=01, Gw=01, B=*, MW=none,
+  LP=\textstar, AP=\textstar, RK=\textstar R, EP=0, In=t01, St=\textstar, Gw=01, B=\textstar, MW=none,
   abwehr=10, resistenz=10/10/10, angriff=keiner, zauber=none,
   zauberMore=none, zauberMMore=none, zauberArtig=none,
   zauberArtigMore=none, zauberArtigMMore=none, zauberEW=0,
@@ -1641,7 +1703,7 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
 \par
 \ifdefstring{\bestBes}{none}%
            {\ifdefstring{\bestAura}{none}{}{\textbf{\textsc{Aura:}} \bestAura\par}}%
-           {\textbf{Bes.:} \bestBes \ifdefstring{\bestAura}{none}{}{ -- \textbf{\textsc{Aura:} \bestAura} \par}}%
+           {\textbf{Bes.:} \bestBes \ifdefstring{\bestAura}{none}{}{ -- \textbf{\textsc{Aura:} \bestAura}}\par }%
 \ifdefstring{\bestZauber}{none}%
            {}%
            {\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}\par}%
