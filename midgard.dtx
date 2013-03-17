@@ -733,6 +733,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %    Aufrufs eine Nummer zugewiesen wird, zu der das Argument dann zu 
 %    jedem späteren Zeitpunkt expandiert.
 %    \begin{macrocode} 
+\providecommand\phantomsection{}
 \newcounter{@hash@id}
 \newcommand\hashstring[1]{%
   \ifcsname\detokenize{hash@#1}\endcsname%
@@ -991,6 +992,7 @@ ABENTEUER
   \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
   \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*2}%
 }%
+\phantomsection%
 \ifdefstring{\fertigkeitEntry}{none}{%
   \addcontentsline{toc}{subsubsection}{\fertigkeitName}
 }{%
@@ -1073,6 +1075,7 @@ ABENTEUER
   \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
   \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*2}%
 }%
+\phantomsection%
 \ifdefstring{\weaponEntry}{none}{%
   \addcontentsline{toc}{subsubsection}{\weaponName}
 }{%
@@ -1212,6 +1215,7 @@ ABENTEUER
 % Gliederungsebene |subsubsection| zum Inhaltsverzeichnis
 % hinzugefügt. Andernfalls geschieht dasselbe mit |\zauberentry|.
 %    \begin{macrocode}
+\phantomsection%
 \ifdefstring{\zauberentry}{none}{%
         \addcontentsline{toc}{subsubsection}{\zaubername}
         }{%
@@ -1394,6 +1398,7 @@ ABENTEUER
 % Gliederungsebene |subsubsection| zum Inhaltsverzeichnis
 % hinzugefügt. Andernfalls geschieht dasselbe mit |\zauberentry|.
 %    \begin{macrocode}
+\phantomsection%
 \ifdefstring{\zauberentry}{none}{%
         \addcontentsline{toc}{subsubsection}{\zaubername}
         }{%
@@ -1536,6 +1541,7 @@ Beschwörung~%
   \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
 }%
 \vspace{1em}
+\phantomsection%
 \ifdefstring{\zaubermittelEntry}{none}{%
         \addcontentsline{toc}{subsubsection}{\zaubermittelName}
         }{%
