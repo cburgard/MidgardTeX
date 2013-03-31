@@ -100,10 +100,18 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \DoNotIndex{\advance,\begingroup,\catcode,\closein}
 % \DoNotIndex{\closeout,\day,\def,\edef,\else,\empty,\endgroup}
 % \DoNotIndex{\begin,\end,\leftskip,\let,\linewidth,\newcommand,\newcounter,\newenvironment,\newline,\noindent,\parindent,\parsep,\parskip,\partopsep,\setcounter,\setlength,\textbf,\textit,\textsf,\textsc,\text...,\large,\Large,\small,\footnotesize,\itshape,\bfseries,\par,\textup,\times,\topmargin,\topsep,\topskip,\LARGE,\headsep,\equal,\value,\frac,\ifdefstr}
+
 % \title{Das \textsf{ midgard } Paket\thanks{Dieses Dokument bezieht
 % sich auf \textsf{ midgard }~\fileversion, datiert~\filedate.}}
+
 % \author{ Carsten Burgard \\ \texttt{ carsten.burgard@gmail.com }}
-% \maketitle \selectlanguage{ngerman}% \begin {abstract}
+
+% \maketitle 
+
+% \selectlanguage{ngerman}
+
+% \begin {abstract}
+
 % \textsc{Midgard} ist ein deutsches Pen-\&-Paper Fantasy Rollenspiel,
 % das seit 1981 erscheint und damit das erste deutsche
 % Fantasy-Rollenspiel überhaupt war.  Dieses \LaTeX{}-Paket versucht,
@@ -112,8 +120,13 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % vierten Auflage so gut es geht nachzuahmen. Zu diesem Zweck werden
 % einige Kommandos und Umgebungen definiert. Insbesondere wurde
 % versucht, ein störungsfreies und vollautomatisches
-% Zwei-Spalten-Layout zu erlauben.  \end{abstract}
-% \selectlanguage{english}% \begin{abstract} \textsc{Midgard} is a
+% Zwei-Spalten-Layout zu erlauben.
+
+% \end{abstract}
+
+% \selectlanguage{english}
+
+% \begin{abstract} \textsc{Midgard} is a
 % german pen \& paper roleplay game. This \LaTeX{} package tries to
 % resemble the layout of the official publications of this game and
 % make it possible to write your own documents in a similar style and
@@ -122,43 +135,62 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % paragraph -- entirely written in german, as is is the game itself. A
 % translation of this package into other languages is not planned,
 % since there is little use for this package outside the entirely
-% german-speaking fanbase of the game itself.  \end {abstract}
-% \selectlanguage{ngerman}% \section{Einleitung} Spielleiter
-% verbringen mitunter viel Zeit mit ihrer Kampagnenplanung. Es gibt
-% zwar inzwischen eine große Zahl von Abenteuern, sei es im Internet
-% zum freien oder kostenpflichtigen Download oder in gedruckter Form,
-% als Hefte oder Teile von Quellenbüchern -- doch letzten Endes kommt
-% man nicht umhin, immer wieder Zeit aufzuwenden, um eigene Abenteuer
-% oder Regelerweiterungen zu entwickeln. Oft jedoch ist die
-% Hemmschwelle groß, die eigenen Ideen anderen zugänglich zu machen --
-% denn das würde bedeuten, dass man sie zunächst einigermaßen
-% ordentlich aufschreiben muss. Viel Zeit geht dabei verloren, die
-% Werte von neuen Zaubern oder Kreaturen abzutippen und in eine
-% einigermaßen ansehnliche, wenn nicht sogar mit den offiziellen
-% Schreibweisen konforme Form zu bringen.  Dieses Paket versucht,
-% diese Hemmschwelle zu senken, indem es Kommandos und Umgebungen zur
-% Verfügung stellt, die es erlauben, auf einfach und -- hoffentlich --
-% intuitive Weise ein Layout zu erzielen, das dem der offiziellen
-% Veröffentlichungen so nahe wie möglich kommt. Ich möchte jedoch
-% nicht verhehlen, dass ich bei einigen Details auch bewusst vom
-% offiziellen Layout abweiche, um das Layout unter Verwendung der
+% german-speaking fanbase of the game itself. 
+
+% \end {abstract}
+
+% \selectlanguage{ngerman}
+
+% \section{Einleitung} 
+
+% Spielleiter verbringen mitunter viel Zeit mit ihrer
+% Kampagnenplanung. Es gibt zwar inzwischen eine große Zahl von
+% Abenteuern, sei es im Internet zum freien oder kostenpflichtigen
+% Download oder in gedruckter Form, als Hefte oder Teile von
+% Quellenbüchern -- doch letzten Endes kommt man nicht umhin, immer
+% wieder Zeit aufzuwenden, um eigene Abenteuer oder Regelerweiterungen
+% zu entwickeln. Oft jedoch ist die Hemmschwelle groß, die eigenen
+% Ideen anderen zugänglich zu machen -- denn das würde bedeuten, dass
+% man sie zunächst einigermaßen ordentlich aufschreiben muss. Viel
+% Zeit geht dabei verloren, die Werte von neuen Zaubern oder Kreaturen
+% abzutippen und in eine einigermaßen ansehnliche, wenn nicht sogar
+% mit den offiziellen Schreibweisen konforme Form zu bringen.  Dieses
+% Paket versucht, diese Hemmschwelle zu senken, indem es Kommandos und
+% Umgebungen zur Verfügung stellt, die es erlauben, auf einfach und --
+% hoffentlich -- intuitive Weise ein Layout zu erzielen, das dem der
+% offiziellen Veröffentlichungen so nahe wie möglich kommt. Ich möchte
+% jedoch nicht verhehlen, dass ich bei einigen Details auch bewusst
+% vom offiziellen Layout abweiche, um das Layout unter Verwendung der
 % Kapazitäten von \LaTeX{} noch ansehnlicher zu machen. Die folgende
 % Liste enthält die von mir bewusst abweichend implementierten
-% Details.  \begin{itemize} \item Alle sonst in GROSSBUCHSTABEN
-% geschriebenen Begriffe, wie Verweise auf Quellenbücher und
-% Regelwerke, werden stattdessen in \textsc{Kapitälchen} gesetzt, um
-% sie weniger blockig wirken zu lassen.  \item Wenn die Felder \glqq
-% Besonderheiten\grqq{} und \glqq Angriff\grqq{} von Kreaturendaten so
-% lang sind, dass sie Zeilenumbrüche verursachen, erhalten die
-% nachfolgenden Zeilen einen leichten hängenden Einzug.  \item Die
+% Details.
+
+% \begin{itemize}
+
+% \item Alle sonst in GROSSBUCHSTABEN geschriebenen Begriffe, wie
+% Verweise auf Quellenbücher und Regelwerke, werden stattdessen in
+% \textsc{Kapitälchen} gesetzt, um sie weniger blockig wirken zu
+% lassen.
+
+% \item Wenn die Felder \glqq Besonderheiten\grqq{} und \glqq
+% Angriff\grqq{} von Kreaturendaten so lang sind, dass sie
+% Zeilenumbrüche verursachen, erhalten die nachfolgenden Zeilen einen
+% leichten hängenden Einzug.
+
+% \item Die
 % Werte von Kreaturen enthalten ein zusätzliches Feld \glqq Aura\grqq,
 % das im Anschluss an die Besonderheiten in die gleiche Zeile gedruckt
-% wird.  \end{itemize} \section{Anleitung} Neben einigen mehr oder
-% minder trivialen Kommandos besteht eine der Hauptleistungen dieses
-% Pakets in der Implementierung der Kommandos |\fertigkeit|,
-% |\waffenfertigkeit|, |\zauber|, |\zauberwerkstatt| und |\bestiarium|
-% (bzw.~|\best|), welche ein den offiziellen Publikationen
-% nachempfundenes Layout der entsprechenden Datenblöcke
+% wird. 
+
+% \end{itemize}
+
+% \section{Anleitung}
+
+% Neben einigen mehr oder minder trivialen Kommandos besteht eine der
+% Hauptleistungen dieses Pakets in der Implementierung der Kommandos
+% |\fertigkeit|, |\waffenfertigkeit|, |\zauber|, |\zauberwerkstatt|
+% und |\bestiarium| (bzw.~|\best|), welche ein den offiziellen
+% Publikationen nachempfundenes Layout der entsprechenden Datenblöcke
 % erlauben. Intern wird hierzu das Paket |xkeyval| verwendet, welches
 % die Übergabe einer durch Kommas getrennten Liste von
 % Schlüssel-Wert-Paaren im optionalen Argument eines Kommandos
@@ -168,7 +200,10 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \meta{Schlüssel}|=|\meta{Wert}|,|\dots|]{}|. Dies gilt analog für
 % die anderen Kommandos zum Textsatz von Datenblöcken. Das Layout und
 % die Spezifikationen der Schlüssel-Wert-Paare werden im folgenden
-% jeweils detailliert beschrieben.  \subsection{Allgemeines}
+% jeweils detailliert beschrieben.
+
+% \subsection{Allgemeines}
+
 % \DescribeMacro{\midgardabenteuer} Auf der Titelseite von offiziellen
 % \textsc{Midgard}-Abenteuern sind oft die Worte \glqq Midgard
 % Abenteuer\grqq{} in einer dekorativen Weise angebracht. Einen
@@ -176,50 +211,102 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % liefert das Kommando |\midgardabenteuer|, dessen Ergebnis in
 % Abbildung~\ref{fig:midgardabenteuer} dargestellt wird. Je nach
 % Kontext sollte es mit |\centering| auf der Seite zentriert
-% werden.  \begin{figure}[H] \centering
-% \midgardabenteuer \caption{Schriftzug auf der Titelseite von
-% Abenteuern\label{fig:midgardabenteuer}} \end{figure}
+% werden. 
+
+% \begin{figure}[H] \centering \midgardabenteuer \caption{Schriftzug
+% auf der Titelseite von
+% Abenteuern \label{fig:midgardabenteuer}} \end{figure}
+
+
 % \DescribeEnv{beispiel} Gerade im Grundregelwerk \glqq
 % \textsc{Midgard} -- Das Fantasy Rollenspiel\grqq{} finden sich immer
 % wieder Beispiel-Passagen, welche die konkrete Verwendung bestimmter
 % Regeln demonstrieren sollen. Diese sind typischerweise in leicht
 % grau hinterlegte, abgerundete Boxen abgedruckt. Dies versucht die
 % Umgebung |beispiel| nachzuempfinden. Das Ergebnis ist in
-% Abbildung~\ref{fig:beispiel} dargestellt.  \begin{figure}[H]
+% Abbildung~\ref{fig:beispiel} dargestellt. 
+
+% \begin{figure}[H]
 % \centering \begin{beispiel} In einer solchen \textit{Beispiel-Box}
 % können erklärende Textpassagen abgedruckt werden. Die Breite
 % expandiert dabei automatisch auf den gesamten zugänglichen
 % Bereich. Soll sie künstlich eingeschränkt werden, kann hierfür die
 % Standard-Umgebung |minipage| verwendet
-% werden.  \end{beispiel}\vspace{\abovecaptionskip} \caption{Die
+% werden. 
+% \end{beispiel}\vspace{\abovecaptionskip}
+% \caption{Die
 % Umgebung \textsf{beispiel} \label{fig:beispiel}} \end{figure}
+
 % \DescribeMacro{\midgardskip} Die Länge |\midgardskip| wird intern
 % verwendet, um innerhalb verschiedener Makros etwas vertikalen Platz
 % zu erzeugen. Standardmäßig ist sie etwa identisch mit |\smallskip|,
 % was zu einem etwas kompakteren Layout der Befehle als im offiziellen
 % Regelwerk führt, kann jedoch umdefiniert werden, um zusätzlichen
 % Platz zu erzeugen. Das Layout in den offiziellen Regelwerken
-% entspricht etwa einer Einstellung von |0.7em|.  \subsection{Das
-% Fantasy Rollenspiel} \begin{figure}
-% \centering \begin{minipage}{1.0\textwidth}
-% \fertigkeit[name=Schleucheln, kategorie=Kampf, ungelernt=0,
-% leitAtt=Gs\,91, anforderungen={Gw\,81, \itshape Schleichen+12,
-% Meucheln+12}, FP=200, G=As, S={\textsc{Käm} a.~As}, A={alle
-% anderen}]{} Der Kämpfer kann gleichzeitig \textit{Schleichen} und
-% \textit{Meucheln}.  \bigskip \fertigkeit[name=Atmen, EW=20,
-% anforderungen={Wk 01}]{} Jeder Mensch kann atmen. Ein kritischer
-% Fehler führt zum
-% Verschlucken.  \end{minipage}\par \bigskip\hrule\bigskip\par \begin{minipage}{0.9\textwidth} \begin{verbatim}
-% \fertigkeit[name=Schleucheln, kategorie=Kampf, ungelernt=0,
-% leitAtt=Gs\,91, anforderungen={Gw\,81, \itshape Schleichen+12,
-% Meucheln+12}, FP=200, G=As, S={\textsc{Käm} a.~As}, A={alle
-% anderen}]{} Der Kämpfer kann gleichzeitig \textit{Schleichen} und
-% \textit{Meucheln}.  \bigskip \fertigkeit[name=Atmen, EW=20,
-% anforderungen={Wk 01}]{} Jeder Mensch kann atmen. Ein kritischer
-% Fehler führt zum
-% Verschlucken.  \end{verbatim} \end{minipage} \caption{Ein dem
-% \textsc{Dfr4} nachempfundenes Layout für Allgemeine
-% Fertigkeiten\label{fig:fertigkeit}} \end{figure}
+% entspricht etwa einer Einstellung von |0.7em|. 
+
+% \subsection{Das Fantasy Rollenspiel} \begin{figure} \centering
+
+% \begin{minipage}{1.0\textwidth}
+
+% \fertigkeit[name=Schleucheln, 
+%             kategorie=Kampf, 
+%             ungelernt=0,
+%             leitAtt={Gs\,91}, 
+%             anforderungen={Gw\,81, \itshape Schleichen+12, Meucheln+12},
+%             FP=200,
+%             G=As,
+%             S={\textsc{Käm} a.~As},
+%             A={alle anderen}
+% ]{}
+
+% Der Kämpfer kann gleichzeitig \textit{Schleichen} und
+% \textit{Meucheln}.
+
+% \bigskip
+
+% \fertigkeit[name=Atmen, EW=20, anforderungen={Wk 01}]{}
+
+%  Jeder Mensch kann atmen. Ein kritischer Fehler führt zum
+% Verschlucken.
+
+% \end{minipage}\par 
+
+%\bigskip\hrule\bigskip\par 
+
+%\begin{minipage}{0.9\textwidth} \begin{verbatim}
+
+% \fertigkeit[name=Schleucheln, 
+%             kategorie=Kampf, 
+%             ungelernt=0,
+%             leitAtt={Gs\,91}, 
+%             anforderungen={Gw\,81, \itshape Schleichen+12,
+%             Meucheln+12}, 
+%             FP=200, 
+%             G=As, 
+%             S={\textsc{Käm} a.~As}, 
+%             A={alle anderen}
+% ]{} 
+
+% Der Kämpfer kann gleichzeitig \textit{Schleichen} und
+% \textit{Meucheln}.  
+
+% \bigskip 
+
+% \fertigkeit[name=Atmen, 
+%             EW=20,
+%             anforderungen={Wk 01}
+% ]{}
+ 
+% Jeder Mensch kann atmen. Ein kritischer Fehler führt zum
+% Verschlucken.
+
+% \end{verbatim} 
+% \end{minipage} 
+ 
+% \caption{Ein dem \textsc{Dfr4} nachempfundenes Layout für Allgemeine Fertigkeiten\label{fig:fertigkeit}} 
+% \end{figure}
+
 % \DescribeMacro{\fertigkeit} Mit dem Kommando
 % |\fertigkeit[|\meta{Schlüssel}|=|\meta{Wert}|]{}| kann ein dem
 % \textsc{Dfr4} nachempfundenes Layout von allgemeinen Fähigkeiten
@@ -230,9 +317,11 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % dar. Letzteres wurde erzielt, indem der Wert |FP| auf \textit{hide}
 % gesetzt bzw.~auf seinem Standard-Wert belassen wurde. Die
 % Tabelle~\ref{tbl:fertigkeit} enthält eine vollständige Liste aller
-% implementierten Schlüssel-Wert-Paare.  \begin{widecenter}
-% \setkeys{fertigkeit}{}{ \begin{longtable}{>{\sf}l | >{\itshape}c |
-% p{12cm}} \caption{Vollständige Liste der Schlüssel und Felder des
+% implementierten Schlüssel-Wert-Paare. 
+
+% \begin{widecenter} \setkeys{fertigkeit}{}{ \begin{longtable}{>{\sf}l
+% | >{\itshape}c | p{12cm}} \caption{Vollständige Liste der Schlüssel
+% und Felder des
 % \textsf{fertigkeit}-Kommandos\label{tbl:fertigkeit}}\\ \rm\bfseries
 % Schlüssel & default & \bfseries Wirkung \tabularnewline\hline name &
 % \fertigkeitName & Der Name der Fertigkeit wird durch
@@ -304,6 +393,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % der Waffenfähigkeit \end{verbatim} \end{minipage} \caption{Ein dem
 % \textsc{Dfr4} nachempfundenes Layout für
 % Waffenfertigkeiten\label{fig:waffe}} \end{figure}
+
 % \DescribeMacro{\waffenfertigkeit} Mit dem Kommando
 % |\waffenfertigkeit[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}|
 % kann ein dem \textsc{Dfr4} nachempfundener Textsatz für
@@ -376,17 +466,18 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % verbraucht} ]{} Beschreibungstext des
 % Zaubers \end{verbatim} \end{minipage} \end{widecenter} \caption{Ein
 % dem Arkanum nachempfundenes Layout für
-% Zauber\label{fig:zauber}} \end{figure} \DescribeMacro{\zauber} Mit
-% dem Kommando |\zauber[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}|
-% kann ein dem Layout des Arkanums nachempfundener Textsatz der Werte
-% eines Zaubers erzeugt werden. Das Ergebnis ist im
-% Abbildung~\ref{fig:zauber} dargestellt. Die vollständige Liste mit
-% Schlüsseln ist in Tabelle \ref{tbl:zauber} abgedruckt. Die Spalte
-% \textit{default} beinhaltet dabei denjenigen Wert, den das
-% entsprechende Feld annimmt, wenn der Wert nicht aktiv gesetzt wird.
-% \DescribeMacro{\zaubervariante} Das Kommando
-% |\zaubervariante{|\meta{Variante}|}| soll benutzt werden um am Ende
-% einer Zauberbeschreibung die Variationen des Zaubers für
+% Zauber\label{fig:zauber}} \end{figure} 
+
+% \DescribeMacro{\zauber} Mit dem Kommando
+% |\zauber[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}| kann ein dem
+% Layout des Arkanums nachempfundener Textsatz der Werte eines Zaubers
+% erzeugt werden. Das Ergebnis ist im Abbildung~\ref{fig:zauber}
+% dargestellt. Die vollständige Liste mit Schlüsseln ist in Tabelle
+% \ref{tbl:zauber} abgedruckt. Die Spalte \textit{default} beinhaltet
+% dabei denjenigen Wert, den das entsprechende Feld annimmt, wenn der
+% Wert nicht aktiv gesetzt wird.  \DescribeMacro{\zaubervariante} Das
+% Kommando |\zaubervariante{|\meta{Variante}|}| soll benutzt werden um
+% am Ende einer Zauberbeschreibung die Variationen des Zaubers für
 % verschiedene Zaubererklassen genauer zu beschreiben, etwa
 % |\zaubervariante{Thaumaturgie}| für einen Abschnitt, der mit
 % \glqq\textbf{\textsc{Thaumaturgie}:} \dots\grqq{} beginnt.
@@ -394,6 +485,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % |\zaubermittel[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}| kann
 % analog ein dem Layout des Arkanums nachempfundener Textsatz der
 % Werte eines Zaubermittels erzeugt werden.
+
 % \DescribeMacro{\zauberwerkstatt} Aus Gründen der Bequemlichkeit und
 % Kompatibilität definieren wir zusätzlich das Kommando
 % |\zauberwerkstatt[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}|,
@@ -450,11 +542,11 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % Zaubermaterialien mit separaten Preisangaben haben, empfiehlt es
 % sich, den entsprechenden Passus unmittelbar in \meta{material} zu
 % schreiben und die Felder \meta{matkosten} und \meta{matannotation}
-% zu ignorieren. \tabularnewline feld & \beschwoerungsfeld & Bei Beschwörungen
-% verwendetes Feld. Jede Angabe außer \textit{none} wird unterhalb der
-% Material-Zeile in Kursiv abgedruckt abgedruckt, wobei die
-% Bezeichnung \textit{Köder} in Fettdruck vornangestellt wird. Ist er
-% Köder \textit{none}, wird die Angabe zum \meta{feldpreis}
+% zu ignorieren. \tabularnewline feld & \beschwoerungsfeld & Bei
+% Beschwörungen verwendetes Feld. Jede Angabe außer \textit{none} wird
+% unterhalb der Material-Zeile in Kursiv abgedruckt abgedruckt, wobei
+% die Bezeichnung \textit{Köder} in Fettdruck vornangestellt wird. Ist
+% er Köder \textit{none}, wird die Angabe zum \meta{feldpreis}
 % ignoriert. \tabularnewline feldpreis & \beschwoerungsfeldpreis & Der
 % Preis des Beschwörungsfelds.  Jede Angabe außer \textit{none} wird
 % hinter dem Beschwörungsfeld in Normalschrift und geklammert
@@ -539,6 +631,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % werden, aura=dämonisch, vorkommen=überall]{} \end{minipage}
 % \hfill~ \caption{Ein dem Bestiarium nachempfundenes Layout für
 % Kreaturendaten\label{fig:bestiarium}} \end{figure}
+
 % \DescribeMacro{\bestiarium} Mit dem Kommando |\bestiarium| kann ein
 % an das Bestiarium angelehntes Layout für die Spieldaten von
 % Kreaturen -- komplett mit Box -- erzeugt werden. Ähnlich wie schon
@@ -546,12 +639,13 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % als Schlüssel-Wert-Paare übergeben. Die Verwendung und das Ergebnis
 % sind in Abbildung~\ref{fig:bestiarium} (links) dargestellt. Die
 % vollständige Liste aller Schlüssel und Felder findet sich in
-% Tabelle~\ref{tbl:bestiarium}.  \DescribeMacro{\best} Mit |\best|
-% kann die aus einigen Abenteuern und Zauberbeschreibungen bekannte
-% Kurzform von Kreaturendaten erzeugt werden, die ohne Box
-% auskommt. Die Verwendung ist identisch mit der des Kommandos
-% |\bestiarium|, das Ergebnis ist ebenfalls sind in
-% Abbildung~\ref{fig:bestiarium} (rechts) dargestellt. Die
+% Tabelle~\ref{tbl:bestiarium}. 
+
+% \DescribeMacro{\best} Mit |\best| kann die aus einigen Abenteuern
+% und Zauberbeschreibungen bekannte Kurzform von Kreaturendaten
+% erzeugt werden, die ohne Box auskommt. Die Verwendung ist identisch
+% mit der des Kommandos |\bestiarium|, das Ergebnis ist ebenfalls sind
+% in Abbildung~\ref{fig:bestiarium} (rechts) dargestellt. Die
 % vollständige Liste aller Schlüssel und Felder findet sich in
 % Tabelle~\ref{tbl:bestiarium}.  \begin{widecenter}
 % \setkeys{best}{}{% \begin{longtable}{>{\sf}l | >{\itshape}c |
@@ -706,6 +800,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \newcounter{midgard@StandardKosten}
 \newcounter{midgard@AusnahmeKosten}
 %    \end{macrocode}
+%\begin{macro}{\EnergieSystem}
 %   Analog verwenden wir einige boolsche Variablen, um das verwendete
 %   Regelsystem zu kontrollieren.
 %    \begin{macrocode}
@@ -803,6 +898,11 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
   \global\def\textddagger{\ensuremath{\ddagger}}
   \newcommand{\texthigh}[1]{\ensuremath{{}^{\textup{#1}}}}
   \newcommand{\textfrac}[2]{\ensuremath{\frac{#1}{#2}}}
+  \@ifpackageloaded{datablist}{%
+    \providecommand{\ifdatablist}[1]{#1}%
+  }{
+    \providecommand{\ifdatablist}[1]{}%
+  }
 }
 %    \end{macrocode}
 % \end{macro}
@@ -826,6 +926,8 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % manuell.
 %    \begin{macrocode}
 \hyphenation{%
+  % general
+  schwarz-ma-gisch%
   Dverg-ar Hu-ne Hu-nen Fro-de-volk Spae-folk%
   % Dvergar
   Hrim-dverg Fell-dverg Glod-dverg Shu-Hou Vin-dverg Sael-dverg%
@@ -968,7 +1070,6 @@ ABENTEUER
 % Wir definieren zusätzlich \textit{default}-Werte für die Variablen,
 % für den Fall, dass sie nicht aufgerufen werden.
 %    \begin{macrocode}
-\savekeys{fertigkeit}{name, entry, kategorie, leitAtt, anforderungen, EW, ungelernt, spielbeginn, maximum, FP, G, S, A}
 \presetkeys{fertigkeit}{name=Fähigkeit, entry=none, kategorie=none, leitAtt=none, anforderungen=none, EW=4, ungelernt=none, spielbeginn=5, maximum=20, FP=hide, G=niemand, S=niemand, A=niemand}{}
 %    \end{macrocode}
 % Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
@@ -1008,21 +1109,25 @@ ABENTEUER
   \ifdefstring{\fertigkeitUngelernt}{none}{}{\hfill ungelernt+(\fertigkeitUngelernt)}%
   \par\vspace{\midgardskip}
   \begin{small}
-  \ifdefstring{\fertigkeitLeitAtt}{none}}{}{\textbf{\fertigkeitLeitAtt}%
-  \ifdefstring{\fertigkeitAnforderungen}{none}{}{%
-  \ifdefstring{\fertigkeitLeitAtt}{none}}{}{, }{\fertigkeitAnforderungen}\hfill Erfolgswert+\fertigkeitEW\hfill% 
-  (+\fertigkeitSpielbeginn/+\fertigkeitMaximum)\par\vspace{\midgardskip}
+    \ifdefstring{\fertigkeitLeitAtt}{none}{}{\textbf{\fertigkeitLeitAtt}}%
+    \ifdefstring{\fertigkeitAnforderungen}{none}{}{%
+      \ifdefstring{\fertigkeitLeitAtt}{none}{}{, }{\fertigkeitAnforderungen}%
+    }%
+    \hfill Erfolgswert+\fertigkeitEW\hfill(+\fertigkeitSpielbeginn/+\fertigkeitMaximum)\par
+    \vspace{\midgardskip}
     \noindent%
     \ifdefstring{\fertigkeitG}{niemand}%
-    {niemand }%
-    {\textbf{\themidgard@GrundKosten :} \nolinebreak \fertigkeitG} -- %
-    \ifdefstring{\fertigkeitS}{niemand}%
-    {niemand }%
-    {\textbf{\themidgard@StandardKosten :} \nolinebreak \fertigkeitS} -- %
-    \ifdefstring{\fertigkeitA}{niemand}%
-    {niemand }%
-    {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \fertigkeitA}\par
-  \end{small}\vspace{\midgardskip}
+                {niemand }%
+                {\textbf{\themidgard@GrundKosten :} \nolinebreak \fertigkeitG} -- %
+                \ifdefstring{\fertigkeitS}{niemand}%
+                            {niemand }%
+                            {\textbf{\themidgard@StandardKosten :} \nolinebreak \fertigkeitS} -- %
+                            \ifdefstring{\fertigkeitA}{niemand}%
+                                        {niemand }%
+                                        {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \fertigkeitA}
+                                        \par
+  \end{small}%
+  \vspace{\midgardskip}
 }}\par}
 %    \end{macrocode}
 % \end{macro}
@@ -1048,8 +1153,6 @@ ABENTEUER
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
-\savekeys{weapon}{name, entry, schaden, reichweite, voraussetzungen,
-  grundkenntnisse, beispiele, schwierigkeit, FP, G, S, A}
 \presetkeys{weapon}{name=Waffe, entry=none, schaden=-, reichweite=,
   voraussetzungen={St\,01, Gs\,01}, grundkenntnisse=-, beispiele=,
   schwierigkeit=normal, FP=hide, G=niemand, S=niemand, A=niemand}{}
@@ -1141,6 +1244,7 @@ ABENTEUER
 %   innerhalb des |\zauber|-Kommandos lokale Kommandos definiert, um
 %   auf die Werte der einzlenen Felder zuzugreifen.
 %    \begin{macrocode}
+\def\zauberValues{}
 \define@key{zauber}{name}{\def\zaubername{#1}}
 \define@key{zauber}{entry}{\def\zauberentry{#1}}
 \define@key{zauber}{anmerkung}{\def\zauberAnmerkung{#1}}
@@ -1148,6 +1252,7 @@ ABENTEUER
 \define@key{zauber}{scroll}{\def\zauberscroll{#1}}
 \define@key{zauber}{th}{\def\zauberth{#1}}
 \define@key{zauber}{art}{\def\zauberart{#1}}
+\define@key{zauber}{artshort}{\def\zauberartshort{#1}}
 \define@key{zauber}{stufe}{\def\zauberstufe{#1}}
 \define@key{zauber}{material}{\def\zaubermaterial{#1}}
 \define@key{zauber}{matpreis}{\def\zaubermatpreis{#1}}
@@ -1164,6 +1269,7 @@ ABENTEUER
 \define@key{zauber}{Zd}{\def\zauberZd{#1}}
 \define@key{zauber}{E}{\def\zauberE{#1}}
 \define@key{zauber}{Rw}{\def\zauberRw{#1}}
+\define@key{zauber}{Rwshort}{\def\zauberRwshort{#1}}
 \define@key{zauber}{Wz}{\def\zauberWz{#1}}
 \define@key{zauber}{Wb}{\def\zauberWb{#1}}
 \define@key{zauber}{Wd}{\def\zauberWd{#1}}
@@ -1172,20 +1278,18 @@ ABENTEUER
 \define@key{zauber}{G}{\def\zauberG{#1}}
 \define@key{zauber}{S}{\def\zauberS{#1}}
 \define@key{zauber}{A}{\def\zauberA{#1}}
+\define@key{zauber}{key}{\def\zauberKey{#1}}
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
-\savekeys{zauber}{name, entry, scroll, th, anmerkung, untertitel, art, stufe,
-  material, matpreis, koeder, koederpreis, feld, feldpreis, matannotation, 
-  prozess, agens, reagens, AP, GZ, E,
-  Zd, Rw, Wz, Wb, Wd, Ur, FP, G, S, A}
 \presetkeys{zauber}{name=Zauber, entry=none, scroll=true, th=none,
-  anmerkung=none, untertitel=none, art=Zauber, stufe=1, 
+  anmerkung=none, untertitel=none, art=Zauber, stufe=1, key=spell,
   material=none, matpreis=none, matannotation=none, 
   koeder=none, koederpreis=none, feld=none, feldpreis=none,
   prozess=Prozess, agens=Agens, reagens=Reagens,
   AP=0, GZ=hide, Zd=keine, Rw=-, E=hide, Wz=-, Wb=-, Wd=-, Ur={n.\,A.},
   FP=hide, G=niemand, S=niemand, A=niemand}{}
+ %  ,  artshort=none, Rwshort=none}{}
 %    \end{macrocode}
 % Das |zauber|-Kommando wird eingeleitet mit etwas vertikalem Platz,
 % der nach Bedarf (z.\,B.~am Seitenanfang) nicht dargestellt
@@ -1198,7 +1302,8 @@ ABENTEUER
 %    \begin{macrocode}
 \newcommand*\zauber[2][]{%
   \pagebreak[2]\addvspace{1em}
-\setkeys{zauber}{#1}{\begingroup
+\begingroup
+\setkeys{zauber}{#1}{
 %    \end{macrocode}
 % Wenn |\zauberFP| \textit{hide} ist, müssen die FP nicht ausgelesen
 % werden. Andernfalls werden Counter für Standard- und Ausnahmekosten
@@ -1217,10 +1322,13 @@ ABENTEUER
 %    \begin{macrocode}
 \phantomsection%
 \ifdefstring{\zauberentry}{none}{%
-        \addcontentsline{toc}{subsubsection}{\zaubername}
-        }{%
-        \addcontentsline{toc}{subsubsection}{\zauberentry}
-        }
+  \addcontentsline{toc}{subsubsection}{\zaubername}
+}{%
+  \addcontentsline{toc}{subsubsection}{\zauberentry}
+}
+ % \ifdefstring{\zauberRwshort}{none}{\let\zauberRwshort\zauberRw }{}
+ % \ifdefstring{\zauberartshort}{none}{\let\zauberartshort\zauberart }{}
+\ifdatablist{\adddataline{\zauberKey}{\zauberValues}}%
 %    \end{macrocode}
 % Zunächst wird der Name des Zaubers gedruckt. Dann wird zunächst
 % |\hfill| benutzt, um an das Ende der Zeile vorzurücken. 
@@ -1348,7 +1456,7 @@ ABENTEUER
   {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zauberA}\par%
   \vspace{1.6\midgardskip}
 }%
-\endgroup}%
+}\endgroup%
 %    \end{macrocode}
 % Abschließend sorgen wir für einen ausreichenden Abstand und
 % verhindern die Einrückung des auf den Datenblock folgenden Absatzes.
@@ -1624,14 +1732,6 @@ Beschwörung~%
 \define@key{best}{zauberArtigMoreEW}  {\def\bestZauberArtigMoreEW {#1}}
 \define@key{best}{zauberArtigMMore}   {\def\bestZauberArtigMMore {#1}}
 \define@key{best}{zauberArtigMMoreEW} {\def\bestZauberArtigMMoreEW {#1}}
-
-\savekeys{best}{%
-  name mag, aura, grad, typ, modus, addendum, variant, size, LP, AP,
-  RK, EP, In, St, Gw, B, MW, abwehr, resistenz, angriff, zauber,
-  zauberMore, zauberMMore, zauberArtig, zauberArtigMore,
-  zauberArtigMMore, zauberEW,
-  zauberMoreEW, zauberMMoreEW, zauberArtigEW, zauberArtigMoreEW,
-  zauberArtigMMoreEW, bes, vorkommen, energy, initiative,raufen }
 
 \presetkeys{best}{ name=Wesen, grad=0, modus=none, typ=none,
   mag=false, aura=none, size=normal, addendum=none, variant=none,
