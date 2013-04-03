@@ -911,6 +911,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % verwendet. Um der Bequemlichkeit willen wollen wir auch das Einfügen
 % dieser Sonderzeichen direkt in den \LaTeX Quellcode erlauben.
 %    \begin{macrocode}
+\DeclareUnicodeCharacter{00B0}{\ensuremath{^\circ}}
 \DeclareUnicodeCharacter{1D9C}{\ensuremath{^\textrm{c}}}
 \DeclareUnicodeCharacter{1DA0}{\ensuremath{^\textrm{f}}}
 \DeclareUnicodeCharacter{1D56}{\ensuremath{^\textrm{p}}}
@@ -1470,18 +1471,38 @@ ABENTEUER
 %\begin{macro}{\zaubersalz}
 % Aus Bequemlichketisgründen definieren wir auch ein Kommando für Zaubersalze, das intern jedoch das Kommando für Zauber aufruft -- mit den voreingestellten Standard-Spieldaten von Zaubersalzen.
 %    \begin{macrocode}
-\newcommand\zaubersalz[2][]{\zauber[
-    name=Zaubersalz,
-    art=Gedankenzauber, 
-    stufe=1, 
-    AP=1, 
-    Rw=500\,m,
-    Zd=1\,sec, 
-    Rw=500\,m,
-    material=Zaubersalz,
-    matpreis=\geld{20},
-    Ur=dämonisch,
-    #1]{#2} }
+\newcommand*\zaubersalz[2][]{
+\zauber[%
+    name=Zaubersalz,%
+    art=Gedankenzauber,% 
+    stufe=1,%
+    AP=1,%
+    Rw={500\,m},%
+    Zd={1\,sec},%
+    Rw={500\,m},%
+    material=Zaubersalz,%
+    matpreis={\geld{20}},%
+    Ur={dämonisch},%
+    #1%
+]{#2}%
+}
+%     \end{macrocode}
+%\end{macro}
+%\begin{macro}{\zauberlied}
+% Ebenfalls us Bequemlichketisgründen definieren wir auch ein Kommando für Zauberlieder, das intern jedoch das Kommando für Zauber aufruft -- mit den voreingestellten Standard-Spieldaten von Zauberliedern.
+%    \begin{macrocode}
+\newcommand*\zauberlied[2][]{%
+\zauber[%
+    name=Zauberlied,%
+    Zd=hide,%
+    Rw=-,%
+    AP=2,%
+    Wz=Geist,%
+    art=Zauberlied,%
+    Ur=bardisch,%
+    #1%
+]{#2}%
+}
 %     \end{macrocode}
 %\end{macro}
 %\begin{macro}{\beschwoerung}
