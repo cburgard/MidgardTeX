@@ -912,6 +912,9 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % dieser Sonderzeichen direkt in den \LaTeX Quellcode erlauben.
 %    \begin{macrocode}
 \DeclareUnicodeCharacter{00B0}{\ensuremath{^\circ}}
+\DeclareUnicodeCharacter{00B2}{\ensuremath{^2}}
+\DeclareUnicodeCharacter{00B3}{\ensuremath{^3}}
+\DeclareUnicodeCharacter{00B9}{\ensuremath{^1}}
 \DeclareUnicodeCharacter{1D9C}{\ensuremath{^\textrm{c}}}
 \DeclareUnicodeCharacter{1DA0}{\ensuremath{^\textrm{f}}}
 \DeclareUnicodeCharacter{1D56}{\ensuremath{^\textrm{p}}}
@@ -1245,7 +1248,6 @@ ABENTEUER
 %   innerhalb des |\zauber|-Kommandos lokale Kommandos definiert, um
 %   auf die Werte der einzlenen Felder zuzugreifen.
 %    \begin{macrocode}
-\def\zauberValues{}
 \define@key{zauber}{name}{\def\zaubername{#1}}
 \define@key{zauber}{entry}{\def\zauberentry{#1}}
 \define@key{zauber}{anmerkung}{\def\zauberAnmerkung{#1}}
@@ -1279,12 +1281,12 @@ ABENTEUER
 \define@key{zauber}{G}{\def\zauberG{#1}}
 \define@key{zauber}{S}{\def\zauberS{#1}}
 \define@key{zauber}{A}{\def\zauberA{#1}}
-\define@key{zauber}{key}{\def\zauberKey{#1}}
+\define@key{zauber}{spelltype}{\def\zauberKey{#1}}
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
 \presetkeys{zauber}{name=Zauber, entry=none, scroll=true, th=none,
-  anmerkung=none, untertitel=none, art=Zauber, stufe=1, key=spell,
+  anmerkung=none, untertitel=none, art=Zauber, stufe=1, spelltype=spell,
   material=none, matpreis=none, matannotation=none, 
   koeder=none, koederpreis=none, feld=none, feldpreis=none,
   prozess=Prozess, agens=Agens, reagens=Reagens,
@@ -1327,9 +1329,9 @@ ABENTEUER
 }{%
   \addcontentsline{toc}{subsubsection}{\zauberentry}
 }
- % \ifdefstring{\zauberRwshort}{none}{\let\zauberRwshort\zauberRw }{}
- % \ifdefstring{\zauberartshort}{none}{\let\zauberartshort\zauberart }{}
-\ifdatablist{\adddataline{\zauberKey}{\zauberValues}}%
+\expandafter\ifcsdef{\zauberKey exportvalues}{%
+  \ifdatablist{\adddataline{\zauberKey}{\csname \zauberKey exportvalues\endcsname}}%
+}{}%
 %    \end{macrocode}
 % Zunächst wird der Name des Zaubers gedruckt. Dann wird zunächst
 % |\hfill| benutzt, um an das Ende der Zeile vorzurücken. 
@@ -1473,6 +1475,7 @@ ABENTEUER
 %    \begin{macrocode}
 \newcommand*\zaubersalz[2][]{
 \zauber[%
+    spelltype=salt,
     name=Zaubersalz,%
     art=Gedankenzauber,% 
     stufe=1,%
@@ -1493,6 +1496,7 @@ ABENTEUER
 %    \begin{macrocode}
 \newcommand*\zauberlied[2][]{%
 \zauber[%
+    spelltype=music,
     name=Zauberlied,%
     Zd=hide,%
     Rw=-,%
@@ -1510,7 +1514,9 @@ ABENTEUER
 %    \begin{macrocode}
 \newcommand*\beschwoerung[2][]{%
   \pagebreak[2]\addvspace{1em}
-\setkeys{zauber}{#1}{\begingroup
+\begingroup
+\presetkeys{zauber}{name=Beschwörung, scroll=false, art=Beschwörung, spelltype=incantation}{}
+\setkeys{zauber}{#1}{
 %    \end{macrocode}
 % Wenn |\zauberFP| \textit{hide} ist, müssen die FP nicht ausgelesen
 % werden. Andernfalls werden Counter für Standard- und Ausnahmekosten
@@ -1533,6 +1539,9 @@ ABENTEUER
         }{%
         \addcontentsline{toc}{subsubsection}{\zauberentry}
         }
+\expandafter\ifcsdef{\zauberKey exportvalues}{%
+  \ifdatablist{\adddataline{\zauberKey}{\csname \zauberKey exportvalues\endcsname}}%
+}{}%
 %    \end{macrocode}
 % Zunächst wird der Name der Beschwörung gedruckt. Dann wird zunächst
 % |\hfill| benutzt, um an das Ende der Zeile vorzurücken. 
@@ -1626,7 +1635,8 @@ Beschwörung~%
   {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zauberA}\par%
   \vspace{1.6\midgardskip}
 }%
-\endgroup}%
+}%
+\endgroup%
 %    \end{macrocode}
 % Abschließend sorgen wir für einen ausreichenden Abstand und
 % verhindern die Einrückung des auf den Datenblock folgenden Absatzes.
