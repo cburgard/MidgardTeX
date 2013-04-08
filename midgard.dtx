@@ -1362,7 +1362,7 @@ ABENTEUER
 % kursiv abgedruckt.
 %    \begin{macrocode}
 \ifdefstring{\zauberUntertitel}{none}{}%
-{{\par\itshape\zauberUntertitel\par}}%
+{{\nopagebreak\par\itshape\zauberUntertitel\par}}%
 %    \end{macrocode}
 % Wir unterdrücken einen Zeilenumbruch unmittelbar nach der
 % Titelzeile. 
@@ -1492,7 +1492,7 @@ ABENTEUER
 %     \end{macrocode}
 %\end{macro}
 %\begin{macro}{\zauberlied}
-% Ebenfalls us Bequemlichketisgründen definieren wir auch ein Kommando für Zauberlieder, das intern jedoch das Kommando für Zauber aufruft -- mit den voreingestellten Standard-Spieldaten von Zauberliedern.
+% Ebenfalls aus Bequemlichketisgründen definieren wir auch ein Kommando für Zauberlieder, das intern jedoch das Kommando für Zauber aufruft -- mit den voreingestellten Standard-Spieldaten von Zauberliedern.
 %    \begin{macrocode}
 \newcommand*\zauberlied[2][]{%
 \zauber[%
@@ -1503,6 +1503,21 @@ ABENTEUER
     AP=2,%
     Wz=Geist,%
     art=Zauberlied,%
+    Ur=bardisch,%
+    #1%
+]{#2}%
+}
+%     \end{macrocode}
+%\end{macro}
+%\begin{macro}{\zaubertanz}
+% Ebenfalls aus Bequemlichketisgründen definieren wir auch ein Kommando für Zaubertänze, das intern jedoch das Kommando für Zauber aufruft -- mit den voreingestellten Standard-Spieldaten von Zaubertänze.
+%    \begin{macrocode}
+\newcommand*\zaubertanz[2][]{%
+\zauber[%
+    spelltype=dance,
+    name=Zaubertanz,%
+    art=Zaubertanz,
+    Rw={0\,m},%
     Ur=bardisch,%
     #1%
 ]{#2}%
@@ -1568,7 +1583,7 @@ ABENTEUER
 % kursiv abgedruckt.
 %    \begin{macrocode}
 \ifdefstring{\zauberUntertitel}{none}{}%
-{{\par\itshape\zauberUntertitel\par}}%
+{{\nopagebreak\par\itshape\zauberUntertitel\par}}%
 %    \end{macrocode}
 % Wir unterdrücken einen Zeilenumbruch unmittelbar nach der
 % Titelzeile. 
