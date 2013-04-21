@@ -253,6 +253,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %             kategorie=Kampf, 
 %             ungelernt=0,
 %             leitAtt={Gs\,91}, 
+%             EW=4,
 %             anforderungen={Gw\,81, \itshape Schleichen+12, Meucheln+12},
 %             FP=200,
 %             G=As,
@@ -282,7 +283,8 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %             leitAtt={Gs\,91}, 
 %             anforderungen={Gw\,81, \itshape Schleichen+12,
 %             Meucheln+12}, 
-%             FP=200, 
+%             FP=200,
+%             EW=4, 
 %             G=As, 
 %             S={\textsc{Käm} a.~As}, 
 %             A={alle anderen}
@@ -1074,41 +1076,42 @@ ABENTEUER
 % Wir definieren zusätzlich \textit{default}-Werte für die Variablen,
 % für den Fall, dass sie nicht aufgerufen werden.
 %    \begin{macrocode}
-\presetkeys{fertigkeit}{name=Fähigkeit, entry=none, kategorie=none, leitAtt=none, anforderungen=none, EW=4, ungelernt=none, spielbeginn=5, maximum=20, FP=hide, G=niemand, S=niemand, A=niemand}{}
+\presetkeys{fertigkeit}{name=Fähigkeit, entry=none, kategorie=none, leitAtt=none, anforderungen=none, EW=none, ungelernt=none, spielbeginn=5, maximum=20, FP=hide, G=niemand, S=niemand, A=niemand}{}
 %    \end{macrocode}
 % Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
 % Seitenumbruch, um unschöne Umbrüche im Layout selbst zu vermindern.
 %    \begin{macrocode}
 \newcommand*\fertigkeit[2][]{%
-\pagebreak[2]
+\pagebreak[2]\begingroup%
 %    \end{macrocode}
 % Anschließend wird der Befehl |setkeys| aufgerufen, um auf die zuvor
 % definierten Kommandos zurückgreifen zu können.
 %    \begin{macrocode}
-\setkeys{fertigkeit}{#1}{
+\setkeys{fertigkeit}{#1}{%
 %    \end{macrocode}
 % Wenn |\fertigkeitFP| \textit{hide} ist, müssen die FP nicht ausgelesen
 % werden. Andernfalls werden Counter für Standard- und Ausnahmekosten
 % definiert und nach der für Fähigkeiten üblichen Formel aus den
 % Standardkosten berechnet.
 %    \begin{macrocode}
-\ifdefstring{\fertigkeitFP}{hide}{}{
+\ifdefstring{\fertigkeitFP}{hide}{}{%
   \setcounter{midgard@StandardKosten}{\fertigkeitFP}%
   \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
   \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*2}%
 }%
 \phantomsection%
+\setlength{\parindent}{0pt}%
 \ifdefstring{\fertigkeitEntry}{none}{%
-  \addcontentsline{toc}{subsubsection}{\fertigkeitName}
+  \addcontentsline{toc}{subsubsection}{\fertigkeitName}%
 }{%
-  \addcontentsline{toc}{subsubsection}{\fertigkeitEntry}
-}
-\par\noindent\textbf{\fertigkeitName}%
-\ifdefstring{\fertigkeitFP}{hide}{+\fertigkeitEW}{}%
+  \addcontentsline{toc}{subsubsection}{\fertigkeitEntry}%
+}%
+\textbf{\fertigkeitName}%
+\ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{none}} }{}{+\fertigkeitEW}%
 \ifdefstring{\fertigkeitKategorie}{none}{}{~(\fertigkeitKategorie)}%
-\ifdefstring{\fertigkeitFP}{hide}{%
-  \ifdefstring{\fertigkeitLeitAtt}{none}{}{\hfill\fertigkeitLeitAtt\hfill}
-  \ifdefstring{\fertigkeitAnforderungen}{none}{}{\hfill{\fertigkeitAnforderungen}\hfill}
+\ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{none}} }{%
+  \ifdefstring{\fertigkeitLeitAtt}{none}{}{\hfill\fertigkeitLeitAtt\hfill}%
+  \ifdefstring{\fertigkeitAnforderungen}{none}{}{\hfill{\fertigkeitAnforderungen}\hfill}~%
 }{%
   \ifdefstring{\fertigkeitUngelernt}{none}{}{\hfill ungelernt+(\fertigkeitUngelernt)}%
   \par\vspace{\midgardskip}
@@ -1117,22 +1120,25 @@ ABENTEUER
     \ifdefstring{\fertigkeitAnforderungen}{none}{}{%
       \ifdefstring{\fertigkeitLeitAtt}{none}{}{, }{\fertigkeitAnforderungen}%
     }%
-    \hfill Erfolgswert+\fertigkeitEW\hfill(+\fertigkeitSpielbeginn/+\fertigkeitMaximum)\par
-    \vspace{\midgardskip}
-    \noindent%
-    \ifdefstring{\fertigkeitG}{niemand}%
-                {niemand }%
-                {\textbf{\themidgard@GrundKosten :} \nolinebreak \fertigkeitG} -- %
-                \ifdefstring{\fertigkeitS}{niemand}%
-                            {niemand }%
-                            {\textbf{\themidgard@StandardKosten :} \nolinebreak \fertigkeitS} -- %
-                            \ifdefstring{\fertigkeitA}{niemand}%
-                                        {niemand }%
-                                        {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \fertigkeitA}
-                                        \par
+    \hfill Erfolgswert+\fertigkeitEW\hfill(+\fertigkeitSpielbeginn/+\fertigkeitMaximum)%
   \end{small}%
+}\par%
+\ifdefstring{\fertigkeitFP}{hide}{}{%
+  \begin{small}%
   \vspace{\midgardskip}
-}}\par}
+  \ifdefstring{\fertigkeitG}{niemand}%
+              {niemand }%
+              {\textbf{\themidgard@GrundKosten :} \nolinebreak \fertigkeitG} -- %
+              \ifdefstring{\fertigkeitS}{niemand}%
+                          {niemand }%
+                          {\textbf{\themidgard@StandardKosten :} \nolinebreak \fertigkeitS} -- %
+                          \ifdefstring{\fertigkeitA}{niemand}%
+                                      {niemand }%
+                                      {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \fertigkeitA}
+                                      \par
+    \end{small}%
+    \vspace{\midgardskip}
+}}\endgroup\par}
 %    \end{macrocode}
 % \end{macro}
 % 
@@ -1681,8 +1687,7 @@ Beschwörung~%
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
-\savekeys{zaubermittel}{voraussetzungen,stufe,zeitaufwand,FP, G, S, A, GZ, entry}
-\presetkeys{zaubermittel}{voraussetzungen=keine,stufe=1,zeitaufwand=keine,FP=keine,G=niemand,S=niemand,A=niemand,entry=none}{}
+\presetkeys{zaubermittel}{voraussetzungen=keine,stufe=1,zeitaufwand=keine,FP=keine,G=niemand,S=niemand,A=niemand,entry=none,kosten=--,zeitaufwand=--}{}
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*\zaubermittel[2][]{%
