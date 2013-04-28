@@ -1335,9 +1335,6 @@ ABENTEUER
 }{%
   \addcontentsline{toc}{subsubsection}{\zauberentry}
 }
-\expandafter\ifcsdef{\zauberKey exportvalues}{%
-  \ifdatablist{\adddataline{\zauberKey}{\csname \zauberKey exportvalues\endcsname}}%
-}{}%
 %    \end{macrocode}
 % Zunächst wird der Name des Zaubers gedruckt. Dann wird zunächst
 % |\hfill| benutzt, um an das Ende der Zeile vorzurücken. 
@@ -1393,16 +1390,17 @@ ABENTEUER
 % \textit{none} sind -- |\zaubermatpreis| und |\zaubermatannotation|,
 % ersteres geklammert, letzteres durch Semikolon abgetrennt.
 %    \begin{macrocode}
+\def\zaubermattotal{}%
 \ifdefstring{\zaubermaterial}{none}%
-          {}%
-          {\textit{\zaubermaterial}%
-            \ifdefstring{\zaubermatpreis}{none}%
             {}%
-            { (\zaubermatpreis)}%
-            \ifdefstring{\zaubermatannotation}{none}%
-            {}%
-            {; \zaubermatannotation}%
-          }\par%
+            {\appto\zaubermattotal{\textit{\zaubermaterial}}%
+              \ifdefstring{\zaubermatpreis}{none}%
+                          {}%
+                          {\appto\zaubermattotal{~(\zaubermatpreis)}%
+                            \ifdefstring{\zaubermatannotation}{none}%
+                                        {}%
+                                        {\appto\zaubermattotal{; \zaubermatannotation}}}}%
+\zaubermattotal\par%
 \ifdefstring{\beschwoerungsfeld}{none}%
            {}%
            {\beschwoerungsfeld%
@@ -1465,6 +1463,9 @@ ABENTEUER
   {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zauberA}\par%
   \vspace{1.6\midgardskip}
 }%
+\expandafter\ifcsdef{\zauberKey exportvalues}{%
+  \ifdatablist{\adddataline{\zauberKey}{\csname \zauberKey exportvalues\endcsname}}%
+}{}%
 }\endgroup%
 %    \end{macrocode}
 % Abschließend sorgen wir für einen ausreichenden Abstand und
