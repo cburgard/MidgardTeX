@@ -1023,7 +1023,7 @@ ABENTEUER
 \numgdef{\midgard@CopperPerSilver}{10}
 \numgdef{\midgard@SilverPerGold  }{10}
 \newcommand {\setzeKupferProSilber}[1]{\numgdef{\midgard@CopperPerSilver}{#1}}
-\newcommand {\setzeSilberProGold}[1]{\numgdef{\midgard@CopperPerSilver}{#1}}
+\newcommand {\setzeSilberProGold}[1]{\numgdef{\midgard@SilverPerGold}{#1}}
 \newcommand{\geld}[1]{%
   \numdef{\midgard@copperpieces}{#1}%
   \ifnumless{\midgard@copperpieces}{\midgard@CopperPerSilver}{%
