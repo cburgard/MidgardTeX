@@ -1002,6 +1002,12 @@ ABENTEUER
   roundcorner=10pt,%
 %%%  tikzsetting={drop shadow={shadow xshift=1.0ex, shadow yshift=-0.5em, fill=black!50, opacity=1, every shadow }}%
 ]{beispiel}
+\newenvironment{rundbox}[1][]{
+  \begin{mdframed}[roundcorner=10pt,innertopmargin=0.5em,innerbottommargin=0.5em]
+    \textbf{#1}\par
+}{
+  \end{mdframed}
+}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1270,9 +1276,16 @@ ABENTEUER
 \define@key{zauber}{koederpreis}{\def\beschwoerungskoederpreis{#1}}
 \define@key{zauber}{feld}{\def\beschwoerungsfeld{#1}}
 \define@key{zauber}{feldpreis}{\def\beschwoerungsfeldpreis{#1}}
-\define@key{zauber}{prozess}{\def\zauberprozess{#1}}
-\define@key{zauber}{agens}{\def\zauberagens{#1}}
-\define@key{zauber}{reagens}{\def\zauberreagens{#1}}
+\define@key{zauber}{prozess}{\def\zauberprozess{#1}\def\beschwoerungsecprozess {#1}}
+\define@key{zauber}{agens}  {\def\zauberagens  {#1}\def\beschwoerungsecagens   {#1}}
+\define@key{zauber}{reagens}{\def\zauberreagens{#1}\def\beschwoerungsecreagens {#1}}
+\define@key{zauber}{secprozess} {\def\beschwoerungsecprozess {#1}}
+\define@key{zauber}{secagens}   {\def\beschwoerungsecagens   {#1}}
+\define@key{zauber}{secreagens} {\def\beschwoerungsecreagens {#1}}
+\define@key{zauber}{primprozess}{\def\beschwoerungprimprozess{#1}}
+\define@key{zauber}{primagens}  {\def\beschwoerungprimagens  {#1}}
+\define@key{zauber}{primreagens}{\def\beschwoerungprimreagens{#1}}
+\define@key{zauber}{showformula}{\def\showformula{#1}}
 \define@key{zauber}{AP}{\def\zauberAP{#1}}
 \define@key{zauber}{GZ}{\def\zauberGZ{#1}}
 \define@key{zauber}{Zd}{\def\zauberZd{#1}}
@@ -1401,20 +1414,6 @@ ABENTEUER
                                         {}%
                                         {\appto\zaubermattotal{; \zaubermatannotation}}}}%
 \zaubermattotal\par%
-\ifdefstring{\beschwoerungsfeld}{none}%
-           {}%
-           {\beschwoerungsfeld%
-             \ifdefstring{\beschwoerungsfeldpreis}{none}%
-                        {}%
-                        { (\beschwoerungsfeldpreis)}%
-           }\par%
-\ifdefstring{\beschwoerungskoeder}{none}%
-           {}%
-           {\textbf{Köder:} \textit{\beschwoerungskoeder}%
-             \ifdefstring{\beschwoerungskoederpreis}{none}%
-                        {}%
-                        { (\beschwoerungskoederpreis)}%
-           }\par%
 %    \end{macrocode}
 % Die Zauberformel wird mit etwas Abstand gedruckt, dazwischen jeweils
 % die Symbole \includegraphics[height=0.7em]{pics/box}
@@ -1537,7 +1536,11 @@ ABENTEUER
 \newcommand*\beschwoerung[2][]{%
   \pagebreak[2]\addvspace{1em}
 \begingroup
-\presetkeys{zauber}{name=Beschwörung, scroll=false, art=Beschwörung, spelltype=incantation}{}
+\presetkeys{zauber}{name=Beschwörung, scroll=false, art=Beschwörung, spelltype=incantation,%
+  primprozess=Verändern, primagens=Magan, primreagens=Metall,%
+  secprozess=Beherrschen, secagens=Magan, secreagens=Wasser,%
+  showformula=none%
+}{}
 \setkeys{zauber}{#1}{
 %    \end{macrocode}
 % Wenn |\zauberFP| \textit{hide} ist, müssen die FP nicht ausgelesen
@@ -1561,9 +1564,6 @@ ABENTEUER
         }{%
         \addcontentsline{toc}{subsubsection}{\zauberentry}
         }
-\expandafter\ifcsdef{\zauberKey exportvalues}{%
-  \ifdatablist{\adddataline{\zauberKey}{\csname \zauberKey exportvalues\endcsname}}%
-}{}%
 %    \end{macrocode}
 % Zunächst wird der Name der Beschwörung gedruckt. Dann wird zunächst
 % |\hfill| benutzt, um an das Ende der Zeile vorzurücken. 
@@ -1611,21 +1611,45 @@ Beschwörung~%
 % Anstelle des Zaubermaterials listen wir den Köder und das
 % Beschwörungsfeld auf.
 %    \begin{macrocode}
+\def\beschwoerungsfeldtotal{}%
 \ifdefstring{\beschwoerungsfeld}{none}%
            {}%
-           {\beschwoerungsfeld%
+           {\appto\beschwoerungsfeldtotal{\beschwoerungsfeld}%
              \ifdefstring{\beschwoerungsfeldpreis}{none}%
                         {}%
-                        { (\beschwoerungsfeldpreis)}%
-           }\par%
+                        {\appto\beschwoerungsfeldtotal{~(\beschwoerungsfeldpreis)}}%
+           }%
+\beschwoerungsfeldtotal\par%
+\def\beschwoerungskoedertotal{}%
 \ifdefstring{\beschwoerungskoeder}{none}%
-           {}%
-           {\textbf{Köder:} \textit{\beschwoerungskoeder}%
-             \ifdefstring{\beschwoerungskoederpreis}{none}%
-                        {}%
-                        { (\beschwoerungskoederpreis)}%
-           }\par%
-\vspace{1.0\midgardskip}%
+            {}%
+            {\appto\beschwoerungskoedertotal{\textit{\beschwoerungskoeder}}%
+              \ifdefstring{\beschwoerungskoederpreis}{none}%
+                          {}%
+                          {\appto\beschwoerungskoedertotal{~(\beschwoerungskoederpreis)}}%
+            }%
+\ifdefstring{\beschwoerungskoeder}{none}%
+            {\textbf{Köder:}~\beschwoerungskoedertotal\par}
+            {}% 
+%    \end{macrocode}
+% Gegebenenfalls drucken wir auch die Zauberformeln, falls dies
+% gewünscht ist.
+%    \begin{macrocode}
+\vspace{\midgardskip}
+\ifdefstring{\showformula}{none}{}{
+  \beschwoerungprimprozess~%
+  \includegraphics[height=0.7em]{pics/box}~%
+  \beschwoerungprimagens~%
+  \includegraphics[height=0.7em]{pics/arrow}~%
+  \beschwoerungprimreagens\par%
+  \beschwoerungsecprozess~%
+  \includegraphics[height=0.7em]{pics/box}~%
+  \beschwoerungsecagens~%
+  \includegraphics[height=0.7em]{pics/arrow}~%
+  \beschwoerungsecreagens\par%
+  \vspace{\parskip}%
+  \vspace{\midgardskip}%
+}%
 %    \end{macrocode}
 % In einer kompaktifizierten |tabbing|-Umgebung drucken wir die
 % wichtigen Daten jeweils, falls diese nicht auf \textit{hide}
@@ -1657,6 +1681,9 @@ Beschwörung~%
   {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zauberA}\par%
   \vspace{1.6\midgardskip}
 }%
+\expandafter\ifcsdef{\zauberKey exportvalues}{%
+  \ifdatablist{\adddataline{\zauberKey}{\csname \zauberKey exportvalues\endcsname}}%
+}{}%
 }%
 \endgroup%
 %    \end{macrocode}
@@ -1667,6 +1694,16 @@ Beschwörung~%
 \@afterheading%
 \par
 }%
+%    \end{macrocode}
+% Schlussendlich definieren wir noch ein Kürzel für Anrufungen-, Namens- und Geisterbeschwörungen,
+%    \begin{macrocode}
+\newcommand*\individualbeschwoerung[2][]{%
+  \beschwoerung[%
+    secreagens=Luft,%
+    showformula=true,%
+    #1%
+  ]{#2}%
+}
 %    \end{macrocode}
 %\end{macro}
 %
@@ -1930,10 +1967,10 @@ Grad \bestGrad%
 \ifdefstring{\bestInitiative}{none}{}{ -- \textsc{Initiative}+\bestInitiative}%
 ~-- \textsc{Abwehr}+\bestAbwehr, \textsc{Resistenz}+\bestResistenz%
 \ifdefstring{\bestBes}{none}{%
-  \ifdefstring{\bestAura}{none}{}{\par\textbf{\textsc{Aura:} \bestAura}}%
+  \ifdefstring{\bestAura}{none}{}{\par\textsc{Aura:} \bestAura}%
 }{%
   \par\textbf{Bes.:} \bestBes%
-  \ifdefstring{\bestAura}{none}{}{-- \textbf{\textsc{Aura:} \bestAura}}%
+  \ifdefstring{\bestAura}{none}{}{-- \textsc{Aura:} \bestAura}%
 }%
 \ifdefstring{\bestZauber}{none}{}{\par\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}}%
 \ifdefstring{\bestZauberMore}{none}{}{\par\textbf{Zaubern+\bestZauberMoreEW:} \textit{\bestZauberMore}}%
