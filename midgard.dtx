@@ -923,6 +923,8 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \DeclareUnicodeCharacter{02E2}{\ensuremath{^\textrm{s}}}
 \DeclareUnicodeCharacter{00BC}{\ensuremath{\nicefrac{1}{4}}}
 \DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{201E}{\glqq}
+\DeclareUnicodeCharacter{201C}{\grqq}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\hyphenation}
@@ -1629,8 +1631,8 @@ Beschwörung~%
                           {\appto\beschwoerungskoedertotal{~(\beschwoerungskoederpreis)}}%
             }%
 \ifdefstring{\beschwoerungskoeder}{none}%
-            {\textbf{Köder:}~\beschwoerungskoedertotal\par}
             {}% 
+            {\textbf{Köder:}~\beschwoerungskoedertotal\par}%
 %    \end{macrocode}
 % Gegebenenfalls drucken wir auch die Zauberformeln, falls dies
 % gewünscht ist.
