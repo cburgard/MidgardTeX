@@ -1090,6 +1090,7 @@ ABENTEUER
 % Seitenumbruch, um unschöne Umbrüche im Layout selbst zu vermindern.
 %    \begin{macrocode}
 \newcommand*\fertigkeit[2][]{%
+\vspace{0.5em plus 0.5em}
 \pagebreak[2]\begingroup%
 %    \end{macrocode}
 % Anschließend wird der Befehl |setkeys| aufgerufen, um auf die zuvor
@@ -1109,6 +1110,7 @@ ABENTEUER
 }%
 \phantomsection%
 \setlength{\parindent}{0pt}%
+\setlength{\parskip}{0pt}%
 \ifdefstring{\fertigkeitEntry}{none}{%
   \addcontentsline{toc}{subsubsection}{\fertigkeitName}%
 }{%
