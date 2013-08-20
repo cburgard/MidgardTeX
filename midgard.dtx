@@ -823,6 +823,28 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %    \end{macrocode}
 %\end{macro}
 %
+%\begin{macro}{\iquo}
+% Berechnet den Ganzzahl-Quotienten der Argumente.
+%    \begin{macrocode}
+\newcommand{\iquo}[2]{% integer quotient of #1 divided by #2
+  \romannumeral-`\.% for 2-step expansion
+  \ifnum#1=0
+    \expandafter 0%
+  \else
+    \the\numexpr(#1-\numexpr(#2-\ifodd \numexpr#2\relax 1 \else 0\fi)/2\relax)/(#2)\expandafter\relax
+  \fi
+}
+%    \end{macrocode}
+%\end{macro}
+
+%\begin{macro}{\irem}
+% Berechnet den Ganzzahl-Divisionsrest der Argumente.
+%    \begin{macrocode}
+\newcommand{\irem}[2]{% integer remainder of #1 divided by #2
+  \the\numexpr #1-#2*\iquo{#1}{#2}\relax}
+%    \end{macrocode}
+%\end{macro}
+
 %\begin{macro}{\hashstring}
 %    Der Befehl |\hashstring| wird intern verwendet, um Querverweise 
 %    \textit{automagisch} zu handhaben. Er implementiert ein simples 
@@ -1030,33 +1052,38 @@ ABENTEUER
 %     \begin{macrocode}
 \numgdef{\midgard@CopperPerSilver}{10}
 \numgdef{\midgard@SilverPerGold  }{10}
-\newcommand {\setzeKupferProSilber}[1]{\numgdef{\midgard@CopperPerSilver}{#1}}
-\newcommand {\setzeSilberProGold}[1]{\numgdef{\midgard@SilverPerGold}{#1}}
-\newcommand{\geld}[1]{%
-  \numdef{\midgard@copperpieces}{#1}%
-  \ifnumless{\midgard@copperpieces}{\midgard@CopperPerSilver}{%
-    \numdef{\midgard@silverpieces}{0}%
-  }{%
-    \numdef{\midgard@silverpieces}{(10*\midgard@copperpieces/\midgard@CopperPerSilver - 5)/10}%
-    \numdef{\midgard@copperpieces}{\midgard@copperpieces - (\midgard@CopperPerSilver * \midgard@silverpieces)}%
-  }%
-  \ifnumless{\midgard@silverpieces}{\midgard@SilverPerGold}{%
-    \numdef{\midgard@goldpieces}{0}%
-  }{%
-    \numdef{\midgard@goldpieces}{(10*\midgard@silverpieces /\midgard@SilverPerGold - 5)/10}%
-    \numdef{\midgard@silverpieces}{\midgard@silverpieces - (\midgard@SilverPerGold * \midgard@goldpieces)}%
-  }%
-  \ifnumgreater{\midgard@goldpieces  }{0}{%
-    \midgard@goldpieces\,GS%
-    \ifnumgreater{\midgard@silverpieces}{0}{ }{}%
-  }{}%
-  \ifnumgreater{\midgard@silverpieces}{0}{%
-    \midgard@silverpieces\,SS%
-    \ifnumgreater{\midgard@copperpieces}{0}{ }{}%
-  }{}%
-  \ifnumgreater{\midgard@copperpieces}{0}{%
-    \midgard@copperpieces\,KS%
-  }{}%
+\newcommand{\setzeKupferProSilber}[1]{\numgdef{\midgard@CopperPerSilver}{#1}}
+\newcommand{\setzeSilberProGold}[1]{\numgdef{\midgard@SilverPerGold}{#1}}
+\newcommand{\kupferAlias}{KS}
+\newcommand{\silberAlias}{SS}
+\newcommand{\goldAlias}  {GS}
+\newcommand{\geld}[1]{% compute GP/SP/CP
+  \printgold{\iquo{#1}{\midgard@CopperPerSilver*\midgard@SilverPerGold}}% Gold pieces
+            {\iquo{\irem{#1}{\midgard@CopperPerSilver*\midgard@SilverPerGold}}{\midgard@CopperPerSilver}}% Silver pieces
+            {\irem{\irem{#1}{\midgard@CopperPerSilver*\midgard@SilverPerGold}}{\midgard@CopperPerSilver}}% Copper pieces
+}
+\newcommand{\printgold}[3]{% Prints GP/SP/CP
+  % #1 = number of gold pieces
+  % #2 = number of silver pieces
+  % #3 = number of copper pieces
+  \ifnum #1 > 0 
+    #1\,\goldAlias
+  \fi
+  \ifnum \numexpr #1*#2 > 0 
+    \ %
+  \fi
+  \ifnum #2 > 0 
+    #2\,\silberAlias
+  \fi
+  \ifnum \numexpr #2*#3 > 0 
+    \ %
+    \else \ifnum \numexpr #1*#3 > 0 
+      \ %
+    \fi
+  \fi
+  \ifnum #3 > 0 
+    #3\,\kupferAlias
+  \fi
 }
 %    \end{macrocode}
 % \end{macro}
@@ -1992,6 +2019,27 @@ Grad \bestGrad%
 %    \end{macrocode}
 % \end{macro}
 %
+\newsavebox\ltmcbox
+\long\def\multicoltable#1#2#3{
+  \begin{multicols}{#2}
+    \setbox\ltmcbox\vbox{
+      \makeatletter\col@number\@ne
+      \begin{longtable}{#1}
+        #3
+      \end{longtable}
+      \unskip
+      \unpenalty
+      \unpenalty}
+    \unvbox\ltmcbox
+  \end{multicols}
+}
+\def\removefromreset#1#2{\let\@tempb\@elt
+  \expandafter\let\expandafter\@tempa\csname c@#1\endcsname
+  \def\@elt##1{\expandafter\ifx\csname c@##1\endcsname\@tempa\else
+    \noexpand\@elt{##1}\fi}%
+  \expandafter\edef\csname cl@#2\endcsname{\csname cl@#2\endcsname}%
+  \let\@elt\@tempb%
+}
 % \PrintChanges
 % \PrintIndex
 % \Finale
