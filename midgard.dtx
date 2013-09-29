@@ -1787,12 +1787,15 @@ Beschwörung~%
       }
 \noindent{\bfseries\zaubermittelName} -- Stufe \zaubermittelStufe%
 \ifdefstring{\zaubermittelVor}{keine}{}{\\\textit{\zaubermittelVor}}%
-\par\vspace{0.5em}%
-\begin{spacelesstabbing}%
-\textbf{Zeitaufwand:}\hspace{1ex} \= anytext \kill
-\textbf{Zeitaufwand:} \> \zaubermittelZeit\\
-\textbf{Kosten:} \> \zaubermittelKosten
-\end{spacelesstabbing}%
+\par%
+\ifdefstrequal{\zaubermittelZeit}{\zaubermittelKosten}{}{
+  \vspace{0.5em}%
+  \begin{spacelesstabbing}%
+    \textbf{Zeitaufwand:}\hspace{1ex} \= anytext \kill
+    \textbf{Zeitaufwand:} \> \zaubermittelZeit\\
+    \textbf{Kosten:} \> \zaubermittelKosten
+  \end{spacelesstabbing}%
+}
 %\vspace{-1em}%
 \ifdefstring{\zaubermittelFP}{keine}{}{
   \ifdefstring{\zaubermittelG}{niemand}%
