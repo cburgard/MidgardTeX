@@ -1143,7 +1143,7 @@ ABENTEUER
 }{%
   \addcontentsline{toc}{subsubsection}{\fertigkeitEntry}%
 }%
-\textbf{\fertigkeitName}%
+\expandnext{\midgard@htarget}{\fertigkeitName}\textbf{\fertigkeitName}%
 \ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{none}} }{}{+\fertigkeitEW}%
 \ifdefstring{\fertigkeitKategorie}{none}{}{~(\fertigkeitKategorie)}%
 \ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{none}} }{%
@@ -1280,9 +1280,10 @@ ABENTEUER
 % \end{macro}
 %
 % \begin{macro}{\zauberref}
-%   Mit dem |\zauberref|-Kommando erlauben wir einfaches refernzieren auf Zauber.
+%   Mit dem |\zauberref|-Kommando erlauben wir einfaches referenzieren auf Zauber.
 %   \begin{macrocode}
 \newcommand*\zauberref[2][]{{\itshape\ifstrempty{#1}{\protect\midgard@hlink{#2}{#2}}{\protect\midgard@hlink{#1}{#2}}}}%%
+\newcommand*\fertigkeitsref[2][]{{\itshape\ifstrempty{#1}{\protect\midgard@hlink{#2}{#2}}{\protect\midgard@hlink{#1}{#2}}}}%%
 %   \end{macrocode}
 % \end{macro}
 % \begin{macro}{\zauber}
