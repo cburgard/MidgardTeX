@@ -1032,6 +1032,15 @@ ABENTEUER
 }{
   \end{mdframed}
 }
+\newcommand\textboxstyle{}
+\newenvironment{textbox}[1][]{
+  \begin{mdframed}[innertopmargin=0.5em,innerbottommargin=0.5em]
+    \textboxstyle\textbf{#1}\par
+    \@afterindentfalse%
+    \@afterheading%
+}{
+  \end{mdframed}
+}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1769,6 +1778,7 @@ Beschwörung~%
   \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
   \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
 }%
+\pagebreak[2]
 \vspace{1em}
 \phantomsection%
 \ifdefstring{\zaubermittelEntry}{none}{%
@@ -1778,12 +1788,15 @@ Beschwörung~%
       }
 \noindent{\bfseries\zaubermittelName} -- Stufe \zaubermittelStufe%
 \ifdefstring{\zaubermittelVor}{keine}{}{\\\textit{\zaubermittelVor}}%
-\par\vspace{0.5em}%
-\begin{spacelesstabbing}%
-\textbf{Zeitaufwand:}\hspace{1ex} \= anytext \kill
-\textbf{Zeitaufwand:} \> \zaubermittelZeit\\
-\textbf{Kosten:} \> \zaubermittelKosten
-\end{spacelesstabbing}%
+\par%
+\ifdefstrequal{\zaubermittelZeit}{\zaubermittelKosten}{}{
+  \vspace{0.5em}%
+  \begin{spacelesstabbing}%
+    \textbf{Zeitaufwand:}\hspace{1ex} \= anytext \kill
+    \textbf{Zeitaufwand:} \> \zaubermittelZeit\\
+    \textbf{Kosten:} \> \zaubermittelKosten
+  \end{spacelesstabbing}%
+}
 %\vspace{-1em}%
 \ifdefstring{\zaubermittelFP}{keine}{}{
   \ifdefstring{\zaubermittelG}{niemand}%
@@ -2041,6 +2054,73 @@ Grad \bestGrad%
   \expandafter\edef\csname cl@#2\endcsname{\csname cl@#2\endcsname}%
   \let\@elt\@tempb%
 }
+\define@key{artefakt}{name}            {\def\artefaktName{#1}}
+\define@key{artefakt}{ABW}             {\def\artefaktABW{#1}}
+\define@key{artefakt}{aura}            {\def\artefaktAura{#1}}
+\define@key{artefakt}{typ}             {\def\artefaktTyp{#1}}
+\define@key{artefakt}{magisch}         {\def\artefaktMagisch{#1}}
+\define@key{artefakt}{herstellbar}     {\def\artefaktHerstellbar{#1}}
+\define@key{artefakt}{untertitel}      {\def\artefaktUntertitel{#1}}
+\define@key{artefakt}{sprache}         {\def\artefaktSprache{#1}}
+\presetkeys{artefakt}{name=Artefakt,ABW=-,aura=-,herstellbar=false,typ=-,
+  untertitel=-,sprache=-,magisch=true%
+}{}
+
+\define@key{artefaktherstellen}{zauber}{\def\herstellenVoraussetzung{#1}}
+\define@key{artefaktherstellen}{stufe} {\def\herstellenStufe{#1}}
+\define@key{artefaktherstellen}{ABW}   {\def\herstellenABW{#1}}
+\define@key{artefaktherstellen}{EP}    {\def\herstellenEP{#1}}
+\define@key{artefaktherstellen}{material}{\def\herstellenMaterial{#1}}
+\presetkeys{artefaktherstellen}{zauber=-,stufe=-,ABW=-,EP=0}{}
+
+\newsavebox\zz
+\savebox\zz{--}
+\def\optendash{\cleaders\copy\zz\hskip1.9\wd\zz}
+
+\newcommand*{\artefakt}[2][]{
+\par\pagebreak[2]%
+\addvspace{1em}% plus 0.5em minus 0.5em}%
+\setkeys{artefakt}{#1}{%
+\addcontentsline{toc}{subsubsection}{\artefaktName}
+\begingroup
+\setlength\parindent{0pt}
+\flushleft
+    {\bfseries \large  \artefaktName}\ifdefstring{\artefaktHerstellbar}{false}{}{~\textdagger} \linebreak[0]%
+    \ifdefstring{\artefaktTyp}{-}{}{\optendash\mbox{\artefaktTyp}}%
+    \ifdefstring{\artefaktMagisch}{false}{\optendash nicht magisch}{%
+      \ifdefstring{\artefaktABW}{-}{}{\mbox{(\textsc{Abw}\,\artefaktABW)}}%
+      \ifdefstring{\artefaktAura}{-}{}{\optendash \mbox{\textbf{\textsc{Aura:}} \artefaktAura}}%
+    } 
+    \ifdefstring{\artefaktUntertitel}{-}{%
+      \ifdefstring{\artefaktSprache}{-}{}{\newline\artefaktSprache}%
+    }{\newline%
+      \textit{\artefaktUntertitel}%
+      \ifdefstring{\artefaktSprache}{-}{}{\optendash \artefaktSprache}%
+    }
+    \par\endgroup
+}
+\@afterindentfalse%
+\@afterheading%
+}
+\newcommand*{\artefaktherstellen}[2][]{
+\pagebreak[2]\begingroup\small%
+\setkeys{artefaktherstellen}{#1}{%
+\noindent%
+\ifdefstring{\herstellenVoraussetzung}{-}{}{%
+  \textit{\herstellenVoraussetzung}%
+  \ifdefstring{\herstellenStufe}{-}{}{~(Stufe \herstellenStufe)} 
+}
+\herstellenEP\,EP
+\ifdefstring{\herstellenABW}{-}{}{für \textsc{Abw}\,\herstellenABW}
+\ifdefstring{\herstellenMaterial}{-}{}{%
+\newline\noindent\textit{Material:}~\herstellenMaterial
+}}\endgroup
+\par
+\@afterindentfalse%
+\@afterheading%
+}
+
+
 % \PrintChanges
 % \PrintIndex
 % \Finale
