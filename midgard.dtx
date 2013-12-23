@@ -48,7 +48,6 @@
 \usepackage[margin=10pt,font=small,labelfont=bf,aboveskip=1em,labelsep=endash]{caption}
 \usepackage[a4paper,lmargin=3.5cm, rmargin=3.5cm]{geometry}
 \usepackage{array}
-\usepackage{longtable}
 \usepackage{boxedminipage}
 \usepackage{hyperref}
 \newenvironment{widecenter}{%
@@ -791,6 +790,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \RequirePackage{graphicx}
 \RequirePackage[framemethod=tikz]{mdframed}
 \usetikzlibrary{shadows}
+\RequirePackage{longtable}
 \RequirePackage{calc}
 \RequirePackage{etextools}
 %    \end{macrocode}
@@ -2033,18 +2033,16 @@ Grad \bestGrad%
 % \end{macro}
 %
 \newsavebox\ltmcbox
-\long\def\multicoltable#1#2#3{
-  \begin{multicols}{#2}
-    \setbox\ltmcbox\vbox{
-      \makeatletter\col@number\@ne
-      \begin{longtable}{#1}
-        #3
-      \end{longtable}
-      \unskip
-      \unpenalty
-      \unpenalty}
+\newenvironment{multicolslongtable}[1]{
+  \setbox\ltmcbox\vbox\bgroup
+  \col@number\@ne
+    \begin{longtable}{#1}
+}{
+    \end{longtable}
+    \unskip
+    \unpenalty
+    \unpenalty\egroup
     \unvbox\ltmcbox
-  \end{multicols}
 }
 \def\removefromreset#1#2{\let\@tempb\@elt
   \expandafter\let\expandafter\@tempa\csname c@#1\endcsname
@@ -2087,7 +2085,7 @@ Grad \bestGrad%
     {\bfseries \large  \artefaktName}\ifdefstring{\artefaktHerstellbar}{false}{}{~\textdagger} \linebreak[0]%
     \ifdefstring{\artefaktTyp}{-}{}{\optendash\mbox{\artefaktTyp}}%
     \ifdefstring{\artefaktMagisch}{false}{\optendash nicht magisch}{%
-      \ifdefstring{\artefaktABW}{-}{}{\mbox{(\textsc{Abw}\,\artefaktABW)}}%
+      \ifdefstring{\artefaktABW}{-}{}{ \mbox{(\textsc{Abw}\,\artefaktABW)}}%
       \ifdefstring{\artefaktAura}{-}{}{\optendash \mbox{\textbf{\textsc{Aura:}} \artefaktAura}}%
     } 
     \ifdefstring{\artefaktUntertitel}{-}{%
