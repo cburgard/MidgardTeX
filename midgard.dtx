@@ -97,8 +97,8 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \DoNotIndex{\#,\$,\%,\&,\@,\\,\{,\},\^,\_,\~,\,,\=,\>}
 % \DoNotIndex{\@ne}
 % \DoNotIndex{\advance,\begingroup,\catcode,\closein}
-% \DoNotIndex{\closeout,\day,\def,\edef,\else,\empty,\endgroup}
-% \DoNotIndex{\begin,\end,\leftskip,\let,\linewidth,\newcommand,\newcounter,\newenvironment,\newline,\noindent,\parindent,\parsep,\parskip,\partopsep,\setcounter,\setlength,\textbf,\textit,\textsf,\textsc,\text...,\large,\Large,\small,\footnotesize,\itshape,\bfseries,\par,\textup,\times,\topmargin,\topsep,\topskip,\LARGE,\headsep,\equal,\value,\frac,\ifdefstr}
+% \DoNotIndex{\closeout,\day,\def,\edef,\else,\empty,\endgroup,\if,\else,\fi}
+% \DoNotIndex{\begin,\end,\leftskip,\let,\linewidth,\newcommand,\newcounter,\newenvironment,\newline,\noindent,\parindent,\parsep,\parskip,\partopsep,\setcounter,\setlength,\textbf,\textit,\textsf,\textsc,\text...,\large,\Large,\small,\footnotesize,\itshape,\bfseries,\par,\textup,\times,\topmargin,\topsep,\topskip,\LARGE,\headsep,\equal,\value,\frac,\ifdefstring}
 
 % \title{Das \textsf{ midgard } Paket\thanks{Dieses Dokument bezieht
 % sich auf \textsf{ midgard }~\fileversion, datiert~\filedate.}}
@@ -1866,6 +1866,7 @@ Beschwörung~%
 \define@key{best}{zauberArtigMoreEW}  {\def\bestZauberArtigMoreEW {#1}}
 \define@key{best}{zauberArtigMMore}   {\def\bestZauberArtigMMore {#1}}
 \define@key{best}{zauberArtigMMoreEW} {\def\bestZauberArtigMMoreEW {#1}}
+\define@key{best}{bestcategory}       {\def\bestKey{#1}}
 
 \presetkeys{best}{ name=Wesen, grad=0, modus=none, typ=none,
   mag=false, aura=none, size=normal, addendum=none, variant=none,
@@ -1875,7 +1876,7 @@ Beschwörung~%
   zauberArtigMore=none, zauberArtigMMore=none, zauberEW=0,
   zauberMoreEW=0, zauberMMoreEW=0, zauberArtigEW=0,
   zauberArtigMoreEW=0, zauberArtigMMoreEW=0, bes=none, vorkommen=none,
-  energy=0, initiative=none,raufen=none }{}
+  energy=0, initiative=none,raufen=none,bestcategory=best }{}
 %    \end{macrocode}
 %
 % \begin{macro}{\bestiarium}
@@ -1897,6 +1898,10 @@ Beschwörung~%
 \newcommand*\bestiarium[2][]{%
 \setkeys{best}{#1}{
 \par\setlength\parskip{0pt}\par
+% Das Kommando kennt die Optionen |noframe| und |float|,
+% welche zum unterdrücken eines Rahmens führen bzw.~dazu, dass die
+% umrahmte Box als Gleitobjekt generiert wird. Wird die Box nicht als
+% Gleitobjekt generiert, wird ein Seitenumbruch vor der Box bevorzugt.
 \ifdefstring{#2}{noframe}{%
   \pagebreak[2]
 }{%
@@ -1907,43 +1912,78 @@ Beschwörung~%
   }
   \begin{mdframed}[style=bestbox]%
 }%
+% Der Inhalt der Box soll einen hängenden Einzug haben.
 \setlength{\leftskip}{1ex}
 \setlength{\parindent}{-1ex}
 \small%
 \begin{spacelesstabbing}%
+% Die Spaltenbreiten des Tabellen-Layouts werden relativ zur Spaltenbreite gewählt.
 \hspace{0.3\linewidth} \= \hspace{0.3\linewidth} \= \hspace{0.2\linewidth} \= anything\kill
+% Zunächst wird der name der Kreatur gesetzt.
 \textbf{\bestName}%
+% Wurde die option |mag| verwendet, wird das Symbol \includegraphics[height=0.7em]{pics/scroll} hinter den Namen gesetzt.
 \ifdefstring{\bestMag}{true}%
            {~\includegraphics[height=0.7em]{pics/scroll}}%
            {}% 
+% Ein Namenszusatz, der über |add| gesetzt wurde, folgt mit einem Komma abgetrennt.
 \ifdefstring{\bestAdd}{none}%
            {}%
            {\textbf{,\,\bestAdd}}%
+% Eine Kreaturenvariante, die mit |variant| definiert wurde, folgt mit Komma getrennt und in normaler Wichtung.
 \ifdefstring{\bestVariant}{none}%
            {}%
            {,\,\bestVariant}%
+% Der mit |mode| deklarierte Modus der Kreatur folgt etwas abgesetzt.
 ~%
 \ifdefstring{\bestModus}{none}%
            {}
            {\bestModus~}% 
+% Die Klammer beinhaltet den Typ der Kreatur (sofern mit |type|
+% definiert) sowie ihren mit |grad| gesetzten Grad und gegebenenfalls
+% mit einem Gedankenstrich abgesetzt die über |size| definierte Größe.
 (%
 \ifdefstring{\bestTyp}{none}%
            {}%
            {\bestTyp~}%
 Grad \bestGrad%
 \ifdefstring{\bestSize}{normal}{}{ -- \bestSize}%
-) \> \> \> \ifdefstring{\bestIn}{hide}{~}{In: \bestIn}\\
+)%
+% Der Rest der Spalte beinhaltet die über |In| definierte Intelligenz.
+ \> \> \> \ifdefstring{\bestIn}{hide}{~}{In: \bestIn}\\
+% In der nächsten Spalte folgen die Lebenspunkte |LP|, Ausdauerpunkte
+% |AP|, der Moralwert |MW| und der EP-Multiplikator |EP| mit passender
+% Beschriftung. Für Lebens- und Ausdauerpunkte werden die
+% Beschriftungen fett gesetzt, für den Moralwert das \glqq
+% +\grqq{}-Zeichen automatisch eingefügt.
 \textbf{LP} \bestLP \> \textbf{AP} \bestAP \> \ifdefstring{\bestMW}{none}{}{MW+\bestMW}\> EP \bestEP\\
+% Es folgen Gewandtheit |Gw|, Stärke |St|, Bewegungsweite |B| und Rüstungsklasse |RK|, letztere in Fettdruck.
 Gw \bestGw \> St \bestSt \> B\,\bestB \> \textbf{\bestRK}\\
+% Als letzte im Tabellenlayout definierte Zeile folgen Abwehr
+% |abwehr|, Resistenz gegen Magie |resisenz| (mit automatisch
+% hinzugefügten \glqq +\grqq{}-Zeichen) und die Energie |energie|,
+% falls definiert.
 Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\> \textsc{E} \bestEnergie}
 \end{spacelesstabbing}\par
+% Die Angriffstechniken |angriff| der Kreatur werden als entsprechend überschriebener Absatz mit hängendem Einzug gesetzt.
 \textbf{Angriff:} \sloppy \bestAngriff%
+% Falls gewünscht wird der Eintrag für \textit{Raufen} automatisch aus dem Wert |raufen| generiert.
 \ifdefstring{\bestRaufen}{none}{}{ -- Raufen+\bestRaufen}%
+% An dieser Stelle kann auch die Initiative |initiative| abgedruckt werden.
 \ifdefstring{\bestInitiative}{none}{}{ -- \textsc{Initiative}+\bestInitiative}%
 \par
+% Die Besonderheiten |bes| der Kreatur werden als entsprechend
+% überschriebener Absatz mit hängendem Einzug gesetzt. Nötigenfalls
+% wird ein Eintrag für die Aura |aura| generiert, wobei die
+% Beschriftung in fetten Kapitälchen erfolgt.
 \ifdefstring{\bestBes}{none}%
            {\ifdefstring{\bestAura}{none}{}{\textbf{\textsc{Aura:}} \bestAura\par}}%
            {\textbf{Bes.:} \bestBes \ifdefstring{\bestAura}{none}{}{ -- \textbf{\textsc{Aura:} \bestAura}}\par }%
+% Die Zauberfertigkeiten |zauber| der Kreatur werden als mit
+% \textbf{Zaubern+|zauberEW|:} überschriebener Absatz mit hängendem
+% Einzug gesetzt. Entsprechende Einträge werden auch generiert für
+% |zauberMore| mit |zauberMoreEW|, |zauberMMore| mit |zauberMMoreEW|,
+% |zauberArtig| mit |zauberArtigEW|, |zauberArtigMore| mit
+% |zauberArtigMoreEW| und |zauberArtigMMore| mit |zauberArtigMMoreEW|.
 \ifdefstring{\bestZauber}{none}%
            {}%
            {\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}\par}%
@@ -1962,9 +2002,11 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
 \ifdefstring{\bestZauberArtigMMore}{none}%
            {}%
            {\textbf{\guillemotright Zaubern+\bestZauberArtigMMoreEW\guillemotleft:} \textit{\bestZauberArtigMMore}\par}%
+% Das Vorkommen der Kreatur letztlich wird in ähnlichem Stil mit hängendem Einzug erzeugt.           
 \ifdefstring{\bestVork}{none}%
            {}%
            {\textbf{Vorkommen:} \bestVork}%
+% Auch beim schließen der Umgebungen wird ein Seitenumbruch vorgeschlagen.
 \ifdefstring{#2}{noframe}{%
   \pagebreak[2]
 }{%
@@ -1976,6 +2018,10 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
     \pagebreak[3]
   }
 }%
+% Letztlich können auch beim Bestiariums-Kommate |\bestiarum| Werte nach belieben exportiert werden.
+\expandafter\ifcsdef{\bestKey exportvalues}{%
+  \ifdatablist{\adddataline{\bestKey}{\csname \bestKey exportvalues\endcsname}}%
+}{}%
 }%
 \@afterindentfalse%
 \@afterheading%
@@ -2033,6 +2079,9 @@ Grad \bestGrad%
 %    \end{macrocode}
 % \end{macro}
 %
+%\begin{macro}{multicolslongtable}
+% Wir definieren die Umgebung.
+%    \begin{macrocode}
 \newsavebox\ltmcbox
 \newenvironment{multicolslongtable}[1]{
   \setbox\ltmcbox\vbox\bgroup
@@ -2045,6 +2094,12 @@ Grad \bestGrad%
     \unpenalty\egroup
     \unvbox\ltmcbox
 }
+%    \end{macrocode}
+% \end{macro}
+%
+%\begin{macro}{\removefromreset}
+% Wir definieren das Kommando.
+%    \begin{macrocode}
 \def\removefromreset#1#2{\let\@tempb\@elt
   \expandafter\let\expandafter\@tempa\csname c@#1\endcsname
   \def\@elt##1{\expandafter\ifx\csname c@##1\endcsname\@tempa\else
@@ -2052,14 +2107,31 @@ Grad \bestGrad%
   \expandafter\edef\csname cl@#2\endcsname{\csname cl@#2\endcsname}%
   \let\@elt\@tempb%
 }
+%    \end{macrocode}
+% \end{macro}
+%
+%\begin{macro}{\optendash}
+% Wir definieren das Kommando.
+%    \begin{macrocode}
+\newsavebox\zz
+\savebox\zz{--}
+\def\optendash{\cleaders\copy\zz\hskip1.9\wd\zz}
+%    \end{macrocode}
+% \end{macro}
+%
+%\begin{macro}{\artefakt}
+% Wir definieren das Kommando.
+%    \begin{macrocode}
 \define@key{artefakt}{name}            {\def\artefaktName{#1}}
 \define@key{artefakt}{ABW}             {\def\artefaktABW{#1}}
 \define@key{artefakt}{aura}            {\def\artefaktAura{#1}}
 \define@key{artefakt}{typ}             {\def\artefaktTyp{#1}}
 \define@key{artefakt}{magisch}         {\def\artefaktMagisch{#1}}
+\define@key{artefakt}{mag}         {\def\artefaktMagisch{#1}}
 \define@key{artefakt}{herstellbar}     {\def\artefaktHerstellbar{#1}}
 \define@key{artefakt}{untertitel}      {\def\artefaktUntertitel{#1}}
 \define@key{artefakt}{sprache}         {\def\artefaktSprache{#1}}
+\define@key{artefakt}{farbe}           {\def\artefaktSprache{#1}}
 \presetkeys{artefakt}{name=Artefakt,ABW=-,aura=-,herstellbar=false,typ=-,
   untertitel=-,sprache=-,magisch=true%
 }{}
@@ -2070,10 +2142,6 @@ Grad \bestGrad%
 \define@key{artefaktherstellen}{EP}    {\def\herstellenEP{#1}}
 \define@key{artefaktherstellen}{material}{\def\herstellenMaterial{#1}}
 \presetkeys{artefaktherstellen}{zauber=-,stufe=-,ABW=-,EP=0}{}
-
-\newsavebox\zz
-\savebox\zz{--}
-\def\optendash{\cleaders\copy\zz\hskip1.9\wd\zz}
 
 \newcommand*{\artefakt}[2][]{
 \par\pagebreak[2]%
@@ -2117,7 +2185,9 @@ Grad \bestGrad%
 \@afterindentfalse%
 \@afterheading%
 }
-
+%    \end{macrocode}
+% \end{macro}
+%
 
 % \PrintChanges
 % \PrintIndex
