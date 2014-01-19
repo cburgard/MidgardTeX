@@ -863,6 +863,9 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
   \fi%
 }%
 \newcommand\gethash[1]{hash:\csname\detokenize{hash@#1}\endcsname}%
+\newcommand*{\@doendeq}{%
+  \everypar{{\setbox\z@\lastbox}\everypar{}}%
+}
 %    \end{macrocode}
 %    Um auf das hashing tatsächlich zu verwenden, muss später nurnoch 
 %    |hyperref| mit dem expandierten Argument aufgerufen werden.
@@ -1028,7 +1031,9 @@ ABENTEUER
 ]{beispiel}
 \newenvironment{rundbox}[1][]{
   \begin{mdframed}[roundcorner=10pt,innertopmargin=0.5em,innerbottommargin=0.5em]
-    \textbf{#1}\par
+    \noindent #1\par
+    \@afterindentfalse%
+    \@afterheading%
 }{
   \end{mdframed}
 }
@@ -1184,7 +1189,10 @@ ABENTEUER
                                       \par
     \end{small}%
     \vspace{\midgardskip}
-}}\endgroup\par}
+}}\endgroup\par%
+\@afterindentfalse%
+\@afterheading%
+}
 %    \end{macrocode}
 % \end{macro}
 % 
@@ -1197,7 +1205,9 @@ ABENTEUER
 \define@key{weapon}{name}{\def\weaponName{#1}}
 \define@key{weapon}{entry}{\def\weaponEntry{#1}}
 \define@key{weapon}{schaden}{\def\weaponDamage{#1}}
+\define@key{weapon}{energie}{\def\weaponEnergy{#1}}
 \define@key{weapon}{reichweite}{\def\weaponRange{#1}}
+\define@key{weapon}{anfangserfolgswert}{\def\weaponStartEW{#1}}
 \define@key{weapon}{voraussetzungen}{\def\weaponPremise{#1}}
 \define@key{weapon}{grundkenntnisse}{\def\weaponBasics{#1}}
 \define@key{weapon}{beispiele}{\def\weaponExamples{#1}}
@@ -1209,8 +1219,8 @@ ABENTEUER
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
-\presetkeys{weapon}{name=Waffe, entry=none, schaden=-, reichweite=,
-  voraussetzungen={St\,01, Gs\,01}, grundkenntnisse=-, beispiele=,
+\presetkeys{weapon}{name=Waffe, entry=none, energie=none, schaden=-, reichweite=, beispiele=none,
+  voraussetzungen={St\,01, Gs\,01}, grundkenntnisse=-, anfangserfolgswert=4,
   schwierigkeit=normal, FP=hide, G=niemand, S=niemand, A=niemand}{}
 %    \end{macrocode}
 % Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
@@ -1240,14 +1250,20 @@ ABENTEUER
 }{%
   \addcontentsline{toc}{subsubsection}{\weaponEntry}
 }
-\par\vspace{0.2em plus 0.3em minus 0.1em}\par
-\noindent\textbf{\weaponName}~(\weaponDamage{})\hfill \weaponRange{}\par% 
+\par\vspace{0.2em plus 0.3em minus 0.1em}%
+\raggedright
+\par
+\noindent\textbf{\weaponName}~\mbox{(\weaponDamage{}%
+\ifboolexpr{ togl {useEnergy} and not test {\ifdefstring{\weaponEnergy}{none}}}{,~\textsc{E}\,\weaponEnergy}{}%
+)}%
+\hfill\hfill\mbox{\weaponRange{}}\par% 
 \begin{small}
-\noindent\weaponPremise \hspace{1cm} Erfolgswert+4\par%
-\noindent\textbf{\weaponBasics} \textit{(\weaponExamples)}
+\noindent\weaponPremise \hspace{1cm} Erfolgswert+\weaponStartEW\par%
+\noindent\textbf{\weaponBasics} \ifdefstring{\weaponExamples}{none}{}{\textit{(\weaponExamples)}}
 \ifdefstring{\weaponFP}{hide}{%
 }{%
-  \newline\noindent\textit{Schwierigkeit:} \weaponDifficulty\\%
+  \newline\noindent\textit{Schwierigkeit:} \weaponDifficulty%
+\\%
   \noindent%
   \ifdefstring{\weaponG}{niemand}%
   {niemand }%
@@ -1259,12 +1275,11 @@ ABENTEUER
   {niemand }%
   {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \weaponA}\par
 }
-\end{small}
+\end{small}}
 \vspace{0.2em plus 0.3em minus 0.1em}
 \@afterindentfalse%
 \@afterheading%
-\par
-}}
+}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\weapon}
@@ -1513,7 +1528,6 @@ ABENTEUER
 %    \begin{macrocode}
 \@afterindentfalse%
 \@afterheading%
-\par
 }%
 %    \end{macrocode}
 %\end{macro}
@@ -1733,7 +1747,6 @@ Beschwörung~%
 %    \begin{macrocode}
 \@afterindentfalse%
 \@afterheading%
-\par
 }%
 %    \end{macrocode}
 % Schlussendlich definieren wir noch ein Kürzel für Anrufungen-, Namens- und Geisterbeschwörungen,
@@ -1898,10 +1911,12 @@ Beschwörung~%
 \newcommand*\bestiarium[2][]{%
 \setkeys{best}{#1}{
 \par\setlength\parskip{0pt}\par
+%    \end{macrocode}
 % Das Kommando kennt die Optionen |noframe| und |float|,
 % welche zum unterdrücken eines Rahmens führen bzw.~dazu, dass die
 % umrahmte Box als Gleitobjekt generiert wird. Wird die Box nicht als
 % Gleitobjekt generiert, wird ein Seitenumbruch vor der Box bevorzugt.
+%    \begin{macrocode}
 \ifdefstring{#2}{noframe}{%
   \pagebreak[2]
 }{%
@@ -1912,35 +1927,51 @@ Beschwörung~%
   }
   \begin{mdframed}[style=bestbox]%
 }%
+%    \end{macrocode}
 % Der Inhalt der Box soll einen hängenden Einzug haben.
+%    \begin{macrocode}
 \setlength{\leftskip}{1ex}
 \setlength{\parindent}{-1ex}
 \small%
 \begin{spacelesstabbing}%
+%    \end{macrocode}
 % Die Spaltenbreiten des Tabellen-Layouts werden relativ zur Spaltenbreite gewählt.
+%    \begin{macrocode}
 \hspace{0.3\linewidth} \= \hspace{0.3\linewidth} \= \hspace{0.2\linewidth} \= anything\kill
+%    \end{macrocode}
 % Zunächst wird der name der Kreatur gesetzt.
+%    \begin{macrocode}
 \textbf{\bestName}%
+%    \end{macrocode}
 % Wurde die option |mag| verwendet, wird das Symbol \includegraphics[height=0.7em]{pics/scroll} hinter den Namen gesetzt.
+%    \begin{macrocode}
 \ifdefstring{\bestMag}{true}%
            {~\includegraphics[height=0.7em]{pics/scroll}}%
            {}% 
+%    \end{macrocode}
 % Ein Namenszusatz, der über |add| gesetzt wurde, folgt mit einem Komma abgetrennt.
+%    \begin{macrocode}
 \ifdefstring{\bestAdd}{none}%
            {}%
            {\textbf{,\,\bestAdd}}%
+%    \end{macrocode}
 % Eine Kreaturenvariante, die mit |variant| definiert wurde, folgt mit Komma getrennt und in normaler Wichtung.
+%    \begin{macrocode}
 \ifdefstring{\bestVariant}{none}%
            {}%
            {,\,\bestVariant}%
+%    \end{macrocode}
 % Der mit |mode| deklarierte Modus der Kreatur folgt etwas abgesetzt.
+%    \begin{macrocode}
 ~%
 \ifdefstring{\bestModus}{none}%
            {}
            {\bestModus~}% 
+%    \end{macrocode}
 % Die Klammer beinhaltet den Typ der Kreatur (sofern mit |type|
 % definiert) sowie ihren mit |grad| gesetzten Grad und gegebenenfalls
 % mit einem Gedankenstrich abgesetzt die über |size| definierte Größe.
+%    \begin{macrocode}
 (%
 \ifdefstring{\bestTyp}{none}%
            {}%
@@ -1948,42 +1979,60 @@ Beschwörung~%
 Grad \bestGrad%
 \ifdefstring{\bestSize}{normal}{}{ -- \bestSize}%
 )%
+%    \end{macrocode}
 % Der Rest der Spalte beinhaltet die über |In| definierte Intelligenz.
+%    \begin{macrocode}
  \> \> \> \ifdefstring{\bestIn}{hide}{~}{In: \bestIn}\\
+%    \end{macrocode}
 % In der nächsten Spalte folgen die Lebenspunkte |LP|, Ausdauerpunkte
 % |AP|, der Moralwert |MW| und der EP-Multiplikator |EP| mit passender
 % Beschriftung. Für Lebens- und Ausdauerpunkte werden die
 % Beschriftungen fett gesetzt, für den Moralwert das \glqq
 % +\grqq{}-Zeichen automatisch eingefügt.
+%    \begin{macrocode}
 \textbf{LP} \bestLP \> \textbf{AP} \bestAP \> \ifdefstring{\bestMW}{none}{}{MW+\bestMW}\> EP \bestEP\\
+%    \end{macrocode}
 % Es folgen Gewandtheit |Gw|, Stärke |St|, Bewegungsweite |B| und Rüstungsklasse |RK|, letztere in Fettdruck.
+%    \begin{macrocode}
 Gw \bestGw \> St \bestSt \> B\,\bestB \> \textbf{\bestRK}\\
+%    \end{macrocode}
 % Als letzte im Tabellenlayout definierte Zeile folgen Abwehr
 % |abwehr|, Resistenz gegen Magie |resisenz| (mit automatisch
 % hinzugefügten \glqq +\grqq{}-Zeichen) und die Energie |energie|,
 % falls definiert.
+%    \begin{macrocode}
 Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\> \textsc{E} \bestEnergie}
 \end{spacelesstabbing}\par
+%    \end{macrocode}
 % Die Angriffstechniken |angriff| der Kreatur werden als entsprechend überschriebener Absatz mit hängendem Einzug gesetzt.
+%    \begin{macrocode}
 \textbf{Angriff:} \sloppy \bestAngriff%
+%    \end{macrocode}
 % Falls gewünscht wird der Eintrag für \textit{Raufen} automatisch aus dem Wert |raufen| generiert.
+%    \begin{macrocode}
 \ifdefstring{\bestRaufen}{none}{}{ -- Raufen+\bestRaufen}%
+%    \end{macrocode}
 % An dieser Stelle kann auch die Initiative |initiative| abgedruckt werden.
+%    \begin{macrocode}
 \ifdefstring{\bestInitiative}{none}{}{ -- \textsc{Initiative}+\bestInitiative}%
 \par
+%    \end{macrocode}
 % Die Besonderheiten |bes| der Kreatur werden als entsprechend
 % überschriebener Absatz mit hängendem Einzug gesetzt. Nötigenfalls
 % wird ein Eintrag für die Aura |aura| generiert, wobei die
 % Beschriftung in fetten Kapitälchen erfolgt.
+%    \begin{macrocode}
 \ifdefstring{\bestBes}{none}%
            {\ifdefstring{\bestAura}{none}{}{\textbf{\textsc{Aura:}} \bestAura\par}}%
            {\textbf{Bes.:} \bestBes \ifdefstring{\bestAura}{none}{}{ -- \textbf{\textsc{Aura:} \bestAura}}\par }%
+%    \end{macrocode}
 % Die Zauberfertigkeiten |zauber| der Kreatur werden als mit
 % \textbf{Zaubern+|zauberEW|:} überschriebener Absatz mit hängendem
 % Einzug gesetzt. Entsprechende Einträge werden auch generiert für
 % |zauberMore| mit |zauberMoreEW|, |zauberMMore| mit |zauberMMoreEW|,
 % |zauberArtig| mit |zauberArtigEW|, |zauberArtigMore| mit
 % |zauberArtigMoreEW| und |zauberArtigMMore| mit |zauberArtigMMoreEW|.
+%    \begin{macrocode}
 \ifdefstring{\bestZauber}{none}%
            {}%
            {\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}\par}%
@@ -2002,11 +2051,15 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
 \ifdefstring{\bestZauberArtigMMore}{none}%
            {}%
            {\textbf{\guillemotright Zaubern+\bestZauberArtigMMoreEW\guillemotleft:} \textit{\bestZauberArtigMMore}\par}%
+%    \end{macrocode}
 % Das Vorkommen der Kreatur letztlich wird in ähnlichem Stil mit hängendem Einzug erzeugt.           
+%    \begin{macrocode}
 \ifdefstring{\bestVork}{none}%
            {}%
            {\textbf{Vorkommen:} \bestVork}%
+%    \end{macrocode}
 % Auch beim schließen der Umgebungen wird ein Seitenumbruch vorgeschlagen.
+%    \begin{macrocode}
 \ifdefstring{#2}{noframe}{%
   \pagebreak[2]
 }{%
@@ -2018,7 +2071,9 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
     \pagebreak[3]
   }
 }%
+%    \end{macrocode}
 % Letztlich können auch beim Bestiariums-Kommate |\bestiarum| Werte nach belieben exportiert werden.
+%    \begin{macrocode}
 \expandafter\ifcsdef{\bestKey exportvalues}{%
   \ifdatablist{\adddataline{\bestKey}{\csname \bestKey exportvalues\endcsname}}%
 }{}%
@@ -2074,7 +2129,6 @@ Grad \bestGrad%
 \pagebreak[3]
 \@afterindentfalse%
 \@afterheading%
-\par%
 }%
 %    \end{macrocode}
 % \end{macro}
