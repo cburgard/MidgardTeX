@@ -1121,11 +1121,12 @@ ABENTEUER
 \define@key{fertigkeit}{G}{\def\fertigkeitG{#1}}
 \define@key{fertigkeit}{S}{\def\fertigkeitS{#1}}
 \define@key{fertigkeit}{A}{\def\fertigkeitA{#1}}
+\define@key{fertigkeit}{key}{\def\fertigkeitKey{#1}}
 %    \end{macrocode}
 % Wir definieren zusätzlich \textit{default}-Werte für die Variablen,
 % für den Fall, dass sie nicht aufgerufen werden.
 %    \begin{macrocode}
-\presetkeys{fertigkeit}{name=Fähigkeit, entry=none, kategorie=none, leitAtt=none, anforderungen=none, EW=none, ungelernt=none, spielbeginn=5, maximum=20, FP=hide, G=niemand, S=niemand, A=niemand}{}
+\presetkeys{fertigkeit}{name=Fähigkeit, entry=none, kategorie=none, leitAtt=none, anforderungen=none, EW=none, ungelernt=none, spielbeginn=5, maximum=20, FP=hide, G=niemand, S=niemand, A=niemand, key=ability}{}
 %    \end{macrocode}
 % Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
 % Seitenumbruch, um unschöne Umbrüche im Layout selbst zu vermindern.
@@ -1189,7 +1190,11 @@ ABENTEUER
                                       \par
     \end{small}%
     \vspace{\midgardskip}
-}}\endgroup\par%
+}%
+\expandafter\ifcsdef{\fertigkeitKey exportvalues}{%
+  \ifdatablist{\adddataline{\fertigkeitKey}{\csname \fertigkeitKey exportvalues\endcsname}}%
+}{}%
+}\endgroup\par%
 \@afterindentfalse%
 \@afterheading%
 }
@@ -1216,12 +1221,13 @@ ABENTEUER
 \define@key{weapon}{G}{\def\weaponG{#1}}
 \define@key{weapon}{S}{\def\weaponS{#1}}
 \define@key{weapon}{A}{\def\weaponA{#1}}
+\define@key{weapon}{key}{\def\weaponKey{#1}}
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
 \presetkeys{weapon}{name=Waffe, entry=none, energie=none, schaden=-, reichweite=, beispiele=none,
   voraussetzungen={St\,01, Gs\,01}, grundkenntnisse=-, anfangserfolgswert=4,
-  schwierigkeit=normal, FP=hide, G=niemand, S=niemand, A=niemand}{}
+  schwierigkeit=normal, FP=hide, G=niemand, S=niemand, A=niemand, key=weaponability}{}
 %    \end{macrocode}
 % Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
 % Seitenumbruch, um unschöne Umbrüche im Layout selbst zu vermindern.
@@ -1255,14 +1261,13 @@ ABENTEUER
 \par
 \noindent\textbf{\weaponName}~\mbox{(\weaponDamage{}%
 \ifboolexpr{ togl {useEnergy} and not test {\ifdefstring{\weaponEnergy}{none}}}{,~\textsc{E}\,\weaponEnergy}{}%
-)}%
-\hfill\hfill\mbox{\weaponRange{}}\par% 
+)}\hfil\mbox{}\nobreak\hfill\nobreak\mbox{\weaponRange{}}\par% 
 \begin{small}
 \noindent\weaponPremise \hspace{1cm} Erfolgswert+\weaponStartEW\par%
 \noindent\textbf{\weaponBasics} \ifdefstring{\weaponExamples}{none}{}{\textit{(\weaponExamples)}}
 \ifdefstring{\weaponFP}{hide}{%
 }{%
-  \newline\noindent\textit{Schwierigkeit:} \weaponDifficulty%
+  \ifdefstring{\weaponDifficulty}{hide}{}{\newline\noindent\textit{Schwierigkeit:} \weaponDifficulty}%
 \\%
   \noindent%
   \ifdefstring{\weaponG}{niemand}%
@@ -1275,7 +1280,11 @@ ABENTEUER
   {niemand }%
   {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \weaponA}\par
 }
-\end{small}}
+\end{small}
+\expandafter\ifcsdef{\weaponKey exportvalues}{%
+  \ifdatablist{\adddataline{\weaponKey}{\csname \weaponKey exportvalues\endcsname}}
+}{}%
+}
 \vspace{0.2em plus 0.3em minus 0.1em}
 \@afterindentfalse%
 \@afterheading%
