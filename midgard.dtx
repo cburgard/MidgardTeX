@@ -924,6 +924,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \usetikzlibrary{shadows}
 \RequirePackage{longtable}
 \RequirePackage{calc}
+\RequirePackage{caption}
 \RequirePackage{anyfontsize}
 \RequirePackage{etextools}
 %    \end{macrocode}
@@ -1095,6 +1096,22 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %    \end{macrocode}
 % \end{macro}
 %
+%\begin{macro}{figurehere}
+%    \begin{macrocode}
+\newenvironment{figurehere}
+               {\par\medskip\noindent\minipage{\linewidth}}
+               {\endminipage\par\medskip}
+%    \end{macrocode}
+%\end{macro}
+               
+%\begin{macro}{tablehere}
+%    \begin{macrocode}
+\newenvironment{tablehere}
+  {\par\medskip\noindent\minipage{\linewidth}}
+  {\endminipage\par\medskip}
+%    \end{macrocode}
+%\end{macro}
+
 %\begin{macro}{\optendash}
 % Ein |\optendash| ist ein |\endash|, der aber als \textit{leader}
 % definiert wurde, am Anfang und Ende von Zeilen also unterdrückt
@@ -1284,6 +1301,21 @@ ABENTEUER
 % \end{macro}
 %
 %
+% \begin{macro}{\setzeGliederungsEbene}
+% Alle für Datenblöcke definiertern Umgebungen fügen dem
+% Inhaltsverzeichnis automatisch Einträge hinzu. Die Gliederungsebene,
+% auf welcher diese erscheinen, können mit dem Makro
+% |\setzeGliederungsEbene{|\meta{Typ}|}{|\meta{Ebene}|}| kontrolliert
+% werden.
+%    \begin{macrocode}
+\def\setzeGliederungsEbene#1#2{%
+  \expandafter\def\csname midgard@#1@tocLevel\endcsname{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+
 % \subsection{Das Fantasy Rollenspiel}
 %
 % \begin{macro}{\geld}
@@ -1342,6 +1374,7 @@ ABENTEUER
 %   \glqq\textit{Variablen}\grqq) fungieren und die dem Kommando im
 %   optionalen Argument übergebenen Werte speichern.
 %    \begin{macrocode}
+\setzeGliederungsEbene{fertigkeit}{subsubsection}
 \define@key{fertigkeit}{name}{\def\fertigkeitName{#1}}
 \define@key{fertigkeit}{entry}{\def\fertigkeitEntry{#1}}
 \define@key{fertigkeit}{kategorie}{\def\fertigkeitKategorie{#1}}
@@ -1390,9 +1423,9 @@ ABENTEUER
 \setlength{\parindent}{0pt}%
 \setlength{\parskip}{0pt}%
 \ifdefstring{\fertigkeitEntry}{none}{%
-  \addcontentsline{toc}{subsubsection}{\fertigkeitName}%
+  \addcontentsline{toc}{\midgard@fertigkeit@tocLevel}{\fertigkeitName}%
 }{%
-  \addcontentsline{toc}{subsubsection}{\fertigkeitEntry}%
+  \addcontentsline{toc}{\midgard@fertigkeit@tocLevel}{\fertigkeitEntry}%
 }%
 \expandnext{\midgard@htarget}{\fertigkeitName}\textbf{\fertigkeitName}%
 \ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{none}} }{}{+\fertigkeitEW}%
@@ -1488,9 +1521,9 @@ ABENTEUER
 }%
 \phantomsection%
 \ifdefstring{\weaponEntry}{none}{%
-  \addcontentsline{toc}{subsubsection}{\weaponName}
+  \addcontentsline{toc}{\midgard@fertigkeit@tocLevel}{\weaponName}
 }{%
-  \addcontentsline{toc}{subsubsection}{\weaponEntry}
+  \addcontentsline{toc}{\midgard@fertigkeit@tocLevel}{\weaponEntry}
 }
 \par\vspace{0.2em plus 0.3em minus 0.1em}%
 \raggedright
@@ -1581,6 +1614,7 @@ ABENTEUER
 %   innerhalb des |\zauber|-Kommandos lokale Kommandos definiert, um
 %   auf die Werte der einzlenen Felder zuzugreifen.
 %    \begin{macrocode}
+\setzeGliederungsEbene{zauber}{subsubsection}
 \define@key{zauber}{name}{\def\zaubername{#1}}
 \define@key{zauber}{entry}{\def\zauberentry{#1}}
 \define@key{zauber}{anmerkung}{\def\zauberAnmerkung{#1}}
@@ -1665,9 +1699,9 @@ ABENTEUER
 %    \begin{macrocode}
 \phantomsection%
 \ifdefstring{\zauberentry}{none}{%
-  \addcontentsline{toc}{subsubsection}{\zaubername}
+  \addcontentsline{toc}{\midgard@zauber@tocLevel}{\zaubername}
 }{%
-  \addcontentsline{toc}{subsubsection}{\zauberentry}
+  \addcontentsline{toc}{\midgard@zauber@tocLevel}{\zauberentry}
 }
 %    \end{macrocode}
 % Zunächst wird der Name des Zaubers gedruckt. Dann wird zunächst
@@ -1884,9 +1918,9 @@ ABENTEUER
 %    \begin{macrocode}
 \phantomsection%
 \ifdefstring{\zauberentry}{none}{%
-        \addcontentsline{toc}{subsubsection}{\zaubername}
+        \addcontentsline{toc}{\midgard@zauber@tocLevel}{\zaubername}
         }{%
-        \addcontentsline{toc}{subsubsection}{\zauberentry}
+        \addcontentsline{toc}{\midgard@zauber@tocLevel}{\zauberentry}
         }
 %    \end{macrocode}
 % Zunächst wird der Name der Beschwörung gedruckt. Dann wird zunächst
@@ -2038,6 +2072,7 @@ Beschwörung~%
 %  das Arkanums-Layout der Zauber. Zunächst definieren wir lokale
 %  Kommandos.
 %    \begin{macrocode}
+\setzeGliederungsEbene{zaubermittel}{subsubsection}
 \define@key{zaubermittel}{name}{\def\zaubermittelName{#1}}
 \define@key{zaubermittel}{entry}{\def\zaubermittelEntry{#1}}
 \define@key{zaubermittel}{voraussetzungen}{\def\zaubermittelVor{#1}}
@@ -2068,9 +2103,9 @@ Beschwörung~%
 \vspace{1em}
 \phantomsection%
 \ifdefstring{\zaubermittelEntry}{none}{%
-        \addcontentsline{toc}{subsubsection}{\zaubermittelName}
+        \addcontentsline{toc}{\midgard@zaubermittel@tocLevel}{\zaubermittelName}
         }{%
-        \addcontentsline{toc}{subsubsection}{\zaubermittelEntry}
+        \addcontentsline{toc}{\midgard@zaubermittel@tocLevel}{\zaubermittelEntry}
       }
 \noindent{\bfseries\zaubermittelName} -- Stufe \zaubermittelStufe%
 \ifdefstring{\zaubermittelVor}{keine}{}{\\\textit{\zaubermittelVor}}%
@@ -2114,6 +2149,7 @@ Beschwörung~%
 %\begin{macro}{\artefakt}
 % Wir definieren das Kommando.
 %    \begin{macrocode}
+\setzeGliederungsEbene{artefakt}{subsubsection}
 \define@key{artefakt}{name}            {\def\artefaktName{#1}}
 \define@key{artefakt}{ABW}             {\def\artefaktABW{#1}}
 \define@key{artefakt}{aura}            {\def\artefaktAura{#1}}
@@ -2139,7 +2175,7 @@ Beschwörung~%
 \par\pagebreak[2]%
 \addvspace{1em}% plus 0.5em minus 0.5em}%
 \setkeys{artefakt}{#1}{%
-\addcontentsline{toc}{subsubsection}{\artefaktName}
+\addcontentsline{toc}{\midgard@artefakt@tocLevel}{\artefaktName}
 \begingroup
 \setlength\parindent{0pt}
 \flushleft
