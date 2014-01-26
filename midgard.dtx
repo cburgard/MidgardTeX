@@ -1,22 +1,30 @@
 % \iffalse meta-comment
 % 
-% Copyright (C) 2012 by Carsten Burgard
+% Copyright (C) 2014 by Carsten Burgard
 % 
 % This file may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
-% version 1.2 of this license or (at your option) any later
+% version 1.3 of this license or (at your option) any later
 % version. The latest version of this license is in:
 % 
 %     http://www.latex-project.org/lppl.txt
 % 
-% and version 1.2 or later is part of all distributions of
-% LaTeX version 1999/12/01 or later.
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
 %
 % The pictures accompanying this package
 %
 %       arrow.pdf  arrow.eps
 %       box.pdf    box.eps
 %       scroll.pdf scroll.eps
+%       water.pdf  water.eps
+%       fire.pdf   fire.eps
+%       earth.pdf  earth.eps
+%       air.pdf    air.eps
+%       ice.pdf    ice.eps
+%       wood.pdf   wood.eps
+%       magic.pdf  magic.eps
+%       metal.pdf  metal.eps
 %
 % are property of 
 %
@@ -32,7 +40,7 @@
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{midgard}
-%<package> [2012/05/23 v1.0 A package for typesetting documents for the german Pen & Paper Roleplay Game 'Midgard']
+%<package> [2014/01/26 v1.0 A package for typesetting documents for the german Pen & Paper Roleplay Game 'Midgard']
 %
 %
 %<*driver>
@@ -94,12 +102,11 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \end{document}
 %</driver> \fi \CheckSum{0} \changes{v1.0}{2012/05/23}{Ursprüngliche
 % Version} \GetFileInfo {midgard.sty}
-% \DoNotIndex{\#,\$,\%,\&,\@,\\,\{,\},\^,\_,\~,\,,\=,\>}
-% \DoNotIndex{\@ne}
-% \DoNotIndex{\advance,\begingroup,\catcode,\closein}
-% \DoNotIndex{\closeout,\day,\def,\edef,\else,\empty,\endgroup,\if,\else,\fi}
-% \DoNotIndex{\begin,\end,\leftskip,\let,\linewidth,\newcommand,\newcounter,\newenvironment,\newline,\noindent,\parindent,\parsep,\parskip,\partopsep,\setcounter,\setlength,\textbf,\textit,\textsf,\textsc,\text...,\large,\Large,\small,\footnotesize,\itshape,\bfseries,\par,\textup,\times,\topmargin,\topsep,\topskip,\LARGE,\headsep,\equal,\value,\frac,\ifdefstring}
-
+% \makeatletter
+% \expandafter\DoNotIndex\expandafter{\string\{}
+% \expandafter\DoNotIndex\expandafter{\string\}}
+% \DoNotIndex{\#,\$,\%,\&,\@,\\,\^,\_,\~,\,,\.,\=,\>,\@ne,\advance,\begingroup,\catcode,\closein,\closeout,\day,\def,\edef,\else,\empty,\endgroup,\if,\else,\fi,\begin,\end,\leftskip,\let,\detokenize,\expandafter,\linewidth,\newcommand,\newcounter,\newenvironment,\newline,\noindent,\parindent,\parsep,\parskip,\partopsep,\setcounter,\setlength,\textbf,\textit,\textsf,\textsc,\text...,\large,\Large,\small,\footnotesize,\itshape,\bfseries,\par,\textup,\times,\topmargin,\topsep,\topskip,\LARGE,\headsep,\equal,\value,\frac,\selectfont,\setkeys,\savekeys,\ref,\rightskip,\raggedright,\sloppy,\textfloatsep,\texthigh,\vspace,\togglefalse,\toggletrue,\typeout,\usetikzlibrary,\xdef,\newlength,\newmdenv,\nolinebreak,\nopagebreak,\nicefrac,\numdef,\numgdef,\mdfdefinestyle,\makebox,\kill,\includegraphics,\iftoggle,\ifnumgreater,\ifdefstring,\hfill,\fi,\csname,\endcsname,\guillemotleft,\guillemotright,\thinspace,\appto,\addvspace,\AtBeginDocument,\bgroup,\centering,\cleaders,\col@number,\copy,\define@key,\everypar,\ensuremath,\expandnext,\flushleft,\fontsize,\global,\glqq,\grqq,\hfil,\hskip,\Hy@raisedlink,\ifboolexp,\ifcsdef,\ifcsname,\ifdefstrequal,\ifnum,\ifodd,\ifstrempty,\lastbox,\linebreak,\mbox,\newsavebox,\newtoggle,\nobreak,\numexpr,\pagebreak,\parbox,\presetkeys,\protect,\providecommand,\protect,\RequirePackage,\romannumeral,\savebox,\setbox,\the,\unpenalty,\unskip,\unvbox,\vbox,\z@,\zz,\relax,\egroup,\endtabbing,\ifboolexpr,\hspace,\hyphenation,\hypertarget,\hyperlink,\@afterheading,\@afterindentfalse,\@ifpackageloaded,\@ifundefined,\addcontentsline,\hyphenation,\stepcounter,\tabbing}
+% \makeatother
 % \title{Das \textsf{ midgard } Paket\thanks{Dieses Dokument bezieht
 % sich auf \textsf{ midgard }~\fileversion, datiert~\filedate.}}
 
@@ -131,7 +138,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % make it possible to write your own documents in a similar style and
 % layout. Different commands and environments are defined to fit this
 % purpose. The package and the documentation is -- apart from this
-% paragraph -- entirely written in german, as is is the game itself. A
+% paragraph -- entirely written in german, as is  the game itself. A
 % translation of this package into other languages is not planned,
 % since there is little use for this package outside the entirely
 % german-speaking fanbase of the game itself. 
@@ -210,11 +217,12 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % liefert das Kommando |\midgardabenteuer|, dessen Ergebnis in
 % Abbildung~\ref{fig:midgardabenteuer} dargestellt wird. Je nach
 % Kontext sollte es mit |\centering| auf der Seite zentriert
-% werden. 
+% werden. \DescribeMacro{\midgardquellenbuch} Ein analoges Kommando
+% existiert auch für Quellenbücher.
 
-% \begin{figure}[H] \centering \midgardabenteuer \caption{Schriftzug
+% \begin{figure}[H] \centering \midgardabenteuer \par\bigskip\par \midgardquellenbuch \caption{Schriftzug
 % auf der Titelseite von
-% Abenteuern \label{fig:midgardabenteuer}} \end{figure}
+% Abenteuern und Quellenbüchern\label{fig:midgardabenteuer}} \end{figure}
 
 
 % \DescribeEnv{beispiel} Gerade im Grundregelwerk \glqq
@@ -223,7 +231,11 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % Regeln demonstrieren sollen. Diese sind typischerweise in leicht
 % grau hinterlegte, abgerundete Boxen abgedruckt. Dies versucht die
 % Umgebung |beispiel| nachzuempfinden. Das Ergebnis ist in
-% Abbildung~\ref{fig:beispiel} dargestellt. 
+% Abbildung~\ref{fig:beispiel} dargestellt. \DescribeEnv{textbox} Auch
+% eckige Textboxen \DescribeEnv{rundbox} und runde Informationsboxen
+% sind üblich, wie in Abbildungen~\ref{fig:textbox} und
+% \ref{fig:rundbox} dargestellt. Ein optionales Argument erlaubt die
+% Eingabe einer Titelzeile für die Box.
 
 % \begin{figure}[H]
 % \centering \begin{beispiel} In einer solchen \textit{Beispiel-Box}
@@ -236,6 +248,23 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \caption{Die
 % Umgebung \textsf{beispiel} \label{fig:beispiel}} \end{figure}
 
+% \begin{figure}[H]
+% \centering \begin{textbox}[Textbox] In einer solchen \textit{Textbox}
+% können zum direkten Vorlesen gedachte Passagen gesetzt werden.
+% \end{textbox}\vspace{\abovecaptionskip}
+% \caption{Die
+% Umgebung \textsf{textbox} \label{fig:textbox}} \end{figure}
+
+% \begin{figure}[H]
+% \centering \begin{rundbox}[Rundbox] In einer solchen \textit{Rundbox}
+% werden üblicherweise nicht direkt mit dem Haupttext in Verindung stehende
+% Hintergrundinformationen abgedruckt.
+% \end{rundbox}\vspace{\abovecaptionskip}
+% \caption{Die
+% Umgebung \textsf{rundbox} \label{fig:rundbox}} \end{figure}
+
+
+
 % \DescribeMacro{\midgardskip} Die Länge |\midgardskip| wird intern
 % verwendet, um innerhalb verschiedener Makros etwas vertikalen Platz
 % zu erzeugen. Standardmäßig ist sie etwa identisch mit |\smallskip|,
@@ -243,6 +272,18 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % Regelwerk führt, kann jedoch umdefiniert werden, um zusätzlichen
 % Platz zu erzeugen. Das Layout in den offiziellen Regelwerken
 % entspricht etwa einer Einstellung von |0.7em|. 
+
+% \DescribeMacro{\geld} Mit |\geld| kann eine beliebige Goldmenge
+% korrekt gestückelt ausgegeben werden. Beispielsweise produziert
+% |\geld{23456}| die Ausgabe \textit{\geld{23456}}.  Da es eine beliebte
+% Hausregel ist, die Umrechnungsfaktoren von Gold- in Silberstücke
+% oder von Silber- in Goldstücke anzupassen (beispielsweise auf 1:100
+% anstelle des Normalwertes von 1:10) existieren entsprechende
+% Funktionalitäten, namentlich |\setzeKupferProSilber| und
+% |\setzeSilberProGold|. Außerdem können die Anzeigewerte \textit{GS},
+% \textit{SS} und \textit{KS} durch Umdefinition von |\goldAlias|,
+% |\silberAlias| und |\kupferAlias| editiert werden.
+
 
 % \subsection{Das Fantasy Rollenspiel} \begin{figure} \centering
 
@@ -379,21 +420,43 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % Abenteurertypen, die diese Fertigkeit zu Standardkosten lernen
 % können.\tabularnewline A & \fertigkeitA & Diejenigen
 % Abenteurertypen, die diese Fertigkeit zu Ausnahmekosten lernen
-% können.  \end{longtable}} \end{widecenter} \begin{figure}
-% \centering \begin{minipage}{0.6\textwidth} \waffenfertigkeit[
+% können.
+% \end{longtable}}
+% \end{widecenter} 
+% \begin{figure}
+% \centering
+% \begin{minipage}{0.6\textwidth} 
+% \waffenfertigkeit[
 % name=Spazierstockwerfen, schaden=1W6,
-% reichweite={5-10/11-20/21-30\,m}, voraussetzungen={St\,31, Gw\,11},
-% grundkenntnisse=Alltagsgegenstände, beispiele={Handtasche, Stuhl},
-% FP=500, G=ältere Herren, S=Wanderer, A=niemand]{} \par
-% Beschreibungstext der
-% Waffenfähigkeit \end{minipage}\par \bigskip\hrule\bigskip\par \begin{minipage}{0.6\textwidth} \begin{verbatim}
-% \waffenfertigkeit[ name=Spazierstockwerfen, schaden=1W6,
-% reichweite={5-10/11-20/21-30\,m}, voraussetzungen={St\,31, Gs\,11},
-% grundkenntnisse=Alltagsgegenstände, beispiele={Handtasche, Stuhl},
-% FP=500, G=ältere Herren, S=Wanderer, A=niemand]{} Beschreibungstext
-% der Waffenfähigkeit \end{verbatim} \end{minipage} \caption{Ein dem
-% \textsc{Dfr4} nachempfundenes Layout für
-% Waffenfertigkeiten\label{fig:waffe}} \end{figure}
+% reichweite={5-10/11-20/21-30\,m}, 
+% voraussetzungen={St\,31, Gw\,11},
+% grundkenntnisse=Alltagsgegenstände, 
+% beispiele={Handtasche, Stuhl}, FP=500, 
+% G=ältere Herren, S=Wanderer, A=niemand
+% ]{} \par
+% Beschreibungstext der Waffenfähigkeit 
+% \end{minipage}
+% \par
+% \bigskip
+% \hrule
+% \bigskip
+% \par 
+% \begin{minipage}{0.6\textwidth} 
+% \begin{verbatim}
+% \waffenfertigkeit[
+%   name=Spazierstockwerfen, schaden=1W6,
+%   reichweite={5-10/11-20/21-30\,m}, 
+%   voraussetzungen={St\,31, Gw\,11},
+%   grundkenntnisse=Alltagsgegenstände, 
+%   beispiele={Handtasche, Stuhl}, FP=500, 
+%   G=ältere Herren, S=Wanderer, A=niemand
+% ]{} 
+% Beschreibungstext der Waffenfähigkeit
+% \end{verbatim}
+% \end{minipage}
+% \caption{Ein dem \textsc{Dfr4} nachempfundenes Layout für
+% Waffenfertigkeiten\label{fig:waffe}} 
+% \end{figure}
 
 % \DescribeMacro{\waffenfertigkeit} Mit dem Kommando
 % |\waffenfertigkeit[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}|
@@ -449,25 +512,80 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % Waffenfertigkeit zu Standardkosten lernen können.\tabularnewline A &
 % \weaponA & Diejenigen Abenteurertypen, die diese Waffenfertigkeit zu
 % Ausnahmekosten lernen
-% können.  \end{longtable}} \end{widecenter} \subsection{Arkanum} \begin{figure} \begin{widecenter} \begin{minipage}{8cm}
-% \zauber[name=Neuer Zauber, scroll=false, stufe=1, art=Gestenzauber,
-% prozess=Veränden, agens=Holz, reagens=Erde, AP=1, Zd=1\,sec,
-% Rw=30\,m, Wz=Geist, Wb=Zauberer, Wd=\textinfty, Ur=druidisch,
-% FP=100, G={Dr, Th}, th=S, S={Hl, Hx, \textsc{Pri} a.~T}, A=niemand,
-% anmerkung={nur zu Demonstrationszwecken}, material={Haare eines
-% Hundes}, matpreis={1~KS}, matannotation={wird nur bei krit.~Fehler
-% verbraucht} ]{} \par Beschreibungstext des
-% Zaubers \end{minipage} \hspace{0.5cm}\vrule\hspace{0.5cm} \begin{minipage}{8cm} \begin{verbatim}
-% \zauber[name=Neuer Zauber, scroll=false,th=S, anmerkung={nur zu
-% Demonstrationszwecken}, stufe=1,art=Gestenzauber,
-% prozess=Veränden,agens=Holz,reagens=Erde AP=1, Zd=1\,sec, Rw=30\,m,
-% Wz=Geist, Wb=Zauberer, Wd=\textinfty, Ur=druidisch, FP=100, S={Hl,
-% Hx, \textsc{Pri} a.~T}, G={Dr, Th}, A=niemand, material={Haare eines
-% Hundes}, matpreis={1~KS}, matannotation={wird nur bei krit.~Fehler
-% verbraucht} ]{} Beschreibungstext des
-% Zaubers \end{verbatim} \end{minipage} \end{widecenter} \caption{Ein
-% dem Arkanum nachempfundenes Layout für
-% Zauber\label{fig:zauber}} \end{figure} 
+% können.  \end{longtable}} \end{widecenter} 
+
+
+% \subsection{Arkanum}
+
+% \begin{table}
+% \centering
+% \begin{tabular}{c l}
+% \imgMagisch &|\imgMagisch |\tabularnewline
+% \imgModus   &|\imgModus   |\tabularnewline
+% \imgObjectum&|\imgObjectum|\tabularnewline
+% \imgFeuer   &|\imgFeuer   |\tabularnewline
+% \imgWasser  &|\imgWasser  |\tabularnewline
+% \imgErde    &|\imgErde    |\tabularnewline
+% \imgLuft    &|\imgLuft    |\tabularnewline
+% \imgEis     &|\imgEis     |\tabularnewline
+% \imgHolz    &|\imgHolz    |\tabularnewline
+% \imgMetall  &|\imgMetall  |\tabularnewline
+% \imgMagan   &|\imgMagan   |
+% \end{tabular}
+% \caption{Besondere Symbole des Arkanums und ihre zugehörigen \LaTeX-Kommandos.\label{tab:symbols}}
+% \end{table}
+
+% \begin{figure}
+% \begin{widecenter}
+% \begin{minipage}{8cm}
+% \zauber[name=Neuer Zauber, 
+%   scroll=false,th=S, 
+%   anmerkung={nur zu Demonstrationszwecken}, 
+%   stufe=1,art=Gestenzauber,
+%   prozess=Veränden,agens=Holz,reagens=Erde,
+%   AP=1, Zd=1\,sec, Rw=30\,m,
+%   Wz=Geist, Wb=Zauberer,
+%   Wd=\textinfty, Ur=druidisch, FP=100,
+%   S={Hl, Hx, \textsc{Pri} a.~T},
+%   G={Dr, Th},
+%   A=niemand,
+%   material={Haare eines Hundes},
+%   matpreis={1~KS},
+%   matannotation={wird nur bei
+%   krit.~Fehler verbraucht}
+% ]{}
+% Beschreibungstext des Zaubers 
+% \end{minipage}
+% \hspace{0.5cm}\vrule\hspace{0.5cm} 
+% \begin{minipage}{6cm} 
+% \begin{verbatim}
+% \zauber[name=Neuer Zauber, 
+%   scroll=false,th=S, 
+%   anmerkung={nur zu Demonstrationszwecken}, 
+%   stufe=1,art=Gestenzauber,
+%   prozess=Veränden,agens=Holz,reagens=Erde,
+%   AP=1, Zd=1\,sec, Rw=30\,m,
+%   Wz=Geist, Wb=Zauberer,
+%   Wd=\textinfty, Ur=druidisch, FP=100,
+%   S={Hl, Hx, \textsc{Pri} a.~T},
+%   G={Dr, Th},
+%   A=niemand,
+%   material={Haare eines Hundes},
+%   matpreis={1~KS},
+%   matannotation={wird nur bei
+%   krit.~Fehler verbraucht}
+% ]{}
+% Beschreibungstext des Zaubers 
+% \end{verbatim}
+%  \end{minipage}
+%  \end{widecenter}
+%  \caption{Ein dem Arkanum nachempfundenes Layout für Zauber\label{fig:zauber}} 
+% \end{figure} 
+
+% \DescribeMacro{\img...} Im Arkanum wird eine Reihe von Sonderzeichen
+% verwendet, welche im Rahmen dieses Paketes zur Verfügung gestellt
+% werden sollen. Die Tabelle \ref{tab:symbols} beinhaltet die Kommandos und
+% zugehörigen Symbole.
 
 % \DescribeMacro{\zauber} Mit dem Kommando
 % |\zauber[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}| kann ein dem
@@ -476,12 +594,15 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % dargestellt. Die vollständige Liste mit Schlüsseln ist in Tabelle
 % \ref{tbl:zauber} abgedruckt. Die Spalte \textit{default} beinhaltet
 % dabei denjenigen Wert, den das entsprechende Feld annimmt, wenn der
-% Wert nicht aktiv gesetzt wird.  \DescribeMacro{\zaubervariante} Das
-% Kommando |\zaubervariante{|\meta{Variante}|}| soll benutzt werden um
-% am Ende einer Zauberbeschreibung die Variationen des Zaubers für
+% Wert nicht aktiv gesetzt wird.
+
+% \DescribeMacro{\zaubervariante} Das Kommando
+% |\zaubervariante{|\meta{Variante}|}| soll benutzt werden um am Ende
+% einer Zauberbeschreibung die Variationen des Zaubers für
 % verschiedene Zaubererklassen genauer zu beschreiben, etwa
 % |\zaubervariante{Thaumaturgie}| für einen Abschnitt, der mit
 % \glqq\textbf{\textsc{Thaumaturgie}:} \dots\grqq{} beginnt.
+
 % \DescribeMacro{\zaubermittel} Mit dem Kommando
 % |\zaubermittel[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}| kann
 % analog ein dem Layout des Arkanums nachempfundener Textsatz der
@@ -492,6 +613,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % |\zauberwerkstatt[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}|,
 % welches sich jedoch genauso verhält wie
 % |\zaubermittel[|\meta{Schlüssel}|=|\meta{Wert}|,| \dots|]{}|.
+
 % \FloatBarrier \begin{widecenter}
 % \setkeys{zauber}{}{ \begin{longtable}{>{\sf}l | >{\itshape}c |
 % p{12cm}} \caption{Vollständige Liste der Schlüssel und Felder des
@@ -507,7 +629,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % führen.  \tabularnewline scroll & \zauberscroll & Bool'sche Angabe,
 % ob dieser Zauber von Schriftrolle gelernt werden kann. Jeder andere
 % Wert außer \textit{true} führt dazu, dass das Schriftrollensymbol
-% \includegraphics[height=0.7em]{pics/scroll} in der Kopfzeile
+% \imgMagisch in der Kopfzeile
 % abgedruckt wird.\tabularnewline th & \zauberth & Information über
 % die thaumaturgische Variante des Zaubers, wird typischerweise auf
 % \textit{R} oder \textit{S} für Runenstäbe bzw.~Siegelzauber
@@ -560,14 +682,14 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % dem Köder in Normalschrift und geklammert
 % abgedruckt. \tabularnewline \tabularnewline prozess & \zauberprozess
 % & Der Prozess-Anteil der Zauberformel. Jede Angabe wird wörtlich vor
-% dem Symbol \includegraphics[height=0.7em]{pics/box} in der
+% dem Symbol \imgModus in der
 % Zauberformel abgedruckt.\tabularnewline agens & \zauberagens & Der
 % Agens-Anteil der Zauberformel. Jede Angabe wird wörtlich zwischen
-% den Symbol \includegraphics[height=0.7em]{pics/box} und
-% \includegraphics[height=0.7em]{pics/arrow} in der Zauberformel
+% den Symbol \imgModus und
+% \imgObjectum in der Zauberformel
 % abgedruckt.\tabularnewline reagens & \zauberreagens & Der
 % Regens-Anteil der Zauberformel. Jede Angabe wird wörtlich zwischen
-% hinter dem Symbol \includegraphics[height=0.7em]{pics/arrow} in der
+% hinter dem Symbol \imgObjectum in der
 % Zauberformel abgedruckt.\tabularnewline AP & \zauberAP & Die
 % AP-Kosten des Zaubers. Jede Angabe außer \textit{hide} wird wörtlich
 % abgedruckt, während \textit{hide} dazu führt, dass die Zeile nicht
@@ -606,30 +728,40 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % die den Zauber zu Standardkosten lernen können.\tabularnewline A &
 % \zauberA & Diejenigen Zaubererklassen, die den Zauber zu
 % Ausnahmekosten lernen
-% können.  \end{longtable}} \end{widecenter} \subsection{Bestiarium} \begin{figure} \begin{verbatim}
+% können.  \end{longtable}} \end{widecenter}
+
+% \subsection{Bestiarium}
+% \begin{figure}
+% \begin{verbatim}
 % \bestiarium[ name=Kreatur, mag=true, typ=Humanoid, grad=3, In=m30,
-% LP=3W6, AP=3W6+2, MW=18, EP=5, Gw=80, St=70, B=24, RK=KR, abwehr=12,
-% resistenz=13/15/11, angriff={Keule+8 (1W6+1) -- Raufen+8 (1W6-2)},
+% LP=3W6, AP=3W6+2, MW=18, EP=5, Gw=80, St=70, B=24, RK=KR, 
+% abwehr=12, resistenz=13/15/11,
+% angriff={Keule+8 (1W6+1) -- Raufen+8 (1W6-2)},
 % zauberEW=12, zauber={Bannen von Dunkelheit, Schlaf -- Niessalz},
-% zauberArtigEW=18, zauberArtig={Heilen von Wunden \textup{(jede Runde
-% auf sich selbst)}}, bes=kann nur mit magischen Waffen verletzt
-% werden, aura=dämonisch, vorkommen=überall]{} \end{verbatim} \hrule
-% \hfill \begin{minipage}{0.45\textwidth} \bestiarium[ name=Kreatur,
-% mag=true, typ=Humanoid, grad=3, In=m30, LP=3W6, AP=3W6+2, MW=18,
-% EP=5, Gw=80, St=70, B=24, RK=KR, abwehr=12, resistenz=13/15/11,
-% angriff={Keule+8 (1W6+1) -- Raufen+8 (1W6-2)}, zauberEW=12,
-% zauber={Bannen von Dunkelheit, Schlaf -- Niessalz},
-% zauberArtigEW=18, zauberArtig={Heilen von Wunden \textup{(jede Runde
-% auf sich selbst)}}, bes=kann nur mit magischen Waffen verletzt
-% werden, aura=dämonisch,
-% vorkommen=überall]{} \end{minipage}\hfill \begin{minipage}{0.45\textwidth}
-% \best[ name=Kreatur, mag=true, typ=Humanoid, grad=3, In=m30, LP=3W6,
-% AP=3W6+2, MW=18, EP=5, Gw=80, St=70, B=24, RK=KR, abwehr=12,
-% resistenz=13/15/11, angriff={Keule+8 (1W6+1) -- Raufen+8 (1W6-2)},
+% zauberArtigEW=18, zauberArtig={Heilen von Wunden \textup{(jede Runde auf sich selbst)}}, 
+% bes=kann nur mit magischen Waffen verletzt werden, aura=dämonisch, vorkommen=überall]{}
+% \end{verbatim}
+% \hrule
+% \smallskip
+% \hfill
+% \begin{minipage}{0.45\textwidth}
+% \bestiarium[ name=Kreatur, mag=true, typ=Humanoid, grad=3, In=m30,
+% LP=3W6, AP=3W6+2, MW=18, EP=5, Gw=80, St=70, B=24, RK=KR, 
+% abwehr=12, resistenz=13/15/11,
+% angriff={Keule+8 (1W6+1) -- Raufen+8 (1W6-2)},
 % zauberEW=12, zauber={Bannen von Dunkelheit, Schlaf -- Niessalz},
-% zauberArtigEW=18, zauberArtig={Heilen von Wunden \textup{(jede Runde
-% auf sich selbst)}}, bes=kann nur mit magischen Waffen verletzt
-% werden, aura=dämonisch, vorkommen=überall]{} \end{minipage}
+% zauberArtigEW=18, zauberArtig={Heilen von Wunden \textup{(jede Runde auf sich selbst)}}, 
+% bes=kann nur mit magischen Waffen verletzt werden, aura=dämonisch, vorkommen=überall]{}
+% \end{minipage}\hfill 
+% \begin{minipage}{0.45\textwidth}
+% \best[ name=Kreatur, mag=true, typ=Humanoid, grad=3, In=m30,
+% LP=3W6, AP=3W6+2, MW=18, EP=5, Gw=80, St=70, B=24, RK=KR, 
+% abwehr=12, resistenz=13/15/11,
+% angriff={Keule+8 (1W6+1) -- Raufen+8 (1W6-2)},
+% zauberEW=12, zauber={Bannen von Dunkelheit, Schlaf -- Niessalz},
+% zauberArtigEW=18, zauberArtig={Heilen von Wunden \textup{(jede Runde auf sich selbst)}}, 
+% bes=kann nur mit magischen Waffen verletzt werden, aura=dämonisch, vorkommen=überall]{}
+%\end{minipage}
 % \hfill~ \caption{Ein dem Bestiarium nachempfundenes Layout für
 % Kreaturendaten\label{fig:bestiarium}} \end{figure}
 
@@ -655,13 +787,13 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % Schlüssel & default & \bfseries Wirkung\tabularnewline\hline name &
 % \bestName & Der Name des Wesens \tabularnewline mag & \bestMag &
 % Falls |mag| \textit{true} ist, wird das Schriftrollensymbol
-% \includegraphics[height=0.7em]{pics/scroll} hinter nem Namen
+% \imgMagisch hinter nem Namen
 % angezeigt.  \tabularnewline addendum & \bestAdd & Bei einigen Wesen
 % gibt es einen Namenszusatz, welcher nötigenfalls \textbf{nach} dem
 % gegebenenfalls vorhandenen Schriftrollensymbol dargestellt werden
 % soll, bei einem Drachen etwa der Zusatz \glqq uralter\grqq{} (für
 % die Ausgabe \textbf{Drache
-% }\includegraphics[height=0.7em]{pics/scroll}\textbf{, uralter})
+% }\imgMagisch\textbf{, uralter})
 % . Jede Angabe außer \textit{none} wird deshalb in Fettdruck und mit
 % Komma abgetrennt hinter dem Namen und dem eventuell vorhandenen
 % Schriftrollensymbol ausgegeben.  \tabularnewline grad & \bestGrad &
@@ -792,9 +924,26 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \usetikzlibrary{shadows}
 \RequirePackage{longtable}
 \RequirePackage{calc}
+\RequirePackage{anyfontsize}
 \RequirePackage{etextools}
 %    \end{macrocode}
-%   Die folgenden Counter weden benötigt um die Grund-, und
+%\begin{macro}{\phantomsection}
+% Um auch ohne das |hyperref|-Paket fehlerlos Dokumente verarbeiten zu können,
+% stellen wir und leeres Kommado von |\phantomsection| zur Verfügung.
+%    \begin{macrocode}
+\providecommand\phantomsection{}
+%    \end{macrocode}
+%\end{macro}
+%\begin{macro}{\@doendeq}
+% Dieses Helferkommando assistiert dabei, die Einrückung nach bestimmten
+% Umgebungen zu entfernen.
+%    \begin{macrocode}
+\newcommand*{\@doendeq}{%
+  \everypar{{\setbox\z@\lastbox}\everypar{}}%
+}
+%    \end{macrocode}
+%\end{macro}
+%   Die folgenden Counter werden benötigt um die Grund-, und
 %   Ausnahmekosten von Zaubern und Fähigkeiten nur aus der Angabe von
 %   Standardkosten zu berechnen.
 %    \begin{macrocode}
@@ -802,9 +951,11 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \newcounter{midgard@StandardKosten}
 \newcounter{midgard@AusnahmeKosten}
 %    \end{macrocode}
-%\begin{macro}{\EnergieSystem}
-%   Analog verwenden wir einige boolsche Variablen, um das verwendete
-%   Regelsystem zu kontrollieren.
+%\begin{macro}{\EnergieSystem} Das |midgard|-Paket ist sehr
+% flexibel. Das Layout kann an das verwendete Regelsystem angepasst
+% werden. Mittels entsprechender Makros kann dann zwischen den
+% verwendeten Systemen gewechselt werden, hier im Beispiel zwischen
+% dem \textsc{DF4} und dem \textsc{EnergieSystem}.
 %    \begin{macrocode}
 \newtoggle{useEnergy}
 \newtoggle{useInitiative}
@@ -813,18 +964,30 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
   \global\toggletrue{useEnergy}%
   \global\toggletrue{useInitiative}%
 }
+%    \end{macrocode}
+%\end{macro}
+%\begin{macro}{\DFR} 
+% Das Kommando für die Verwendung des Standard-Layouts ist |\DFR|.
+%    \begin{macrocode}
 \newcommand{\DFR}{%
   \typeout{package MIDGARD info: Verwende jetzt das DFR}%
   \global\togglefalse{useEnergy}%
   \global\togglefalse{useInitiative}%
 }
-\newcommand{\EnergieOrDFR}[2]{\iftoggle{useEnergy}{#1}{#2}}
 \DFR
+%    \end{macrocode}
+%\end{macro}
+%\begin{macro}{\EnergieOrDFR} 
+% Mit diesem Kommando können kurze Textpassagen zwischen zwei Regelversionen
+% ein und desselben Dokumentes ausgetauscht werden. Für längere Textpassagen
+% sollte das |versions|-Paket zurate gezogen werden.
+%    \begin{macrocode}
+\newcommand{\EnergieOrDFR}[2]{\iftoggle{useEnergy}{#1}{#2}}
 %    \end{macrocode}
 %\end{macro}
 %
 %\begin{macro}{\iquo}
-% Berechnet den Ganzzahl-Quotienten der Argumente.
+% Mit diesem Helfermakro kann der Ganzzahlquotient zweier Zahlen bestimmt werden.
 %    \begin{macrocode}
 \newcommand{\iquo}[2]{% integer quotient of #1 divided by #2
   \romannumeral-`\.% for 2-step expansion
@@ -836,9 +999,8 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 }
 %    \end{macrocode}
 %\end{macro}
-
 %\begin{macro}{\irem}
-% Berechnet den Ganzzahl-Divisionsrest der Argumente.
+% Entsprechend wird der Divisionsrest zweier Zahlen berechnet.
 %    \begin{macrocode}
 \newcommand{\irem}[2]{% integer remainder of #1 divided by #2
   \the\numexpr #1-#2*\iquo{#1}{#2}\relax}
@@ -852,7 +1014,6 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %    Aufrufs eine Nummer zugewiesen wird, zu der das Argument dann zu 
 %    jedem späteren Zeitpunkt expandiert.
 %    \begin{macrocode} 
-\providecommand\phantomsection{}
 \newcounter{@hash@id}
 \newcommand\hashstring[1]{%
   \ifcsname\detokenize{hash@#1}\endcsname%
@@ -863,9 +1024,6 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
   \fi%
 }%
 \newcommand\gethash[1]{hash:\csname\detokenize{hash@#1}\endcsname}%
-\newcommand*{\@doendeq}{%
-  \everypar{{\setbox\z@\lastbox}\everypar{}}%
-}
 %    \end{macrocode}
 %    Um auf das hashing tatsächlich zu verwenden, muss später nurnoch 
 %    |hyperref| mit dem expandierten Argument aufgerufen werden.
@@ -909,6 +1067,51 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
   \tabbing%
 }
 {\endtabbing}
+%    \end{macrocode}
+% \end{macro}
+
+%\begin{macro}{multicolslongtable}
+% In Rollenspielpublikationen sind sehr lange Tabellen nicht
+% unüblich. Diese sind oft schwierig zu setzen, da sie ausgesprochen
+% schmal sind. Ein mehrspaltiges Tabellenlayout im Stil von
+% |multicols| ist hier vorteilhaft, mit normalen \LaTeX-Mitteln aber
+% meist nur schwierig zu realisieren. Die
+% |multicolslongtable|-Umgebung funktioneirt wie |longtable| aus dem
+% gleichnamigen Paket, ist aber für den Einsatz innerhalb einer
+% |multicols|-Umgebung gedacht.
+%    \begin{macrocode}
+\newsavebox\ltmcbox
+\newenvironment{multicolslongtable}[1]{
+  \setbox\ltmcbox\vbox\bgroup
+  \col@number\@ne
+    \begin{longtable}{#1}
+}{
+    \end{longtable}
+    \unskip
+    \unpenalty
+    \unpenalty\egroup
+    \unvbox\ltmcbox
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%\begin{macro}{\optendash}
+% Ein |\optendash| ist ein |\endash|, der aber als \textit{leader}
+% definiert wurde, am Anfang und Ende von Zeilen also unterdrückt
+% wird.
+%    \begin{macrocode}
+\newsavebox\zz
+\savebox\zz{--}
+\def\optendash{\cleaders\copy\zz\hskip1.9\wd\zz}
+%    \end{macrocode}
+% \end{macro}
+%
+
+%\begin{macro}{unraggedright}
+% Mit diesem Kommando kann das Absatzlayout für linksbündige Passagen
+% mit kleinen erlaubten Abweichungen von dem rechten Zeilenrand
+% eingestellt werden.
+%    \begin{macrocode}
 \newcommand{\unraggedright}{\raggedright\rightskip=0pt plus 0.2\linewidth\sloppy}
 %    \end{macrocode}
 % \end{macro}
@@ -916,15 +1119,31 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %   Einige mathematische Symbole wie etwa das Unendlich-Zeichen
 %   \glqq\textinfty\grqq{} müssen in den Daten von Zaubern und
 %   Kreaturen häufig im Text-Modus gesetzt werden. Daher definieren
-%   wir hier entsprechende Kommandos.
+%   wir hier entsprechende Kommandos. Einige dieser Kommandos werden
+%   abhängig vom gewählten Encoding auch von anderen Paketen definiert.
+%   Damit sie dennoch wie gewohnt funktionieren, überschreiben wir 
+%   bereits erfolge Definitionen am Dokumentanfang.
 %    \begin{macrocode}
-\AtBeginDocument{\global\def\textinfty{\ensuremath{\infty}}
+\AtBeginDocument{
+  \global\def\textinfty{\ensuremath{\infty}}
   \global\def\textstar{\ensuremath{\ast}}
   \global\def\texttimes{\ensuremath{\times}}
   \global\def\textdagger{\ensuremath{\dagger}}
   \global\def\textddagger{\ensuremath{\ddagger}}
   \newcommand{\texthigh}[1]{\ensuremath{{}^{\textup{#1}}}}
   \newcommand{\textfrac}[2]{\ensuremath{\frac{#1}{#2}}}
+}
+%    \end{macrocode}
+% \end{macro}
+%\begin{macro}{datablist}
+% Stellenweise wird das Paket |datablist| verwendet, um 
+% Daten von Kreaturen, Zaubern, Fertigkeiten oder Gegenständen
+% aus dem Dokument exportieren zu können.
+% Damit Dokumente auch prozessiert werden können, ohne das 
+% |datablist|-Paket zu verwenden, definieren wir an dieser
+% Stelle eine entsprechende Abfrage.
+%    \begin{macrocode}
+\AtBeginDocument{
   \@ifpackageloaded{datablist}{%
     \providecommand{\ifdatablist}[1]{#1}%
   }{
@@ -979,9 +1198,9 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \end{macro}
 %\begin{macro}{\HUGE}
 % In Midgardpublikationen werden oft sehr große Schriftgrößen verwendet. Daher definieren wir ein neues Schriftgrößenkommando, um diesen Extra-Größen gerecht zu werden.
-% \begin{macrocode}
+%    \begin{macrocode}
 \newcommand{\HUGE}{\fontsize{36}{36}\selectfont}
-% \end{macrocode}
+%    \end{macrocode}
 %\end{macro}
 % \begin{macro}{\midgardabenteuer}
 %   Die offiziellen Publikationen zeigen auf der dem
@@ -1004,19 +1223,24 @@ ABENTEUER
 % \end{macro}
 % \begin{macro}{\midgardquellenbuch}
 %   Ähnlich verhält es sich mit Quellenbüchern.
-% \begin{macrocode}
+%    \begin{macrocode}
 \newcommand\midgardquellenbuch{%
 \textbf{\fontsize{48}{0}\selectfont M}
 \hspace{-6pt}
-\begin{minipage}{138pt}
-\vspace{-8pt}
-\centering \noindent{\HUGE \textbf{IDGAR}}\\
-\bfseries \LARGE Quellenbuch
+\begin{minipage}[t]{106pt}
+\centering \noindent
+\vspace{-34pt}
+\bfseries
+\fontsize{30}{0}\selectfont
+\textbf{IDGAR}
+\vspace{-6pt}
+\par
+ \LARGE Quellenbuch
 \end{minipage}
 \hspace{-6pt}
 \textbf{\fontsize{48}{0}\selectfont D}
 }
-% \end{macrocode}
+%    \end{macrocode}
 %\end{macro}
 % \begin{macro}{beispiel}
 %   In offiziellen Veröffentlichungen werden Beispiele in leicht grau
@@ -1029,6 +1253,11 @@ ABENTEUER
   roundcorner=10pt,%
 %%%  tikzsetting={drop shadow={shadow xshift=1.0ex, shadow yshift=-0.5em, fill=black!50, opacity=1, every shadow }}%
 ]{beispiel}
+%    \end{macrocode}
+%\end{macro}
+% \begin{macro}{rundbox}
+% Auch wollen wir eine Rundbox (Infobox) definieren.
+%    \begin{macrocode}
 \newenvironment{rundbox}[1][]{
   \begin{mdframed}[roundcorner=10pt,innertopmargin=0.5em,innerbottommargin=0.5em]
     \noindent #1\par
@@ -1037,6 +1266,11 @@ ABENTEUER
 }{
   \end{mdframed}
 }
+%    \end{macrocode}
+%\end{macro}
+% \begin{macro}{textbox}
+% Auch wollen wir eine Textbox (Eckbox) definieren.
+%    \begin{macrocode}
 \newcommand\textboxstyle{}
 \newenvironment{textbox}[1][]{
   \begin{mdframed}[innertopmargin=0.5em,innerbottommargin=0.5em]
@@ -1084,15 +1318,15 @@ ABENTEUER
     #1\,\goldAlias
   \fi
   \ifnum \numexpr #1*#2 > 0 
-    \ %
+    \thinspace%
   \fi
   \ifnum #2 > 0 
     #2\,\silberAlias
   \fi
   \ifnum \numexpr #2*#3 > 0 
-    \ %
+    \thinspace%
     \else \ifnum \numexpr #1*#3 > 0 
-      \ %
+      \thinspace%
     \fi
   \fi
   \ifnum #3 > 0 
@@ -1126,7 +1360,9 @@ ABENTEUER
 % Wir definieren zusätzlich \textit{default}-Werte für die Variablen,
 % für den Fall, dass sie nicht aufgerufen werden.
 %    \begin{macrocode}
-\presetkeys{fertigkeit}{name=Fähigkeit, entry=none, kategorie=none, leitAtt=none, anforderungen=none, EW=none, ungelernt=none, spielbeginn=5, maximum=20, FP=hide, G=niemand, S=niemand, A=niemand, key=ability}{}
+\presetkeys{fertigkeit}{name=Fähigkeit, entry=none, kategorie=none, leitAtt=none, 
+  anforderungen=none, EW=none, ungelernt=none, spielbeginn=5, maximum=20, FP=hide, 
+  G=niemand, S=niemand, A=niemand, key=ability}{}
 %    \end{macrocode}
 % Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
 % Seitenumbruch, um unschöne Umbrüche im Layout selbst zu vermindern.
@@ -1301,6 +1537,26 @@ ABENTEUER
 %
 % \subsection{Arkanum}
 %
+
+% \begin{macro}{\img...}  Das \textsc{Midgard}-Regelwerk verwendet
+% einige Sonderzeichen, welche als Vektorgraphiken mit freundlicher
+% Genehmingung des Verlages mit diesem Paket gemeinsam ausgeliefert
+% werden. Diese können mit den hier aufgeführten Kommandos im Text
+% eingebunden werden.  \begin{macrocode}
+\newcommand\imgMagisch {\includegraphics[height=0.7em]{pics/scroll}}
+\newcommand\imgModus   {\includegraphics[height=0.7em]{pics/box}}
+\newcommand\imgObjectum{\includegraphics[height=0.7em]{pics/arrow}}
+\newcommand\imgFeuer   {\includegraphics[height=0.7em]{pics/fire}}
+\newcommand\imgWasser  {\includegraphics[height=0.7em]{pics/water}}
+\newcommand\imgErde    {\includegraphics[height=0.7em]{pics/earth}}
+\newcommand\imgLuft    {\includegraphics[height=0.55em]{pics/air}}
+\newcommand\imgEis     {\includegraphics[height=0.7em]{pics/ice}}
+\newcommand\imgHolz    {\includegraphics[height=0.7em]{pics/wood}}
+\newcommand\imgMetall  {\includegraphics[height=0.7em]{pics/metal}}
+\newcommand\imgMagan   {\includegraphics[height=0.7em]{pics/magic}}
+%    \end{macrocode}
+% \end{macro}
+
 % \begin{macro}{\zaubervariante}
 %   Das Kommando |\zaubervariante| soll benutzt werden um am Ende
 %   einer Zauberbeschreibung die Variationen des Zaubers für
@@ -1417,11 +1673,13 @@ ABENTEUER
 % Zunächst wird der Name des Zaubers gedruckt. Dann wird zunächst
 % |\hfill| benutzt, um an das Ende der Zeile vorzurücken. 
 %    \begin{macrocode}
-\noindent\makebox[\linewidth]{\parbox[b]{0.85\linewidth}{\unraggedright\expandnext{\midgard@htarget}{\zaubername}\noindent \bfseries \large  \zaubername}%
+\noindent\makebox[\linewidth]{\parbox[b]{0.85\linewidth}{%
+    \unraggedright\expandnext{\midgard@htarget}{\zaubername}\noindent \bfseries \large  \zaubername%
+  }%
 \hfill%
 \ifdefstring{\zauberscroll}{true}%
            {}%
-           {\includegraphics[height=0.8em]{pics/scroll}}%
+           {\imgMagisch}%
 \hfill%
 \ifdefstring{\zauberth}{none}%
            {}%
@@ -1481,14 +1739,13 @@ ABENTEUER
 \zaubermattotal\par%
 %    \end{macrocode}
 % Die Zauberformel wird mit etwas Abstand gedruckt, dazwischen jeweils
-% die Symbole \includegraphics[height=0.7em]{pics/box}
-% und \includegraphics[height=0.7em]{pics/arrow}.
+% die Symbole \imgModus und \imgObjectum.
 %    \begin{macrocode}
 \vspace{\midgardskip}
 \zauberprozess~%
-\includegraphics[height=0.7em]{pics/box}~%
+\imgModus~%
 \zauberagens~%
-\includegraphics[height=0.7em]{pics/arrow}~%
+\imgObjectum~%
 \zauberreagens\par\vspace{\parskip}%
 \vspace{\midgardskip}
 %    \end{macrocode}
@@ -1541,7 +1798,7 @@ ABENTEUER
 %    \end{macrocode}
 %\end{macro}
 %\begin{macro}{\zaubersalz}
-% Aus Bequemlichketisgründen definieren wir auch ein Kommando für Zaubersalze, das intern jedoch das Kommando für Zauber aufruft -- mit den voreingestellten Standard-Spieldaten von Zaubersalzen.
+% Aus Bequemlichkeitsgründen definieren wir auch ein Kommando für Zaubersalze, das intern jedoch das Kommando für Zauber aufruft -- mit den voreingestellten Standard-Spieldaten von Zaubersalzen.
 %    \begin{macrocode}
 \newcommand*\zaubersalz[2][]{
 \zauber[%
@@ -1559,10 +1816,13 @@ ABENTEUER
     #1%
 ]{#2}%
 }
-%     \end{macrocode}
+%    \end{macrocode}
 %\end{macro}
 %\begin{macro}{\zauberlied}
-% Ebenfalls aus Bequemlichketisgründen definieren wir auch ein Kommando für Zauberlieder, das intern jedoch das Kommando für Zauber aufruft -- mit den voreingestellten Standard-Spieldaten von Zauberliedern.
+% Ebenfalls aus Bequemlichketisgründen definieren wir auch ein
+% Kommando für Zauberlieder, das intern jedoch das Kommando für Zauber
+% aufruft -- mit den voreingestellten Standard-Spieldaten von
+% Zauberliedern.
 %    \begin{macrocode}
 \newcommand*\zauberlied[2][]{%
 \zauber[%
@@ -1577,7 +1837,7 @@ ABENTEUER
     #1%
 ]{#2}%
 }
-%     \end{macrocode}
+%    \end{macrocode}
 %\end{macro}
 %\begin{macro}{\zaubertanz}
 % Ebenfalls aus Bequemlichketisgründen definieren wir auch ein Kommando für Zaubertänze, das intern jedoch das Kommando für Zauber aufruft -- mit den voreingestellten Standard-Spieldaten von Zaubertänze.
@@ -1592,7 +1852,7 @@ ABENTEUER
     #1%
 ]{#2}%
 }
-%     \end{macrocode}
+%    \end{macrocode}
 %\end{macro}
 %\begin{macro}{\beschwoerung}
 %   Völlig analog definieren wir ein Kommando für das Layout von Beschwörungen.
@@ -1632,11 +1892,14 @@ ABENTEUER
 % Zunächst wird der Name der Beschwörung gedruckt. Dann wird zunächst
 % |\hfill| benutzt, um an das Ende der Zeile vorzurücken. 
 %    \begin{macrocode}
-\noindent\makebox[\linewidth]{\parbox[b]{0.85\linewidth}{\unraggedright\expandnext{\midgard@htarget}{\zaubername}\noindent \bfseries \large  \zaubername}%
+\noindent\makebox[\linewidth]{\parbox[b]{0.85\linewidth}{%
+    \unraggedright\expandnext{\midgard@htarget}{\zaubername}%
+    \noindent \bfseries \large  \zaubername%
+  }%
 \hfill%
 \ifdefstring{\zauberscroll}{true}%
            {}%
-           {\includegraphics[height=0.8em]{pics/scroll}}%
+           {\imgMagisch}%
 \hfill}\par%
 \setlength{\parindent}{-1ex}%
 \setlength{\leftskip}{1ex}%
@@ -1702,14 +1965,14 @@ Beschwörung~%
 \vspace{\midgardskip}
 \ifdefstring{\showformula}{none}{}{
   \beschwoerungprimprozess~%
-  \includegraphics[height=0.7em]{pics/box}~%
+  \imgModus~%
   \beschwoerungprimagens~%
-  \includegraphics[height=0.7em]{pics/arrow}~%
+  \imgObjectum~%
   \beschwoerungprimreagens\par%
   \beschwoerungsecprozess~%
-  \includegraphics[height=0.7em]{pics/box}~%
+  \imgModus~%
   \beschwoerungsecagens~%
-  \includegraphics[height=0.7em]{pics/arrow}~%
+  \imgObjectum~%
   \beschwoerungsecreagens\par%
   \vspace{\parskip}%
   \vspace{\midgardskip}%
@@ -1788,7 +2051,8 @@ Beschwörung~%
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
-\presetkeys{zaubermittel}{voraussetzungen=keine,stufe=1,zeitaufwand=keine,FP=keine,G=niemand,S=niemand,A=niemand,entry=none,kosten=--,zeitaufwand=--}{}
+\presetkeys{zaubermittel}{voraussetzungen=keine,stufe=1,zeitaufwand=keine,
+  FP=keine,G=niemand,S=niemand,A=niemand,entry=none,kosten=--,zeitaufwand=--}{}
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*\zaubermittel[2][]{%
@@ -1847,6 +2111,75 @@ Beschwörung~%
 %    \end{macrocode}
 % \end{macro}
 %
+%\begin{macro}{\artefakt}
+% Wir definieren das Kommando.
+%    \begin{macrocode}
+\define@key{artefakt}{name}            {\def\artefaktName{#1}}
+\define@key{artefakt}{ABW}             {\def\artefaktABW{#1}}
+\define@key{artefakt}{aura}            {\def\artefaktAura{#1}}
+\define@key{artefakt}{typ}             {\def\artefaktTyp{#1}}
+\define@key{artefakt}{magisch}         {\def\artefaktMagisch{#1}}
+\define@key{artefakt}{mag}         {\def\artefaktMagisch{#1}}
+\define@key{artefakt}{herstellbar}     {\def\artefaktHerstellbar{#1}}
+\define@key{artefakt}{untertitel}      {\def\artefaktUntertitel{#1}}
+\define@key{artefakt}{sprache}         {\def\artefaktSprache{#1}}
+\define@key{artefakt}{farbe}           {\def\artefaktSprache{#1}}
+\presetkeys{artefakt}{name=Artefakt,ABW=-,aura=-,herstellbar=false,typ=-,
+  untertitel=-,sprache=-,magisch=true%
+}{}
+
+\define@key{artefaktherstellen}{zauber}{\def\herstellenVoraussetzung{#1}}
+\define@key{artefaktherstellen}{stufe} {\def\herstellenStufe{#1}}
+\define@key{artefaktherstellen}{ABW}   {\def\herstellenABW{#1}}
+\define@key{artefaktherstellen}{EP}    {\def\herstellenEP{#1}}
+\define@key{artefaktherstellen}{material}{\def\herstellenMaterial{#1}}
+\presetkeys{artefaktherstellen}{zauber=-,stufe=-,ABW=-,EP=0}{}
+
+\newcommand*{\artefakt}[2][]{
+\par\pagebreak[2]%
+\addvspace{1em}% plus 0.5em minus 0.5em}%
+\setkeys{artefakt}{#1}{%
+\addcontentsline{toc}{subsubsection}{\artefaktName}
+\begingroup
+\setlength\parindent{0pt}
+\flushleft
+    {\bfseries \large  \artefaktName}\ifdefstring{\artefaktHerstellbar}{false}{}{~\textdagger} \linebreak[0]%
+    \ifdefstring{\artefaktTyp}{-}{}{\optendash\mbox{\artefaktTyp}}%
+    \ifdefstring{\artefaktMagisch}{false}{\optendash nicht magisch}{%
+      \ifdefstring{\artefaktABW}{-}{}{ \mbox{(\textsc{Abw}\,\artefaktABW)}}%
+      \ifdefstring{\artefaktAura}{-}{}{\optendash \mbox{\textbf{\textsc{Aura:}} \artefaktAura}}%
+    } 
+    \ifdefstring{\artefaktUntertitel}{-}{%
+      \ifdefstring{\artefaktSprache}{-}{}{\newline\artefaktSprache}%
+    }{\newline%
+      \textit{\artefaktUntertitel}%
+      \ifdefstring{\artefaktSprache}{-}{}{\optendash \artefaktSprache}%
+    }
+    \par\endgroup
+}
+\@afterindentfalse%
+\@afterheading%
+}
+\newcommand*{\artefaktherstellen}[2][]{
+\pagebreak[2]\begingroup\small%
+\setkeys{artefaktherstellen}{#1}{%
+\noindent%
+\ifdefstring{\herstellenVoraussetzung}{-}{}{%
+  \textit{\herstellenVoraussetzung}%
+  \ifdefstring{\herstellenStufe}{-}{}{~(Stufe \herstellenStufe)} 
+}
+\herstellenEP\,EP
+\ifdefstring{\herstellenABW}{-}{}{für \textsc{Abw}\,\herstellenABW}
+\ifdefstring{\herstellenMaterial}{-}{}{%
+\newline\noindent\textit{Material:}~\herstellenMaterial
+}}\endgroup
+\par
+\@afterindentfalse%
+\@afterheading%
+}
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{Bestiarium}
 %
 %    \begin{macrocode}
@@ -1892,7 +2225,8 @@ Beschwörung~%
 
 \presetkeys{best}{ name=Wesen, grad=0, modus=none, typ=none,
   mag=false, aura=none, size=normal, addendum=none, variant=none,
-  LP=\textstar, AP=\textstar, RK=\textstar R, EP=0, In=t01, St=\textstar, Gw=01, B=\textstar, MW=none,
+  LP=\textstar, AP=\textstar, RK=\textstar R, EP=0, In=t01, 
+  St=\textstar, Gw=01, B=\textstar, MW=none,
   abwehr=10, resistenz=10/10/10, angriff=keiner, zauber=none,
   zauberMore=none, zauberMMore=none, zauberArtig=none,
   zauberArtigMore=none, zauberArtigMMore=none, zauberEW=0,
@@ -1952,10 +2286,10 @@ Beschwörung~%
 %    \begin{macrocode}
 \textbf{\bestName}%
 %    \end{macrocode}
-% Wurde die option |mag| verwendet, wird das Symbol \includegraphics[height=0.7em]{pics/scroll} hinter den Namen gesetzt.
+% Wurde die option |mag| verwendet, wird das Symbol \imgMagisch hinter den Namen gesetzt.
 %    \begin{macrocode}
 \ifdefstring{\bestMag}{true}%
-           {~\includegraphics[height=0.7em]{pics/scroll}}%
+           {~\imgMagisch}%
            {}% 
 %    \end{macrocode}
 % Ein Namenszusatz, der über |add| gesetzt wurde, folgt mit einem Komma abgetrennt.
@@ -2105,7 +2439,7 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
 \vspace{0.5em plus 0.5em minus 0.2em}%
 \begin{spacing}{0.5}%
 \noindent \textbf{\bestName}%
-\ifdefstring{\bestMag}{true}{~\includegraphics[height=0.7em]{pics/scroll}}{}%
+\ifdefstring{\bestMag}{true}{~\imgMagisch}{}%
 \ifdefstring{\bestAdd}{none}{}{\textbf{,\,\bestAdd}}%
 \ifdefstring{\bestVariant}{none}{}{,\,\bestVariant}%
 ~\ifdefstring{\bestModus}{none}{}{\bestModus~}%
@@ -2142,116 +2476,6 @@ Grad \bestGrad%
 %    \end{macrocode}
 % \end{macro}
 %
-%\begin{macro}{multicolslongtable}
-% Wir definieren die Umgebung.
-%    \begin{macrocode}
-\newsavebox\ltmcbox
-\newenvironment{multicolslongtable}[1]{
-  \setbox\ltmcbox\vbox\bgroup
-  \col@number\@ne
-    \begin{longtable}{#1}
-}{
-    \end{longtable}
-    \unskip
-    \unpenalty
-    \unpenalty\egroup
-    \unvbox\ltmcbox
-}
-%    \end{macrocode}
-% \end{macro}
-%
-%\begin{macro}{\removefromreset}
-% Wir definieren das Kommando.
-%    \begin{macrocode}
-\def\removefromreset#1#2{\let\@tempb\@elt
-  \expandafter\let\expandafter\@tempa\csname c@#1\endcsname
-  \def\@elt##1{\expandafter\ifx\csname c@##1\endcsname\@tempa\else
-    \noexpand\@elt{##1}\fi}%
-  \expandafter\edef\csname cl@#2\endcsname{\csname cl@#2\endcsname}%
-  \let\@elt\@tempb%
-}
-%    \end{macrocode}
-% \end{macro}
-%
-%\begin{macro}{\optendash}
-% Wir definieren das Kommando.
-%    \begin{macrocode}
-\newsavebox\zz
-\savebox\zz{--}
-\def\optendash{\cleaders\copy\zz\hskip1.9\wd\zz}
-%    \end{macrocode}
-% \end{macro}
-%
-%\begin{macro}{\artefakt}
-% Wir definieren das Kommando.
-%    \begin{macrocode}
-\define@key{artefakt}{name}            {\def\artefaktName{#1}}
-\define@key{artefakt}{ABW}             {\def\artefaktABW{#1}}
-\define@key{artefakt}{aura}            {\def\artefaktAura{#1}}
-\define@key{artefakt}{typ}             {\def\artefaktTyp{#1}}
-\define@key{artefakt}{magisch}         {\def\artefaktMagisch{#1}}
-\define@key{artefakt}{mag}         {\def\artefaktMagisch{#1}}
-\define@key{artefakt}{herstellbar}     {\def\artefaktHerstellbar{#1}}
-\define@key{artefakt}{untertitel}      {\def\artefaktUntertitel{#1}}
-\define@key{artefakt}{sprache}         {\def\artefaktSprache{#1}}
-\define@key{artefakt}{farbe}           {\def\artefaktSprache{#1}}
-\presetkeys{artefakt}{name=Artefakt,ABW=-,aura=-,herstellbar=false,typ=-,
-  untertitel=-,sprache=-,magisch=true%
-}{}
-
-\define@key{artefaktherstellen}{zauber}{\def\herstellenVoraussetzung{#1}}
-\define@key{artefaktherstellen}{stufe} {\def\herstellenStufe{#1}}
-\define@key{artefaktherstellen}{ABW}   {\def\herstellenABW{#1}}
-\define@key{artefaktherstellen}{EP}    {\def\herstellenEP{#1}}
-\define@key{artefaktherstellen}{material}{\def\herstellenMaterial{#1}}
-\presetkeys{artefaktherstellen}{zauber=-,stufe=-,ABW=-,EP=0}{}
-
-\newcommand*{\artefakt}[2][]{
-\par\pagebreak[2]%
-\addvspace{1em}% plus 0.5em minus 0.5em}%
-\setkeys{artefakt}{#1}{%
-\addcontentsline{toc}{subsubsection}{\artefaktName}
-\begingroup
-\setlength\parindent{0pt}
-\flushleft
-    {\bfseries \large  \artefaktName}\ifdefstring{\artefaktHerstellbar}{false}{}{~\textdagger} \linebreak[0]%
-    \ifdefstring{\artefaktTyp}{-}{}{\optendash\mbox{\artefaktTyp}}%
-    \ifdefstring{\artefaktMagisch}{false}{\optendash nicht magisch}{%
-      \ifdefstring{\artefaktABW}{-}{}{ \mbox{(\textsc{Abw}\,\artefaktABW)}}%
-      \ifdefstring{\artefaktAura}{-}{}{\optendash \mbox{\textbf{\textsc{Aura:}} \artefaktAura}}%
-    } 
-    \ifdefstring{\artefaktUntertitel}{-}{%
-      \ifdefstring{\artefaktSprache}{-}{}{\newline\artefaktSprache}%
-    }{\newline%
-      \textit{\artefaktUntertitel}%
-      \ifdefstring{\artefaktSprache}{-}{}{\optendash \artefaktSprache}%
-    }
-    \par\endgroup
-}
-\@afterindentfalse%
-\@afterheading%
-}
-\newcommand*{\artefaktherstellen}[2][]{
-\pagebreak[2]\begingroup\small%
-\setkeys{artefaktherstellen}{#1}{%
-\noindent%
-\ifdefstring{\herstellenVoraussetzung}{-}{}{%
-  \textit{\herstellenVoraussetzung}%
-  \ifdefstring{\herstellenStufe}{-}{}{~(Stufe \herstellenStufe)} 
-}
-\herstellenEP\,EP
-\ifdefstring{\herstellenABW}{-}{}{für \textsc{Abw}\,\herstellenABW}
-\ifdefstring{\herstellenMaterial}{-}{}{%
-\newline\noindent\textit{Material:}~\herstellenMaterial
-}}\endgroup
-\par
-\@afterindentfalse%
-\@afterheading%
-}
-%    \end{macrocode}
-% \end{macro}
-%
-
 % \PrintChanges
 % \PrintIndex
 % \Finale
