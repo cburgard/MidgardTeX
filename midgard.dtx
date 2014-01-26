@@ -284,6 +284,12 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \textit{SS} und \textit{KS} durch Umdefinition von |\goldAlias|,
 % |\silberAlias| und |\kupferAlias| editiert werden.
 
+% \DescribeMacro{\setzeGliederungsEbene} Alle für Datenblöcke
+% definiertern Umgebungen fügen dem Inhaltsverzeichnis automatisch
+% Einträge hinzu. Die Gliederungsebene, auf welcher diese erscheinen,
+% können mit dem Makro
+% |\setzeGliederungsEbene{|\meta{Typ}|}{|\meta{Ebene}|}| kontrolliert
+% werden.
 
 % \subsection{Das Fantasy Rollenspiel} \begin{figure} \centering
 
@@ -629,7 +635,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % führen.  \tabularnewline scroll & \zauberscroll & Bool'sche Angabe,
 % ob dieser Zauber von Schriftrolle gelernt werden kann. Jeder andere
 % Wert außer \textit{true} führt dazu, dass das Schriftrollensymbol
-% \imgMagisch in der Kopfzeile
+% \imgMagisch{} in der Kopfzeile
 % abgedruckt wird.\tabularnewline th & \zauberth & Information über
 % die thaumaturgische Variante des Zaubers, wird typischerweise auf
 % \textit{R} oder \textit{S} für Runenstäbe bzw.~Siegelzauber
@@ -682,14 +688,14 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % dem Köder in Normalschrift und geklammert
 % abgedruckt. \tabularnewline \tabularnewline prozess & \zauberprozess
 % & Der Prozess-Anteil der Zauberformel. Jede Angabe wird wörtlich vor
-% dem Symbol \imgModus in der
+% dem Symbol \imgModus{} in der
 % Zauberformel abgedruckt.\tabularnewline agens & \zauberagens & Der
 % Agens-Anteil der Zauberformel. Jede Angabe wird wörtlich zwischen
-% den Symbol \imgModus und
-% \imgObjectum in der Zauberformel
+% den Symbol \imgModus{} und
+% \imgObjectum{} in der Zauberformel
 % abgedruckt.\tabularnewline reagens & \zauberreagens & Der
 % Regens-Anteil der Zauberformel. Jede Angabe wird wörtlich zwischen
-% hinter dem Symbol \imgObjectum in der
+% hinter dem Symbol \imgObjectum{} in der
 % Zauberformel abgedruckt.\tabularnewline AP & \zauberAP & Die
 % AP-Kosten des Zaubers. Jede Angabe außer \textit{hide} wird wörtlich
 % abgedruckt, während \textit{hide} dazu führt, dass die Zeile nicht
@@ -787,7 +793,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % Schlüssel & default & \bfseries Wirkung\tabularnewline\hline name &
 % \bestName & Der Name des Wesens \tabularnewline mag & \bestMag &
 % Falls |mag| \textit{true} ist, wird das Schriftrollensymbol
-% \imgMagisch hinter nem Namen
+% \imgMagisch{} hinter nem Namen
 % angezeigt.  \tabularnewline addendum & \bestAdd & Bei einigen Wesen
 % gibt es einen Namenszusatz, welcher nötigenfalls \textbf{nach} dem
 % gegebenenfalls vorhandenen Schriftrollensymbol dargestellt werden
@@ -1773,7 +1779,7 @@ ABENTEUER
 \zaubermattotal\par%
 %    \end{macrocode}
 % Die Zauberformel wird mit etwas Abstand gedruckt, dazwischen jeweils
-% die Symbole \imgModus und \imgObjectum.
+% die Symbole \imgModus{} und \imgObjectum.
 %    \begin{macrocode}
 \vspace{\midgardskip}
 \zauberprozess~%
@@ -2147,7 +2153,10 @@ Beschwörung~%
 % \end{macro}
 %
 %\begin{macro}{\artefakt}
-% Wir definieren das Kommando.
+% Auch Artefakte haben im Arkanum ein charakteristisches Layout,
+% welches jedoch weniger komplex ist als beispielsweise die
+% Zauberdatenblöcke. Die Herausforderung besteht hier darin,
+% vernünftige Zeilenumbrüche zu erzeugen.
 %    \begin{macrocode}
 \setzeGliederungsEbene{artefakt}{subsubsection}
 \define@key{artefakt}{name}            {\def\artefaktName{#1}}
@@ -2163,18 +2172,31 @@ Beschwörung~%
 \presetkeys{artefakt}{name=Artefakt,ABW=-,aura=-,herstellbar=false,typ=-,
   untertitel=-,sprache=-,magisch=true%
 }{}
-
+%    \end{macrocode}
+% Von Spielerfiguren herstellbare Artefakten haben einen erweiterten
+% Datenblock. Um die Implementierung und die Bedienung so einfach wie
+% möglich zu halten, wird dieser zweite Datenblock von einem separaten
+% Kommando erzeugt.
+%    \begin{macrocode}
 \define@key{artefaktherstellen}{zauber}{\def\herstellenVoraussetzung{#1}}
 \define@key{artefaktherstellen}{stufe} {\def\herstellenStufe{#1}}
 \define@key{artefaktherstellen}{ABW}   {\def\herstellenABW{#1}}
 \define@key{artefaktherstellen}{EP}    {\def\herstellenEP{#1}}
 \define@key{artefaktherstellen}{material}{\def\herstellenMaterial{#1}}
 \presetkeys{artefaktherstellen}{zauber=-,stufe=-,ABW=-,EP=0}{}
-
+%    \end{macrocode}
+% Das |\artefakt|-Kommando erzeugt den Artefakt-Datenblock.
+%    \begin{macrocode}
 \newcommand*{\artefakt}[2][]{
+%    \end{macrocode}
+% Erneut beginnen wir mit dem Vorschlag eines Seitenumbruches.
+%    \begin{macrocode}
 \par\pagebreak[2]%
 \addvspace{1em}% plus 0.5em minus 0.5em}%
 \setkeys{artefakt}{#1}{%
+%    \end{macrocode}
+% Wir fügen den Artefaktnamen dem Inhaltsverzeichnis hinzu.
+%    \begin{macrocode}
 \addcontentsline{toc}{\midgard@artefakt@tocLevel}{\artefaktName}
 \begingroup
 \setlength\parindent{0pt}
@@ -2193,10 +2215,20 @@ Beschwörung~%
     }
     \par\endgroup
 }
+%    \end{macrocode}
+% Zuletzt verhindern wir Einrückung in der nachfolgenden Zeile.
+%    \begin{macrocode}
 \@afterindentfalse%
 \@afterheading%
 }
+%    \end{macrocode}
+% Das |\artefaktherstellen|-Kommando erzeugt zweiten Datenblock für
+% von Spielerfiguren herstellbare Artefakte.
+%    \begin{macrocode}
 \newcommand*{\artefaktherstellen}[2][]{
+%    \end{macrocode}
+% Erneut beginnen wir mit dem Vorschlag eines Seitenumbruches.
+%    \begin{macrocode}
 \pagebreak[2]\begingroup\small%
 \setkeys{artefaktherstellen}{#1}{%
 \noindent%
@@ -2210,6 +2242,9 @@ Beschwörung~%
 \newline\noindent\textit{Material:}~\herstellenMaterial
 }}\endgroup
 \par
+%    \end{macrocode}
+% Zuletzt verhindern wir Einrückung in der nachfolgenden Zeile.
+%    \begin{macrocode}
 \@afterindentfalse%
 \@afterheading%
 }
@@ -2322,7 +2357,7 @@ Beschwörung~%
 %    \begin{macrocode}
 \textbf{\bestName}%
 %    \end{macrocode}
-% Wurde die option |mag| verwendet, wird das Symbol \imgMagisch hinter den Namen gesetzt.
+% Wurde die option |mag| verwendet, wird das Symbol \imgMagisch{} hinter den Namen gesetzt.
 %    \begin{macrocode}
 \ifdefstring{\bestMag}{true}%
            {~\imgMagisch}%
@@ -2463,7 +2498,8 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
 %    \end{macrocode}
 %\end{macro}
 %\begin{macro}{\best}
-% Wir definieren das Kommando.
+% Auf analoge Weise definieren wir auch eine Kurzversion des des
+% Bestiarums-Layouts, welche im Fließtext verwendet werden kann.
 %    \begin{macrocode}
 \newcommand*\best[2][]{%
 \pagebreak[3]
