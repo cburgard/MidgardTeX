@@ -926,6 +926,8 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
 \RequirePackage{graphicx}
+\RequirePackage{numprint}
+\npthousandsep{\,}
 \RequirePackage[framemethod=tikz]{mdframed}
 \usetikzlibrary{shadows}
 \RequirePackage{longtable}
@@ -1353,7 +1355,7 @@ ABENTEUER
   % #2 = number of silver pieces
   % #3 = number of copper pieces
   \ifnum #1 > 0 
-    #1\,\goldAlias
+    \numprint{#1}\,\goldAlias
   \fi
   \ifnum \numexpr #1*#2 > 0 
     \thinspace%
