@@ -1076,7 +1076,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % schmal sind. Ein mehrspaltiges Tabellenlayout im Stil von
 % |multicols| ist hier vorteilhaft, mit normalen \LaTeX-Mitteln aber
 % meist nur schwierig zu realisieren. Die
-% |multicolslongtable|-Umgebung funktioneirt wie |longtable| aus dem
+% |multicolslongtable|-Umgebung funktioniert wie |longtable| aus dem
 % gleichnamigen Paket, ist aber für den Einsatz innerhalb einer
 % |multicols|-Umgebung gedacht.
 %    \begin{macrocode}
@@ -1084,14 +1084,14 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \newenvironment{multicolslongtable}[1]{
   \setbox\ltmcbox\vbox\bgroup
   \col@number\@ne
-    \begin{longtable}{#1}
+  \begin{longtable}{#1}
 }{
-    \end{longtable}
-    \unskip
-    \unpenalty
-    \unpenalty\egroup
-    \unvbox\ltmcbox
-}
+  \end{longtable}
+  \unskip
+  \unpenalty
+  \unpenalty\egroup
+  \unvbox\ltmcbox
+}  
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1174,6 +1174,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % verwendet. Um der Bequemlichkeit willen wollen wir auch das Einfügen
 % dieser Sonderzeichen direkt in den \LaTeX Quellcode erlauben.
 %    \begin{macrocode}
+\@ifpackageloaded{inputenc}{%
 \DeclareUnicodeCharacter{00B0}{\ensuremath{^\circ}}
 \DeclareUnicodeCharacter{00B2}{\ensuremath{^2}}
 \DeclareUnicodeCharacter{00B3}{\ensuremath{^3}}
@@ -1186,6 +1187,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
 \DeclareUnicodeCharacter{201E}{\glqq}
 \DeclareUnicodeCharacter{201C}{\grqq}
+}{}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\hyphenation}
