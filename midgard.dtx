@@ -766,7 +766,12 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % als Schlüssel-Wert-Paare übergeben. Die Verwendung und das Ergebnis
 % sind in Abbildung~\ref{fig:bestiarium} (links) dargestellt. Die
 % vollständige Liste aller Schlüssel und Felder findet sich in
-% Tabelle~\ref{tbl:bestiarium}. 
+% Tabelle~\ref{tbl:bestiarium}. Da die Box unter Verwendung des
+% |mdframed|-Pakets erzeugt wird, sind Seiten- und Spaltenumbrüche
+% innerhalb der Box grundsätzlich erlaubt. Falls dies nicht erwünscht
+% ist, kann die folgende Zeile in der Präambel verwendet werden, um
+% Seitenumbrüche innerhalb der |\bestiarum|-Boxen global zu
+% unterbinden: |\mdfapptodefinestyle{bestbox}{nobreak}|.
 
 % \DescribeMacro{\best} Mit |\best| kann die aus einigen Abenteuern
 % und Zauberbeschreibungen bekannte Kurzform von Kreaturendaten
@@ -787,8 +792,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % gegebenenfalls vorhandenen Schriftrollensymbol dargestellt werden
 % soll, bei einem Drachen etwa der Zusatz \glqq uralter\grqq{} (für
 % die Ausgabe \textbf{Drache
-% }\imgMagisch\textbf{, uralter})
-% . Jede Angabe außer \textit{none} wird deshalb in Fettdruck und mit
+% }\imgMagisch\textbf{, uralter}). Jede Angabe außer \textit{none} wird deshalb in Fettdruck und mit
 % Komma abgetrennt hinter dem Namen und dem eventuell vorhandenen
 % Schriftrollensymbol ausgegeben.  \tabularnewline grad & \bestGrad &
 % Der Grad des Wesens wird in Klammern hinter dem Namen angezeigt
@@ -1589,7 +1593,6 @@ ABENTEUER
 \newcommand\imgMagan   {\includegraphics[height=0.7em]{pics/magic}}
 %    \end{macrocode}
 % \end{macro}
-
 % \begin{macro}{\zaubervariante}
 %   Das Kommando |\zaubervariante| soll benutzt werden um am Ende
 %   einer Zauberbeschreibung die Variationen des Zaubers für
@@ -1598,6 +1601,24 @@ ABENTEUER
 %   \textbf{fett} und mit |\textsc| in \textsc{Kapitälchen}.
 %    \begin{macrocode}
 \newcommand{\zaubervariante}[1]{\noindent\textbf{\textsc{#1}: }}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{thaumagralzauber}
+% Eine besondere Form der Zaubervariante ist der Thaumagralzauber. Dieser erhält einen eigenen Datenblock.
+%    \begin{macrocode}
+\NewDocumentEnvironment{thaumagralzauber}{O{0} O{Thaumagral}}{%
+  \par\pagebreak[2]\par
+  \noindent\textbf{#2} ABW+#1%
+  \setlength\parindent{1em}%
+  \setlength\parskip{1pt}%
+  \nopagebreak\par\nopagebreak%
+  \renewcommand{\item}[1][]{\par\normalfont ##1\hfill\bfseries}%
+}{
+  \unskip\unskip
+  % these two unskips are needed to remove trailing spaces/newlines
+  % see http://tex.stackexchange.com/questions/166158/why-is-unskip-not-working-here
+  \ignorespacesafterend\par\noindent\aftergroup\@doendeq%
+}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1678,7 +1699,7 @@ ABENTEUER
 % Zeilen zu erzeugen..
 %    \begin{macrocode}
 \newcommand*\zauber[2][]{%
-  \pagebreak[2]\addvspace{1em}
+  \par\pagebreak[2]\addvspace{1em}
 \begingroup
 \setkeys{zauber}{#1}{
 %    \end{macrocode}
