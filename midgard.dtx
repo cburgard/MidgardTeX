@@ -926,6 +926,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \RequirePackage{calc}
 \RequirePackage{caption}
 \RequirePackage{anyfontsize}
+\RequirePackage{forloop}
 \RequirePackage{etextools}
 %    \end{macrocode}
 %\begin{macro}{\phantomsection}
@@ -2104,21 +2105,33 @@ Beschwörung~%
 \define@key{zaubermittel}{G}{\def\zaubermittelG{#1}}
 \define@key{zaubermittel}{S}{\def\zaubermittelS{#1}}
 \define@key{zaubermittel}{A}{\def\zaubermittelA{#1}}
+\count@=0
+\loop
+  \advance\count@ 1
+  \begingroup\edef\x{\endgroup
+    \noexpand\define@key{zaubermittel}{FP\the\count@}[]{%
+      \noexpand\@namedef{zaubermittelFP\the\count@}{####1}%
+    }% end of \define@key
+  }% end of \edef
+  \x % execute \x
+\ifnum\count@<6
+\repeat
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
 \presetkeys{zaubermittel}{voraussetzungen=keine,stufe=1,zeitaufwand=keine,
-  FP=keine,G=niemand,S=niemand,A=niemand,entry=none,kosten=--,zeitaufwand=--}{}
+  FP=keine,G=niemand,S=niemand,A=niemand,entry=none,kosten=--,zeitaufwand=--,
+  FP1=0,FP2=0,FP3=0,FP4=0,FP5=0,FP6=0,%
+}{}
 %    \end{macrocode}
 %    \begin{macrocode}
+\newcount\tmp@count@%
 \newcommand*\zaubermittel[2][]{%
 \setkeys{zaubermittel}{#1}{
 \setlength{\parindent}{0pt}\par
 %\setlength{\parskip}{0pt}\par
 \ifdefstring{\zaubermittelFP}{keine}{}{
-  \setcounter{midgard@StandardKosten}{\zaubermittelFP}%
-  \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
-  \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
+
 }%
 \pagebreak[2]
 \vspace{1em}
@@ -2139,8 +2152,36 @@ Beschwörung~%
     \textbf{Kosten:} \> \zaubermittelKosten
   \end{spacelesstabbing}%
 }
-%\vspace{-1em}%
-\ifdefstring{\zaubermittelFP}{keine}{}{
+\vspace{0.5em}%
+\ifdefstring{\zaubermittelFP}{keine}{%
+  \begin{enumerate}[align=left,itemsep=0pt,topsep=0pt,parsep=0pt]
+  \tmp@count@=0%
+  \loop%
+  \advance\tmp@count@ 1%
+  \ifdefstring{\csname zaubermittelFP\the\tmp@count@\endcsname}{0}{}{%
+    \setcounter{midgard@StandardKosten}{\csname zaubermittelFP\the\tmp@count@\endcsname}%
+    \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
+    \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
+    \ifnum\value{midgard@StandardKosten}>0
+    \item[Stufe \the\tmp@count@:]%
+    \ifdefstring{\zaubermittelG}{niemand}%
+                {niemand }%
+                {\textbf{\themidgard@GrundKosten :} \nolinebreak \zaubermittelG} -- %
+                \ifdefstring{\zaubermittelS}{niemand}%
+                            {niemand }%
+                            {\textbf{\themidgard@StandardKosten :} \nolinebreak \zaubermittelS} -- %
+                            \ifdefstring{\zaubermittelA}{niemand}%
+                                        {niemand }%
+                                        {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zaubermittelA}%
+                                        \fi
+  }%
+  \ifnum\tmp@count@<6\repeat%
+  \end{enumerate}
+  \vspace{0.5em}%
+}{
+  \setcounter{midgard@StandardKosten}{\zaubermittelFP}%
+  \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
+  \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
   \ifdefstring{\zaubermittelG}{niemand}%
   {niemand }%
   {\textbf{\themidgard@GrundKosten :} \nolinebreak \zaubermittelG} -- %
