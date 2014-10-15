@@ -2604,6 +2604,96 @@ Grad \bestGrad%
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\person}
+%    \begin{macrocode}
+\define@key{person}{name}{\def\personName{#1}}%
+\define@key{person}{grad}{\def\personGrad{#1}}%
+\define@key{person}{typ}{\def\personTyp{#1}}%
+\define@key{person}{klasse}{\def\personKlasse{#1}}%
+\define@key{person}{alter}{\def\personAlter{#1}}%
+\define@key{person}{LP}{\def\personLP{#1}}%
+\define@key{person}{AP}{\def\personAP{#1}}%
+\define@key{person}{RK}{\def\personRK{#1}}%
+\define@key{person}{B}{\def\personB{#1}}%
+\define@key{person}{statur}{\def\personStatur{#1}}%
+\define@key{person}{gewicht}{\def\personGewicht{#1}}%
+\define@key{person}{groesse}{\def\personGroesse{#1}}%
+\define@key{person}{aussehen}{\def\personAussehen{#1}}%
+\define@key{person}{angriff}{\def\personAngriff{#1}}%
+\define@key{person}{raufen}{\def\personRaufen{#1}}%
+\define@key{person}{abwehr}{\def\personAbwehr{#1}}%
+\define@key{person}{energie}{\def\personEnergie{#1}}%
+\define@key{person}{initiative}{\def\personInitiative{#1}}%
+\define@key{person}{resistenz}{\def\personResistenz{#1}}%
+\define@key{person}{beschreibung}{\def\personBeschreibung{#1}}%
+\define@key{person}{schicht}{\def\personSchicht{#1}}%
+\define@key{person}{stand}{\def\personSchicht{#1}}%
+\define@key{person}{herkunft}{\def\personHerkunft{#1}}%
+\define@key{person}{glaube}{\def\personGlaube{#1}}%
+\define@key{person}{fertigkeiten}{\def\personFertigkeiten{#1}}%
+\define@key{person}{zauber}{\def\personZauber{#1}}%
+\define@key{person}{zauberEW}{\def\personZauberEW{#1}}%
+\define@key{person}{attribute}{\def\personAttribute{#1}}%
+\define@key{person}{besitz}{\def\personBesitz{#1}}%
+\define@key{person}{bes}{\def\personBesonderheiten{#1}}%
+\presetkeys{person}{name=Person,grad=1,alter=,statur=,gewicht=,aussehen=,beschreibung=,schicht=,glaube=,herkunft=,fertigkeiten=,zauber=,zauberEW=,attribute=,typ=Normaler Mensch,besitz=,groesse=,klasse=,LP=,AP=,RK=,B=24,energie=0,raufen=,initiative=,bes=,angriff=}{}%
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*\person[2][]{%
+\pagebreak[3]
+\setkeys{person}{#1}{
+\setlength{\parskip}{0pt}
+\setlength{\topsep}{0pt}%
+\setlength{\partopsep}{0pt}\par
+\small
+\vspace{0.5em plus 0.5em minus 0.2em}%
+\begin{spacing}{0.5}%
+\noindent\textbf{\personName}\optendash\personTyp\hfill\mbox{}\linebreak[0]\mbox{}\nolinebreak\hfill\textbf{\ifdefstring{\personKlasse}{}{}{\mbox{\personKlasse{}}~}Gr.\,\personGrad}%
+\par%
+\setlength{\leftskip}{1ex}
+\setlength{\parindent}{-1ex}
+\ifdefstring{\personAttribute}{}{}{\personAttribute \optendash}
+\ifdefstring{\personAlter}{}{}{\personAlter, }%
+\ifdefstring{\personGroesse}{}{}{\personGroesse, }%
+\ifdefstring{\personGewicht}{}{}{\personGewicht, }%
+\ifdefstring{\personStatur}{}{}{\textit{\personStatur} \optendash}%
+\ifdefstring{\personHerkunft}{}{}{\personHerkunft, }%
+\ifdefstring{\personSchicht}{}{}{\personSchicht, }%
+\ifdefstring{\personGlaube}{}{}{\textit{\personGlaube} \optendash}%
+\ifdefstring{\personAussehen}{}{}{\personAussehen \optendash}%
+\ifdefstring{\personBeschreibung}{}{}{\personBeschreibung}\par%
+\ifdefstring{\personLP}{}{}{%
+  \personLP~LP, \personAP~AP -- \personRK~-- B\,\personB \ifdefstring{\personEnergie}{0}{}{, \textsc{E}\,\personEnergie}\par%
+  \ifdefstring{\personAngriff}{}{}{%
+    \textbf{Angriff:} \personAngriff%
+    \ifdefstring{\personRaufen}{}{}{ -- Raufen+\personRaufen}%
+    \ifdefstring{\personInitiative}{}{}{ -- \textsc{Initiative}+\personInitiative}%
+    ~-- \textsc{Abwehr}+\personAbwehr, \textsc{Resistenz}+\personResistenz%
+  }
+}
+\ifdefstring{\personBesonderheiten}{none}{%
+  \ifdefstring{\personAura}{none}{}{\par\textsc{Aura:} \personAura}%
+}{}%
+\ifdefstring{\personFertigkeiten}{}{}{\textit{\personFertigkeiten}\par}%
+\ifdefstring{\personZauber}{}%
+            {}%
+            {\textbf{Zaubern+\personZauberEW:} \textit{\personZauber}\par}%
+\ifdefstring{\personBesonderheiten}{}{}{
+  \par\textbf{Bes.:} \personBesonderheiten%
+  \ifdefstring{\personAura}{none}{}{-- \textsc{Aura:} \personAura}%
+}%
+\ifdefstring{\personBesitz}{}{}{\textbf{Besitz:} \personBesitz}\par%
+\end{spacing}%
+\bigskip
+}
+%    \end{macrocode}
+% Zuletzt verhindern wir Einrückung in der nachfolgenden Zeile.
+%    \begin{macrocode}
+\@afterindentfalse%
+\@afterheading%
+}
+%    \end{macrocode}
+% \end{macro}
 % \PrintChanges
 % \PrintIndex
 % \Finale
