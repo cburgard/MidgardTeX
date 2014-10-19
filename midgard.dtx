@@ -928,6 +928,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \RequirePackage{anyfontsize}
 \RequirePackage{forloop}
 \RequirePackage{etextools}
+\RequirePackage{enumitem}
 %    \end{macrocode}
 %\begin{macro}{\phantomsection}
 % Um auch ohne das |hyperref|-Paket fehlerlos Dokumente verarbeiten zu können,
@@ -2162,18 +2163,18 @@ Beschwörung~%
     \setcounter{midgard@StandardKosten}{\csname zaubermittelFP\the\tmp@count@\endcsname}%
     \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
     \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
-    \ifnum\value{midgard@StandardKosten}>0
-    \item[Stufe \the\tmp@count@:]%
+    \ifnum\value{midgard@StandardKosten}>0\relax%
+    \item[Stufe \the\tmp@count@:] 
     \ifdefstring{\zaubermittelG}{niemand}%
                 {niemand }%
                 {\textbf{\themidgard@GrundKosten :} \nolinebreak \zaubermittelG} -- %
-                \ifdefstring{\zaubermittelS}{niemand}%
-                            {niemand }%
-                            {\textbf{\themidgard@StandardKosten :} \nolinebreak \zaubermittelS} -- %
-                            \ifdefstring{\zaubermittelA}{niemand}%
-                                        {niemand }%
-                                        {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zaubermittelA}%
-                                        \fi
+    \ifdefstring{\zaubermittelS}{niemand}%
+                {niemand }%
+                {\textbf{\themidgard@StandardKosten :} \nolinebreak \zaubermittelS} -- %
+    \ifdefstring{\zaubermittelA}{niemand}%
+                {niemand }%
+                {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \zaubermittelA}%
+    \fi%
   }%
   \ifnum\tmp@count@<6\repeat%
   \end{enumerate}
