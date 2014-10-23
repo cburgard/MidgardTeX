@@ -1193,6 +1193,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
 \DeclareUnicodeCharacter{201E}{\glqq}
 \DeclareUnicodeCharacter{201C}{\grqq}
+\DeclareUnicodeCharacter{00AD}{\ignorespaces}
 }{}
 %    \end{macrocode}
 % \end{macro}
@@ -2244,6 +2245,8 @@ Beschwörung~%
 %    \end{macrocode}
 % Das |\artefakt|-Kommando erzeugt den Artefakt-Datenblock.
 %    \begin{macrocode}
+\newcommand\midgard@artefakt@customcode\relax%
+\newcommand\nutzercode[2]{\expandafter\def\csname midgard@#1@customcode\endcsname{#2}}
 \newcommand*{\artefakt}[2][]{
 %    \end{macrocode}
 % Erneut beginnen wir mit dem Vorschlag eines Seitenumbruches.
@@ -2255,7 +2258,7 @@ Beschwörung~%
 % Wir fügen den Artefaktnamen dem Inhaltsverzeichnis hinzu.
 %    \begin{macrocode}
 \addcontentsline{toc}{\midgard@artefakt@tocLevel}{\artefaktName}
-\begingroup
+\begin{samepage}
 \setlength\parindent{0pt}
 \flushleft
     {\bfseries \large  \artefaktName}\ifdefstring{\artefaktHerstellbar}{false}{}{~\textdagger} \linebreak[0]%
@@ -2270,11 +2273,12 @@ Beschwörung~%
       \textit{\artefaktUntertitel}%
       \ifdefstring{\artefaktSprache}{-}{}{\optendash \artefaktSprache}%
     }
-    \par\endgroup
-}
+    \par\end{samepage}\nopagebreak
+}\nopagebreak
 %    \end{macrocode}
 % Zuletzt verhindern wir Einrückung in der nachfolgenden Zeile.
 %    \begin{macrocode}
+\midgard@artefakt@customcode%
 \@afterindentfalse%
 \@afterheading%
 }
