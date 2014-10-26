@@ -1052,6 +1052,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %    \begin{macrocode}
 \newlength\midgardskip
 \setlength\midgardskip{0.2em}
+\newcommand\nutzercode[2]{\expandafter\def\csname midgard@#1@customcode\endcsname{#2}}
 %    \end{macrocode}
 %\end{macro}
 %
@@ -1193,6 +1194,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
 \DeclareUnicodeCharacter{201E}{\glqq}
 \DeclareUnicodeCharacter{201C}{\grqq}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
 \DeclareUnicodeCharacter{00AD}{\ignorespaces}
 }{}
 %    \end{macrocode}
@@ -1285,8 +1287,8 @@ ABENTEUER
 % Auch wollen wir eine Rundbox (Infobox) definieren.
 %    \begin{macrocode}
 \newenvironment{rundbox}[1][]{
-  \begin{mdframed}[roundcorner=10pt,innertopmargin=0.5em,innerbottommargin=0.5em]
-    \noindent #1\par
+  \begin{mdframed}[roundcorner=10pt,innertopmargin=0.5em,innerbottommargin=0.5em]%
+    \ifempty{#1}{}{\noindent {#1}\par}%
     \@afterindentfalse%
     \@afterheading%
 }{
@@ -1407,6 +1409,7 @@ ABENTEUER
 % Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
 % Seitenumbruch, um unschöne Umbrüche im Layout selbst zu vermindern.
 %    \begin{macrocode}
+\newcommand\midgard@fertigkeit@customcode\relax%
 \newcommand*\fertigkeit[2][]{%
 \vspace{0.5em plus 0.5em}
 \pagebreak[2]\begingroup%
@@ -1471,6 +1474,7 @@ ABENTEUER
   \ifdatablist{\adddataline{\fertigkeitKey}{\csname \fertigkeitKey exportvalues\endcsname}}%
 }{}%
 }\endgroup\par%
+\midgard@fertigkeit@customcode%
 \@afterindentfalse%
 \@afterheading%
 }
@@ -2246,7 +2250,6 @@ Beschwörung~%
 % Das |\artefakt|-Kommando erzeugt den Artefakt-Datenblock.
 %    \begin{macrocode}
 \newcommand\midgard@artefakt@customcode\relax%
-\newcommand\nutzercode[2]{\expandafter\def\csname midgard@#1@customcode\endcsname{#2}}
 \newcommand*{\artefakt}[2][]{
 %    \end{macrocode}
 % Erneut beginnen wir mit dem Vorschlag eines Seitenumbruches.
