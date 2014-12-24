@@ -1154,7 +1154,10 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
   \global\def\texttimes{\ensuremath{\times}}
   \global\def\textdagger{\ensuremath{\dagger}}
   \global\def\textddagger{\ensuremath{\ddagger}}
+  \global\def\textsubscript#1{\ensuremath{{}_{\textup{#1}}}}
+  \global\def\textsuperscript#1{\ensuremath{{}^{\textup{#1}}}}
   \newcommand{\texthigh}[1]{\ensuremath{{}^{\textup{#1}}}}
+  \newcommand{\textlow} [1]{\ensuremath{{}_{\textup{#1}}}}
   \newcommand{\textfrac}[2]{\ensuremath{\frac{#1}{#2}}}
 }
 %    \end{macrocode}
@@ -1398,13 +1401,14 @@ ABENTEUER
 \define@key{fertigkeit}{S}{\def\fertigkeitS{#1}}
 \define@key{fertigkeit}{A}{\def\fertigkeitA{#1}}
 \define@key{fertigkeit}{key}{\def\fertigkeitKey{#1}}
+\define@key{fertigkeit}{anmerkung}{\def\fertigkeitAnmerkung{#1}}
 %    \end{macrocode}
 % Wir definieren zusätzlich \textit{default}-Werte für die Variablen,
 % für den Fall, dass sie nicht aufgerufen werden.
 %    \begin{macrocode}
 \presetkeys{fertigkeit}{name=Fähigkeit, entry=none, kategorie=none, leitAtt=none, 
   anforderungen=none, EW=none, ungelernt=none, spielbeginn=5, maximum=20, FP=hide, 
-  G=niemand, S=niemand, A=niemand, key=ability}{}
+  G=niemand, S=niemand, A=niemand, key=ability, anmerkung=\relax}{}
 %    \end{macrocode}
 % Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
 % Seitenumbruch, um unschöne Umbrüche im Layout selbst zu vermindern.
@@ -1440,6 +1444,7 @@ ABENTEUER
 \expandnext{\midgard@htarget}{\fertigkeitName}\textbf{\fertigkeitName}%
 \ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{none}} }{}{+\fertigkeitEW}%
 \ifdefstring{\fertigkeitKategorie}{none}{}{~(\fertigkeitKategorie)}%
+\ifdefstring{\fertigkeitAnmerkung}{\relax}{}{ \optendash{} \textit{\fertigkeitAnmerkung}}%
 \ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{none}} }{%
   \ifdefstring{\fertigkeitLeitAtt}{none}{}{\hfill\fertigkeitLeitAtt\hfill}%
   \ifdefstring{\fertigkeitAnforderungen}{none}{}{\hfill{\fertigkeitAnforderungen}\hfill}~%
@@ -1480,7 +1485,29 @@ ABENTEUER
 }
 %    \end{macrocode}
 % \end{macro}
-% 
+%
+% \begin{macro}{steigertabelle}
+%    \begin{macrocode}
+\newenvironment{steigertabelle}[1]{%
+  \begin{center}
+\begin{minipage}{.8\linewidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+  \setkeys{fertigkeit}{#1}%
+  \textbf{\fertigkeitName+\fertigkeitEW}\par
+  \hspace{1em}\begin{tabular}{c >{\bfseries}r}
+}{%
+  \end{tabular}\par
+  \begin{description}[font=\normalfont\itshape,noitemsep,nolistsep]
+    \ifdefstring{\fertigkeitG}{niemand}{}{\item[Grund:]    \fertigkeitG}
+    \ifdefstring{\fertigkeitS}{niemand}{}{\item[Standard:]    \fertigkeitS}
+    \ifdefstring{\fertigkeitA}{niemand}{}{\item[Ausnahme:]    \fertigkeitA}
+  \end{description}
+\end{minipage}
+\end{center}
+}
+%    \end{macrocode}
+% \end{macro}
 % 
 % \begin{macro}{\waffenfertigkeit}
 %   Waffenfertigkeiten werden im \textsc{Dfr4} auf ganz
@@ -2268,7 +2295,7 @@ Beschwörung~%
     \ifdefstring{\artefaktTyp}{-}{}{\optendash\mbox{\artefaktTyp}}%
     \ifdefstring{\artefaktMagisch}{false}{\optendash nicht magisch}{%
       \ifdefstring{\artefaktABW}{-}{}{ \mbox{(\textsc{Abw}\,\artefaktABW)}}%
-      \ifdefstring{\artefaktAura}{-}{}{\optendash \mbox{\textbf{\textsc{Aura:}} \artefaktAura}}%
+      \ifdefstring{\artefaktAura}{-}{}{ \optendash \mbox{\textbf{\textsc{Aura:}} \artefaktAura}}%
     } 
     \ifdefstring{\artefaktUntertitel}{-}{%
       \ifdefstring{\artefaktSprache}{-}{}{\newline\artefaktSprache}%
@@ -2502,7 +2529,7 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
 %    \begin{macrocode}
 \ifdefstring{\bestBes}{none}%
            {\ifdefstring{\bestAura}{none}{}{\textbf{\textsc{Aura:}} \bestAura\par}}%
-           {\textbf{Bes.:} \bestBes \ifdefstring{\bestAura}{none}{}{ -- \textbf{\textsc{Aura:} \bestAura}}\par }%
+           {\textbf{Bes.:} \bestBes \ifdefstring{\bestAura}{none}{}{ \optendash \textbf{\textsc{Aura:} \bestAura}}\par }%
 %    \end{macrocode}
 % Die Zauberfertigkeiten |zauber| der Kreatur werden als mit
 % \textbf{Zaubern+|zauberEW|:} überschriebener Absatz mit hängendem
@@ -2595,7 +2622,7 @@ Grad \bestGrad%
   \ifdefstring{\bestAura}{none}{}{\par\textsc{Aura:} \bestAura}%
 }{%
   \par\textbf{Bes.:} \bestBes%
-  \ifdefstring{\bestAura}{none}{}{-- \textsc{Aura:} \bestAura}%
+  \ifdefstring{\bestAura}{none}{}{ -- \textsc{Aura:} \bestAura}%
 }%
 \ifdefstring{\bestZauber}{none}{}{\par\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}}%
 \ifdefstring{\bestZauberMore}{none}{}{\par\textbf{Zaubern+\bestZauberMoreEW:} \textit{\bestZauberMore}}%
