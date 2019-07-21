@@ -2291,21 +2291,22 @@ Beschwörung~%
 %    \begin{macrocode}
 \addcontentsline{toc}{\midgard@artefakt@tocLevel}{\artefaktName}
 \begin{samepage}
-\setlength\parindent{0pt}
-\flushleft
-    {\bfseries \large  \artefaktName}\ifdefstring{\artefaktHerstellbar}{false}{}{~\textdagger} \linebreak[0]%
-    \ifdefstring{\artefaktTyp}{-}{}{\optendash\mbox{\artefaktTyp}}%
-    \ifdefstring{\artefaktMagisch}{false}{\optendash nicht magisch}{%
-      \ifdefstring{\artefaktABW}{-}{}{ \mbox{(\textsc{Abw}\,\artefaktABW)}}%
-      \ifdefstring{\artefaktAura}{-}{}{ \optendash \mbox{\textbf{\textsc{Aura:}} \artefaktAura}}%
-    } 
-    \ifdefstring{\artefaktUntertitel}{-}{%
-      \ifdefstring{\artefaktSprache}{-}{}{\newline\artefaktSprache}%
-    }{\newline%
-      \textit{\artefaktUntertitel}%
-      \ifdefstring{\artefaktSprache}{-}{}{\optendash \artefaktSprache}%
-    }
-    \par\end{samepage}\nopagebreak
+  \setlength\parindent{0pt}
+  \flushleft
+      {\bfseries \large  \artefaktName}\ifdefstring{\artefaktHerstellbar}{false}{}{~\textdagger} \linebreak[0]%
+      \ifdefstring{\artefaktTyp}{-}{}{\optendash\mbox{\artefaktTyp}}%
+      \ifdefstring{\artefaktMagisch}{false}{\optendash nicht magisch}{%
+        \ifdefstring{\artefaktABW}{-}{}{ \mbox{(\textsc{Abw}\,\artefaktABW)}}%
+        \ifdefstring{\artefaktAura}{-}{}{ \optendash \mbox{\textbf{\textsc{Aura:}} \artefaktAura}}%
+      } 
+      \ifdefstring{\artefaktUntertitel}{-}{%
+        \ifdefstring{\artefaktSprache}{-}{}{\newline\artefaktSprache}%
+      }{\newline%
+        \textit{\artefaktUntertitel}%
+        \ifdefstring{\artefaktSprache}{-}{}{\optendash \artefaktSprache}%
+      }
+      \end{samepage}
+      \par\nopagebreak
 }\nopagebreak
 %    \end{macrocode}
 % Zuletzt verhindern wir Einrückung in der nachfolgenden Zeile.
@@ -2322,7 +2323,7 @@ Beschwörung~%
 %    \end{macrocode}
 % Erneut beginnen wir mit dem Vorschlag eines Seitenumbruches.
 %    \begin{macrocode}
-\pagebreak[2]\begingroup\small%
+\begingroup\small%
 \setkeys{artefaktherstellen}{#1}{%
 \noindent%
 \ifdefstring{\herstellenVoraussetzung}{-}{}{%
