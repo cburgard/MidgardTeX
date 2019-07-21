@@ -1679,6 +1679,7 @@ ABENTEUER
 \define@key{zauber}{th}{\def\zauberth{#1}}
 \define@key{zauber}{art}{\def\zauberart{#1}}
 \define@key{zauber}{artshort}{\def\zauberartshort{#1}}
+\define@key{zauber}{kurztext}{\def\zaubershortdescription{#1}}
 \define@key{zauber}{stufe}{\def\zauberstufe{#1}}
 \define@key{zauber}{material}{\def\zaubermaterial{#1}}
 \define@key{zauber}{matpreis}{\def\zaubermatpreis{#1}}
@@ -1715,7 +1716,7 @@ ABENTEUER
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
-\presetkeys{zauber}{name=Zauber, entry=none, scroll=true, th=none,
+\presetkeys{zauber}{name=Zauber, entry=none, scroll=true, th=none, kurztext={},
   anmerkung=none, untertitel=none, art=Zauber, stufe=1, spelltype=spell,
   material=none, matpreis=none, matannotation=none, 
   koeder=none, koederpreis=none, feld=none, feldpreis=none,
