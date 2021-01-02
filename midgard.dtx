@@ -365,26 +365,26 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % Fähigkeit nicht lernbar und hat daher einen fixen Erfolgswert, der
 % dann unmittelbar auf den Namen folgend dargestellt
 % wird.\tabularnewline entry & \fertigkeitEntry & Eintrag dieser
-% Fähigkeit im Inhaltsverzeichnis.  Bei \textit{none} wird der mit
+% Fähigkeit im Inhaltsverzeichnis.  Bei \textit{\empty} wird der mit
 % \meta{name} gesetzte Name der Fertigkeit verwendet. \tabularnewline
 % kategorie & \fertigkeitKategorie & Die Kategorie der Fähigkeit, etwa
 % \glqq Sozial\grqq{} oder \glqq Bewegung\grqq{}. Jeder Wert außer
-% \textit{none} wird in der Titelzeile hinter dem Namen der Fähigkeit
+% \textit{\empty} wird in der Titelzeile hinter dem Namen der Fähigkeit
 % in Klammern abgedruckt. \tabularnewline ungelernt &
 % \fertigkeitUngelernt & Der ungelernte Erfolgswert für diese
-% Fertigkeit. Jeder Wert außer \textit{none} wird als Erfolgswert
+% Fertigkeit. Jeder Wert außer \textit{\empty} wird als Erfolgswert
 % interpretiert und in der Form \glqq
 % ungelernt+(\meta{ungelernt})\grqq{} am Ende der Titelzeile
 % abgedruckt. Der Löwenanteil des folgenden Datenblocks wird dann
 % ignoriert und nur das Leitattribut und die anderen Anforderungen
 % werden noch in der Titelzeile dargestellt, falls diese nicht
-% \textit{none} sind. \tabularnewline leitatt & \fertigkeitLeitAtt &
-% Das Leitattribut dieser Fertigkeit. Jeder Wert außer \textit{none}
+% \textit{\empty} sind. \tabularnewline leitatt & \fertigkeitLeitAtt &
+% Das Leitattribut dieser Fertigkeit. Jeder Wert außer \textit{\empty}
 % wird in der unmittelbar auf den Titel folgenden Zeile in
 % \textbf{Fettdruck} an den Anfang gestellt.\tabularnewline
 % anforderungen & \fertigkeitAnforderungen & Die zum Lernen dieser
 % Fertigkeit benötigten Voraussetzungen, typischerweise
-% Mindestattribute. Jeder Wert außer \textit{none} wird in der
+% Mindestattribute. Jeder Wert außer \textit{\empty} wird in der
 % unmittelbar auf den Titel folgenden Zeile an den Anfang gestellt,
 % hinter das Leitattribut. \tabularnewline EW & \fertigkeitEW & Der
 % Wert |EW| wird als Erfolgswert interpretiert und wörtlich in der
@@ -470,7 +470,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \weaponName & Der Name der Waffenfertigkeit wird durch
 % \textbf{Fettdruck} hervorgehoben in der Titelzeile
 % dargestellt.\tabularnewline entry & \weaponEntry & Eintrag dieser
-% Waffenfähigkeit im Inhaltsverzeichnis.  Bei \textit{none} wird der
+% Waffenfähigkeit im Inhaltsverzeichnis.  Bei \textit{\empty} wird der
 % mit \meta{name} gesetzte Name der Waffenfertigkeit verwendet. So ist
 % es möglich, z.\,B.~die \glqq\textbf{Schwere Armbrust}\grqq{} als
 % \glqq\textbf{Armbrust, schwere}\grqq{} im Inhaltsverzeichnis zu
@@ -615,7 +615,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \zaubername & Der Name des Zaubers wird mit \textbf{Fettdruck} und
 % leicht größerer Schriftart hervorgehoben in der Titelzeile
 % dargestellt.  \tabularnewline entry & \zauberentry & Eintrag dieses
-% Zaubers im Inhaltsverzeichnis. Bei \textit{none} wird der mit
+% Zaubers im Inhaltsverzeichnis. Bei \textit{\empty} wird der mit
 % \meta{name} gesetzte Name des Zaubers verwendet. So ist es möglich,
 % z.\,B.~die \glqq\textbf{Blaue Bannsphäre}\grqq{} als
 % \glqq\textbf{Bannsphäre, Blaue}\grqq{} im Inhaltsverzeichnis zu
@@ -626,12 +626,12 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % abgedruckt wird.\tabularnewline th & \zauberth & Information über
 % die thaumaturgische Variante des Zaubers, wird typischerweise auf
 % \textit{R} oder \textit{S} für Runenstäbe bzw.~Siegelzauber
-% gesetzt. Tatsächlich wird aber jede Angabe außer \textit{none} in
+% gesetzt. Tatsächlich wird aber jede Angabe außer \textit{\empty} in
 % der Kopfzeile abgedruckt. Länge Angaben sollten vermieden werden, da
 % diese zu unerwünschten Zeilenüberläufen führen können!
 % \tabularnewline anmerkung & \zauberAnmerkung & Anmerkungen zum
 % Zauber, etwa zur Quelle, aus welcher der Zauber stammt. Jeder Wert
-% außer \textit{none} wird unterhalb der Titelzeile klein,
+% außer \textit{\empty} wird unterhalb der Titelzeile klein,
 % linksbündig, fett und kursiv agbedruckt. \tabularnewline art &
 % \zauberart & Art des Zaubers, z.\,B.~\textbf{Gedankenzauber},
 % \textbf{Wortzauber} oder \textbf{Gestenzauber}. Jede Angabe wird vor
@@ -643,35 +643,35 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \glqq Großen Magie\grqq{} (z.\,B.~in \glqq Gestenzauber der
 % \textbf{Großen Magie}\grqq{}) expandiert wird \tabularnewline
 % material & \zaubermaterial & Jedes Zaubermaterial außer
-% \textit{none} wird in kursiv unterhalb der Zeile mit Art und Stufe
-% des Zaubers abgedruckt. Ist das \meta{material} \textit{none},
+% \textit{\empty} wird in kursiv unterhalb der Zeile mit Art und Stufe
+% des Zaubers abgedruckt. Ist das \meta{material} \textit{\empty},
 % werden die Angaben \meta{matpreis} und \meta{matannotation}
 % ignoriert. \tabularnewline matpreis & \zaubermatpreis & Der
-% Materialpreis. Jede Angabe außer \textit{none} wird hinter dem
+% Materialpreis. Jede Angabe außer \textit{\empty} wird hinter dem
 % Zaubermaterial in Normalschrift und geklammert
 % abgedruckt. \tabularnewline matannotation & \zaubermatannotation &
 % Weitere Anmerkungen zum Zaubermaterial, beispielsweise
 % \glqq\textbf{wird nicht verbraucht}\grqq{} oder \glqq\textbf{wird
 % nur bei kritischem Fehler verbraucht}\grqq{}. Jede Angabe außer
-% \textit{none} wird am Ende der \glqq Zaubermaterial-Zeile\grqq{},
+% \textit{\empty} wird am Ende der \glqq Zaubermaterial-Zeile\grqq{},
 % mit einem Semikolon abgetrennt, abgedruckt. Bei Zaubern, die mehrere
 % Zaubermaterialien mit separaten Preisangaben haben, empfiehlt es
 % sich, den entsprechenden Passus unmittelbar in \meta{material} zu
 % schreiben und die Felder \meta{matkosten} und \meta{matannotation}
 % zu ignorieren. \tabularnewline feld & \beschwoerungsfeld & Bei
-% Beschwörungen verwendetes Feld. Jede Angabe außer \textit{none} wird
+% Beschwörungen verwendetes Feld. Jede Angabe außer \textit{\empty} wird
 % unterhalb der Material-Zeile in Kursiv abgedruckt abgedruckt, wobei
 % die Bezeichnung \textit{Köder} in Fettdruck vornangestellt wird. Ist
-% er Köder \textit{none}, wird die Angabe zum \meta{feldpreis}
+% er Köder \textit{\empty}, wird die Angabe zum \meta{feldpreis}
 % ignoriert. \tabularnewline feldpreis & \beschwoerungsfeldpreis & Der
-% Preis des Beschwörungsfelds.  Jede Angabe außer \textit{none} wird
+% Preis des Beschwörungsfelds.  Jede Angabe außer \textit{\empty} wird
 % hinter dem Beschwörungsfeld in Normalschrift und geklammert
 % abgedruckt. \tabularnewline koeder & \beschwoerungskoeder & Bei
-% Beschwörungen verwendete Köder. Jede Angabe außer \textit{none} wird
+% Beschwörungen verwendete Köder. Jede Angabe außer \textit{\empty} wird
 % unterhalb der Material-Zeile in Normalschrift abgedruckt. Ist er
-% Köder \textit{none}, wird die Angabe zum \meta{koederpreis}
+% Köder \textit{\empty}, wird die Angabe zum \meta{koederpreis}
 % ignoriert. \tabularnewline koederpreis & \beschwoerungskoederpreis &
-% Der Preis des Köders.  Jede Angabe außer \textit{none} wird hinter
+% Der Preis des Köders.  Jede Angabe außer \textit{\empty} wird hinter
 % dem Köder in Normalschrift und geklammert
 % abgedruckt. \tabularnewline \tabularnewline prozess & \zauberprozess
 % & Der Prozess-Anteil der Zauberformel. Jede Angabe wird wörtlich vor
@@ -792,20 +792,20 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % gegebenenfalls vorhandenen Schriftrollensymbol dargestellt werden
 % soll, bei einem Drachen etwa der Zusatz \glqq uralter\grqq{} (für
 % die Ausgabe \textbf{Drache
-% }\imgMagisch\textbf{, uralter}). Jede Angabe außer \textit{none} wird deshalb in Fettdruck und mit
+% }\imgMagisch\textbf{, uralter}). Jede Angabe außer \textit{\empty} wird deshalb in Fettdruck und mit
 % Komma abgetrennt hinter dem Namen und dem eventuell vorhandenen
 % Schriftrollensymbol ausgegeben.  \tabularnewline grad & \bestGrad &
 % Der Grad des Wesens wird in Klammern hinter dem Namen angezeigt
 % \tabularnewline typ & \bestTyp & Der \glqq Typ\grqq{} gibt an, zu
 % welcher Kategorie die Kreatur gehört, etwa \glqq Dämon\grqq oder
-% \glqq Humanoid\grqq{}. Jeder Werte außer \textit{none} wird vor dem
+% \glqq Humanoid\grqq{}. Jeder Werte außer \textit{\empty} wird vor dem
 % Grad des Wesens innerhalb der gleichen Parenthese abgedruckt.
 % \tabularnewline modus & \bestModus & Der \glqq Modus\grqq{} gibt die
 % Erscheinungsform des Wesens an. Einige Wesen besitzen verschiedene
 % Zustände, etwa \textbf{Werwesen} oder \textbf{Abbadonspinnen}. Bei
 % währen dann \textit{in Menschengestalt} bzw.~textit{in Wergestalt}
 % sowie \textit{körperlich} bzw.~\textit{auf Seelenreise} angebrachte
-% Einträge für |modus|. Jede Angabe außer \textit{none} wird
+% Einträge für |modus|. Jede Angabe außer \textit{\empty} wird
 % unmittelbar vor der Klammer in der Titelzeile abgedruckt.
 % \tabularnewline variant & \bestVariant & Einige Wesen gibt es in
 % verschiedenen Varianten, wobei die Variante jedoch weder (wie bei
@@ -816,7 +816,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % zwischen dem |addendum| und dem |modus| in Normalschrift ausgegeben.
 % \tabularnewline size & \bestSize & Die Größenordnung des Wesens,
 % etwa \textit{Groß} oder \textit{Riesig} (als Regelausdruck). Jede
-% Angabe außer \textit{none} wird mit einem Gedankenstrich abgetrennt
+% Angabe außer \textit{\empty} wird mit einem Gedankenstrich abgetrennt
 % hinter dem Grad innerhalb der selben Parenthese abgedruckt.
 % \tabularnewline LP & \bestLP & Die Lebenspunkte eines Wesens. Neben
 % Würfelausdrücken können hier \textinfty{} (|\textinfty|), * (|*|)
@@ -843,7 +843,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % Bewegungsweiten für verschiedene Fortbewegungsarten können mit einem
 % einfachen Querstrich (|/|) abgetrennt werden.  \tabularnewline MW &
 % \bestMW & Für den Moralwert des Wesens wird jede Angabe außer
-% \textit{none} als EW interpretiert und in der Form \glqq
+% \textit{\empty} als EW interpretiert und in der Form \glqq
 % MW+\meta{MW}\grqq{} abgedruckt.  \tabularnewline abwehr &
 % \bestAbwehr & Für die Abwehr des Wesens wird jede Angabe als EW
 % interpretiert und in der Form \glqq Abwehr+\meta{abwehr}\grqq{}
@@ -864,7 +864,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \textbf{Angriff:} in einem eigenen Absatz dargestellt. Nachfolgende
 % Zeilen erhalten einen hängenden Einzug.  \tabularnewline zauber &
 % \bestZauber & Die Zauberfähigkeiten des Wesens. Jede Angabe außer
-% \textit{none} wird kursiv hinter dem Erfolgswert dargestellt (siehe
+% \textit{\empty} wird kursiv hinter dem Erfolgswert dargestellt (siehe
 % nächster Eintrag). Wie schon bei |angriff| sind die einzelnen
 % Einträge durch Kommas abzutrennen und durch geschweifte Klammern
 % |{|\dots|}| zu umschließen.  \tabularnewline zauberEW &
@@ -900,10 +900,10 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \bestZauberArtigMMoreEW & Der zugehörige Erfolgswert. Es gelten die
 % Anmerkungen zu |zauberArtigEW|.  \tabularnewline bes & \bestBes &
 % Die Besonderheiten werden nach dem Kürzel \glqq\textbf{Bes.:}\grqq{}
-% in einem eigenen Absatz dargestellt. Jede Angabe außer \textit{none}
+% in einem eigenen Absatz dargestellt. Jede Angabe außer \textit{\empty}
 % wird wörtlich abgedruckt. Nachfolgende Zeilen erhalten einen
 % hängenden Einzug.  \tabularnewline aura & \bestAura & Die Aura des
-% Wesens. Jede Angabe außer \textit{none} wird nach dem Wort
+% Wesens. Jede Angabe außer \textit{\empty} wird nach dem Wort
 % \glqq\textsc{Aura}\grqq{} mit einem Gedankenstrich \glqq--\grqq{} an
 % die \textbf{Besonderheiten} angehängt.  \tabularnewline vorkommen &
 % \bestVork & Das Vorkommen einer Art wird nur im |\bestiarium|-Layout
@@ -1407,8 +1407,8 @@ ABENTEUER
 % Wir definieren zusätzlich \textit{default}-Werte für die Variablen,
 % für den Fall, dass sie nicht aufgerufen werden.
 %    \begin{macrocode}
-\presetkeys{fertigkeit}{name=Fähigkeit, entry=none, kategorie=none, leitAtt=none, 
-  anforderungen=none, EW=none, ungelernt=none, spielbeginn=5, maximum=20, FP=hide, 
+\presetkeys{fertigkeit}{name=Fähigkeit, entry=\empty, kategorie=\empty, leitAtt=\empty, 
+  anforderungen=\empty, EW=\empty, ungelernt=\empty, spielbeginn=\empty, maximum=\empty, FP=hide, 
   G=niemand, S=niemand, A=niemand, key=ability, anmerkung=\relax}{}
 %    \end{macrocode}
 % Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
@@ -1437,27 +1437,27 @@ ABENTEUER
 \phantomsection%
 \setlength{\parindent}{0pt}%
 \setlength{\parskip}{0pt}%
-\ifdefstring{\fertigkeitEntry}{none}{%
+\ifdefstring{\fertigkeitEntry}{\empty}{%
   \addcontentsline{toc}{\midgard@fertigkeit@tocLevel}{\fertigkeitName}%
 }{%
   \addcontentsline{toc}{\midgard@fertigkeit@tocLevel}{\fertigkeitEntry}%
 }%
 \expandnext{\midgard@htarget}{\fertigkeitName}\textbf{\fertigkeitName}%
-\ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{none}} }{}{+\fertigkeitEW}%
-\ifdefstring{\fertigkeitKategorie}{none}{}{~(\fertigkeitKategorie)}%
+\ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{\empty}} }{}{+\fertigkeitEW}%
+\ifdefstring{\fertigkeitKategorie}{\empty}{}{~(\fertigkeitKategorie)}%
 \ifdefstring{\fertigkeitAnmerkung}{\relax}{}{ \optendash{} \textit{\fertigkeitAnmerkung}}%
-\ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{none}} }{%
-  \ifdefstring{\fertigkeitLeitAtt}{none}{}{\hfill\fertigkeitLeitAtt\hfill}%
-  \ifdefstring{\fertigkeitAnforderungen}{none}{}{\hfill{\fertigkeitAnforderungen}\hfill}~%
+\ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{\empty}} }{%
+  \ifdefstring{\fertigkeitLeitAtt}{\empty}{}{\hfill\fertigkeitLeitAtt\hfill}%
+  \ifdefstring{\fertigkeitAnforderungen}{\empty}{}{\hfill{\fertigkeitAnforderungen}\hfill}~%
 }{%
-  \ifdefstring{\fertigkeitUngelernt}{none}{}{\hfill ungelernt+(\fertigkeitUngelernt)}%
+  \ifdefstring{\fertigkeitUngelernt}{\empty}{}{\hfill ungelernt+(\fertigkeitUngelernt)}%
   \par\vspace{\midgardskip}
   \begin{small}
-    \ifdefstring{\fertigkeitLeitAtt}{none}{}{\textbf{\fertigkeitLeitAtt}}%
-    \ifdefstring{\fertigkeitAnforderungen}{none}{}{%
-      \ifdefstring{\fertigkeitLeitAtt}{none}{}{, }{\fertigkeitAnforderungen}%
+    \ifdefstring{\fertigkeitLeitAtt}{\empty}{}{\textbf{\fertigkeitLeitAtt}}%
+    \ifdefstring{\fertigkeitAnforderungen}{\empty}{}{%
+      \ifdefstring{\fertigkeitLeitAtt}{\empty}{}{, }{\fertigkeitAnforderungen}%
     }%
-    \hfill Erfolgswert+\fertigkeitEW\hfill(+\fertigkeitSpielbeginn/+\fertigkeitMaximum)%
+    \hfill~\linebreak[0] \mbox{Erfolgswert+\fertigkeitEW}\ifdefstring{\fertigkeitSpielbeginn}{\empty}{}{\hfill(+\fertigkeitSpielbeginn/+\fertigkeitMaximum)}%
   \end{small}%
 }\par%
 \ifdefstring{\fertigkeitFP}{hide}{}{%
@@ -1533,7 +1533,7 @@ ABENTEUER
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
-\presetkeys{weapon}{name=Waffe, entry=none, energie=none, schaden=-, reichweite=, beispiele=none,
+\presetkeys{weapon}{name=Waffe, entry=\empty, energie=\empty, schaden=-, reichweite=, beispiele=\empty,
   voraussetzungen={St\,01, Gs\,01}, grundkenntnisse=-, anfangserfolgswert=4,
   schwierigkeit=normal, FP=hide, G=niemand, S=niemand, A=niemand, key=weaponability}{}
 %    \end{macrocode}
@@ -1559,7 +1559,7 @@ ABENTEUER
   \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*2}%
 }%
 \phantomsection%
-\ifdefstring{\weaponEntry}{none}{%
+\ifdefstring{\weaponEntry}{\empty}{%
   \addcontentsline{toc}{\midgard@fertigkeit@tocLevel}{\weaponName}
 }{%
   \addcontentsline{toc}{\midgard@fertigkeit@tocLevel}{\weaponEntry}
@@ -1568,11 +1568,11 @@ ABENTEUER
 \raggedright
 \par
 \noindent\textbf{\weaponName}~\mbox{(\weaponDamage{}%
-\ifboolexpr{ togl {useEnergy} and not test {\ifdefstring{\weaponEnergy}{none}}}{,~\textsc{E}\,\weaponEnergy}{}%
+\ifboolexpr{ togl {useEnergy} and not test {\ifdefstring{\weaponEnergy}{\empty}}}{,~\textsc{E}\,\weaponEnergy}{}%
 )}\hfil\mbox{}\nobreak\hfill\nobreak\mbox{\weaponRange{}}\par% 
 \begin{small}
 \noindent\weaponPremise \hspace{1cm} Erfolgswert+\weaponStartEW\par%
-\noindent\textbf{\weaponBasics} \ifdefstring{\weaponExamples}{none}{}{\textit{(\weaponExamples)}}
+\noindent\textbf{\weaponBasics} \ifdefstring{\weaponExamples}{\empty}{}{\textit{(\weaponExamples)}}
 \ifdefstring{\weaponFP}{hide}{%
 }{%
   \ifdefstring{\weaponDifficulty}{hide}{}{\newline\noindent\textit{Schwierigkeit:} \weaponDifficulty}%
@@ -1716,14 +1716,14 @@ ABENTEUER
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
-\presetkeys{zauber}{name=Zauber, entry=none, scroll=true, th=none, kurztext={},
-  anmerkung=none, untertitel=none, art=Zauber, stufe=1, spelltype=spell,
-  material=none, matpreis=none, matannotation=none, 
-  koeder=none, koederpreis=none, feld=none, feldpreis=none,
+\presetkeys{zauber}{name=Zauber, entry=\empty, scroll=true, th=\empty, kurztext={},
+  anmerkung=\empty, untertitel=\empty, art=Zauber, stufe=1, spelltype=spell,
+  material=\empty, matpreis=\empty, matannotation=\empty, 
+  koeder=\empty, koederpreis=\empty, feld=\empty, feldpreis=\empty,
   prozess=Prozess, agens=Agens, reagens=Reagens,
   AP=0, GZ=hide, Zd=keine, Rw=-, E=hide, Wz=-, Wb=-, Wd=-, Ur={n.\,A.},
   FP=hide, G=niemand, S=niemand, A=niemand}{}
- %  ,  artshort=none, Rwshort=none}{}
+ %  ,  artshort=\empty, Rwshort=\empty}{}
 %    \end{macrocode}
 % Das |zauber|-Kommando wird eingeleitet mit etwas vertikalem Platz,
 % der nach Bedarf (z.\,B.~am Seitenanfang) nicht dargestellt
@@ -1750,12 +1750,12 @@ ABENTEUER
   \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
 }%
 %    \end{macrocode}
-% Wenn |\zauberentry| \textit{none}, wird der |\zaubername| auf der
+% Wenn |\zauberentry| \textit{\empty}, wird der |\zaubername| auf der
 % Gliederungsebene |subsubsection| zum Inhaltsverzeichnis
 % hinzugefügt. Andernfalls geschieht dasselbe mit |\zauberentry|.
 %    \begin{macrocode}
 \phantomsection%
-\ifdefstring{\zauberentry}{none}{%
+\ifdefstring{\zauberentry}{\empty}{%
   \addcontentsline{toc}{\midgard@zauber@tocLevel}{\zaubername}
 }{%
   \addcontentsline{toc}{\midgard@zauber@tocLevel}{\zauberentry}
@@ -1772,7 +1772,7 @@ ABENTEUER
            {}%
            {\imgMagisch}%
 \hfill%
-\ifdefstring{\zauberth}{none}%
+\ifdefstring{\zauberth}{\empty}%
            {}%
            {\textbf{\zauberth}}%
 }\par%
@@ -1785,13 +1785,13 @@ ABENTEUER
 % Falls |\zauberAnmerkung| gesetzt ist, wird sie jetzt klein, fett und
 % kursiv abgedruckt.
 %    \begin{macrocode}
-\ifdefstring{\zauberAnmerkung}{none}{}%
+\ifdefstring{\zauberAnmerkung}{\empty}{}%
 {{\par\footnotesize\bfseries\itshape\zauberAnmerkung\par}}%
 %    \end{macrocode}
 % Falls |\zauberUntertitel| gesetzt ist, wird sie jetzt klein, fett und
 % kursiv abgedruckt.
 %    \begin{macrocode}
-\ifdefstring{\zauberUntertitel}{none}{}%
+\ifdefstring{\zauberUntertitel}{\empty}{}%
 {{\nopagebreak\par\itshape\zauberUntertitel\par}}%
 %    \end{macrocode}
 % Wir unterdrücken einen Zeilenumbruch unmittelbar nach der
@@ -1810,21 +1810,21 @@ ABENTEUER
            {der Stufe \zauberstufe}%
 \par
 %    \end{macrocode}
-% Falls |\zaubermaterial| \textit{none} ist, gibt es kein
+% Falls |\zaubermaterial| \textit{\empty} ist, gibt es kein
 % Zaubermaterial. Wir unterdrücken etwas vertikalen Platz und machen
 % sofort mit der Zauberformel weiter. Andernfalls drucken wir zunächst
 % das Material, und dann -- wiederum nur falls diese nicht
-% \textit{none} sind -- |\zaubermatpreis| und |\zaubermatannotation|,
+% \textit{\empty} sind -- |\zaubermatpreis| und |\zaubermatannotation|,
 % ersteres geklammert, letzteres durch Semikolon abgetrennt.
 %    \begin{macrocode}
 \def\zaubermattotal{}%
-\ifdefstring{\zaubermaterial}{none}%
+\ifdefstring{\zaubermaterial}{\empty}%
             {}%
             {\appto\zaubermattotal{\textit{\zaubermaterial}}%
-              \ifdefstring{\zaubermatpreis}{none}%
+              \ifdefstring{\zaubermatpreis}{\empty}%
                           {}%
                           {\appto\zaubermattotal{~(\zaubermatpreis)}%
-                            \ifdefstring{\zaubermatannotation}{none}%
+                            \ifdefstring{\zaubermatannotation}{\empty}%
                                         {}%
                                         {\appto\zaubermattotal{; \zaubermatannotation}}}}%
 \zaubermattotal\par%
@@ -1954,7 +1954,7 @@ ABENTEUER
 \presetkeys{zauber}{name=Beschwörung, scroll=false, art=Beschwörung, spelltype=incantation,%
   primprozess=Verändern, primagens=Magan, primreagens=Metall,%
   secprozess=Beherrschen, secagens=Magan, secreagens=Wasser,%
-  showformula=none%
+  showformula=\empty%
 }{}
 \setkeys{zauber}{#1}{
 %    \end{macrocode}
@@ -1969,12 +1969,12 @@ ABENTEUER
   \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*5}%
 }%
 %    \end{macrocode}
-% Wenn |\zauberentry| \textit{none}, wird der |\zaubername| auf der
+% Wenn |\zauberentry| \textit{\empty}, wird der |\zaubername| auf der
 % Gliederungsebene |subsubsection| zum Inhaltsverzeichnis
 % hinzugefügt. Andernfalls geschieht dasselbe mit |\zauberentry|.
 %    \begin{macrocode}
 \phantomsection%
-\ifdefstring{\zauberentry}{none}{%
+\ifdefstring{\zauberentry}{\empty}{%
         \addcontentsline{toc}{\midgard@zauber@tocLevel}{\zaubername}
         }{%
         \addcontentsline{toc}{\midgard@zauber@tocLevel}{\zauberentry}
@@ -2001,13 +2001,13 @@ ABENTEUER
 % Falls |\zauberAnmerkung| gesetzt ist, wird sie jetzt klein, fett und
 % kursiv abgedruckt.
 %    \begin{macrocode}
-\ifdefstring{\zauberAnmerkung}{none}{}%
+\ifdefstring{\zauberAnmerkung}{\empty}{}%
 {{\par\footnotesize\bfseries\itshape\zauberAnmerkung\par}}%
 %    \end{macrocode}
 % Falls |\zauberUntertitel| gesetzt ist, wird sie jetzt klein, fett und
 % kursiv abgedruckt.
 %    \begin{macrocode}
-\ifdefstring{\zauberUntertitel}{none}{}%
+\ifdefstring{\zauberUntertitel}{\empty}{}%
 {{\nopagebreak\par\itshape\zauberUntertitel\par}}%
 %    \end{macrocode}
 % Wir unterdrücken einen Zeilenumbruch unmittelbar nach der
@@ -2030,23 +2030,23 @@ Beschwörung~%
 % Beschwörungsfeld auf.
 %    \begin{macrocode}
 \def\beschwoerungsfeldtotal{}%
-\ifdefstring{\beschwoerungsfeld}{none}%
+\ifdefstring{\beschwoerungsfeld}{\empty}%
            {}%
            {\appto\beschwoerungsfeldtotal{\beschwoerungsfeld}%
-             \ifdefstring{\beschwoerungsfeldpreis}{none}%
+             \ifdefstring{\beschwoerungsfeldpreis}{\empty}%
                         {}%
                         {\appto\beschwoerungsfeldtotal{~(\beschwoerungsfeldpreis)}}%
            }%
 \beschwoerungsfeldtotal\par%
 \def\beschwoerungskoedertotal{}%
-\ifdefstring{\beschwoerungskoeder}{none}%
+\ifdefstring{\beschwoerungskoeder}{\empty}%
             {}%
             {\appto\beschwoerungskoedertotal{\textit{\beschwoerungskoeder}}%
-              \ifdefstring{\beschwoerungskoederpreis}{none}%
+              \ifdefstring{\beschwoerungskoederpreis}{\empty}%
                           {}%
                           {\appto\beschwoerungskoedertotal{~(\beschwoerungskoederpreis)}}%
             }%
-\ifdefstring{\beschwoerungskoeder}{none}%
+\ifdefstring{\beschwoerungskoeder}{\empty}%
             {}% 
             {\textbf{Köder:}~\beschwoerungskoedertotal\par}%
 %    \end{macrocode}
@@ -2054,7 +2054,7 @@ Beschwörung~%
 % gewünscht ist.
 %    \begin{macrocode}
 \vspace{\midgardskip}
-\ifdefstring{\showformula}{none}{}{
+\ifdefstring{\showformula}{\empty}{}{
   \beschwoerungprimprozess~%
   \imgModus~%
   \beschwoerungprimagens~%
@@ -2155,7 +2155,7 @@ Beschwörung~%
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
 \presetkeys{zaubermittel}{voraussetzungen=keine,stufe=1,zeitaufwand=keine,
-  FP=keine,G=niemand,S=niemand,A=niemand,entry=none,kosten=--,zeitaufwand=--,
+  FP=keine,G=niemand,S=niemand,A=niemand,entry=\empty,kosten=--,zeitaufwand=--,
   FP1=0,FP2=0,FP3=0,FP4=0,FP5=0,FP6=0,%
 }{}
 %    \end{macrocode}
@@ -2171,7 +2171,7 @@ Beschwörung~%
 \pagebreak[2]
 \vspace{1em}
 \phantomsection%
-\ifdefstring{\zaubermittelEntry}{none}{%
+\ifdefstring{\zaubermittelEntry}{\empty}{%
         \addcontentsline{toc}{\midgard@zaubermittel@tocLevel}{\zaubermittelName}
         }{%
         \addcontentsline{toc}{\midgard@zaubermittel@tocLevel}{\zaubermittelEntry}
@@ -2388,16 +2388,16 @@ Beschwörung~%
 \define@key{best}{zauberArtigMMoreEW} {\def\bestZauberArtigMMoreEW {#1}}
 \define@key{best}{bestcategory}       {\def\bestKey{#1}}
 
-\presetkeys{best}{ name=Wesen, grad=0, modus=none, typ=none,
-  mag=false, aura=none, size=normal, addendum=none, variant=none,
+\presetkeys{best}{ name=Wesen, grad=0, modus=\empty, typ=\empty,
+  mag=false, aura=\empty, size=normal, addendum=\empty, variant=\empty,
   LP=\textstar, AP=\textstar, RK=\textstar R, EP=0, In=t01, 
-  St=\textstar, Gw=01, B=\textstar, MW=none,
-  abwehr=10, resistenz=10/10/10, angriff=keiner, zauber=none,
-  zauberMore=none, zauberMMore=none, zauberArtig=none,
-  zauberArtigMore=none, zauberArtigMMore=none, zauberEW=0,
+  St=\textstar, Gw=01, B=\textstar, MW=\empty,
+  abwehr=10, resistenz=10/10/10, angriff=keiner, zauber=\empty,
+  zauberMore=\empty, zauberMMore=\empty, zauberArtig=\empty,
+  zauberArtigMore=\empty, zauberArtigMMore=\empty, zauberEW=0,
   zauberMoreEW=0, zauberMMoreEW=0, zauberArtigEW=0,
-  zauberArtigMoreEW=0, zauberArtigMMoreEW=0, bes=none, vorkommen=none,
-  energy=0, initiative=none,raufen=none,bestcategory=best }{}
+  zauberArtigMoreEW=0, zauberArtigMMoreEW=0, bes=\empty, vorkommen=\empty,
+  energy=0, initiative=\empty,raufen=\empty,bestcategory=best }{}
 %    \end{macrocode}
 %
 % \begin{macro}{\bestiarium}
@@ -2459,20 +2459,20 @@ Beschwörung~%
 %    \end{macrocode}
 % Ein Namenszusatz, der über |add| gesetzt wurde, folgt mit einem Komma abgetrennt.
 %    \begin{macrocode}
-\ifdefstring{\bestAdd}{none}%
+\ifdefstring{\bestAdd}{\empty}%
            {}%
            {\textbf{,\,\bestAdd}}%
 %    \end{macrocode}
 % Eine Kreaturenvariante, die mit |variant| definiert wurde, folgt mit Komma getrennt und in normaler Wichtung.
 %    \begin{macrocode}
-\ifdefstring{\bestVariant}{none}%
+\ifdefstring{\bestVariant}{\empty}%
            {}%
            {,\,\bestVariant}%
 %    \end{macrocode}
 % Der mit |mode| deklarierte Modus der Kreatur folgt etwas abgesetzt.
 %    \begin{macrocode}
 ~%
-\ifdefstring{\bestModus}{none}%
+\ifdefstring{\bestModus}{\empty}%
            {}
            {\bestModus~}% 
 %    \end{macrocode}
@@ -2481,7 +2481,7 @@ Beschwörung~%
 % mit einem Gedankenstrich abgesetzt die über |size| definierte Größe.
 %    \begin{macrocode}
 (%
-\ifdefstring{\bestTyp}{none}%
+\ifdefstring{\bestTyp}{\empty}%
            {}%
            {\bestTyp~}%
 Grad \bestGrad%
@@ -2498,7 +2498,7 @@ Grad \bestGrad%
 % Beschriftungen fett gesetzt, für den Moralwert das \glqq
 % +\grqq{}-Zeichen automatisch eingefügt.
 %    \begin{macrocode}
-\textbf{LP} \bestLP \> \textbf{AP} \bestAP \> \ifdefstring{\bestMW}{none}{}{MW+\bestMW}\> EP \bestEP\\
+\textbf{LP} \bestLP \> \textbf{AP} \bestAP \> \ifdefstring{\bestMW}{\empty}{}{MW+\bestMW}\> EP \bestEP\\
 %    \end{macrocode}
 % Es folgen Gewandtheit |Gw|, Stärke |St|, Bewegungsweite |B| und Rüstungsklasse |RK|, letztere in Fettdruck.
 %    \begin{macrocode}
@@ -2518,11 +2518,11 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
 %    \end{macrocode}
 % Falls gewünscht wird der Eintrag für \textit{Raufen} automatisch aus dem Wert |raufen| generiert.
 %    \begin{macrocode}
-\ifdefstring{\bestRaufen}{none}{}{ -- Raufen+\bestRaufen}%
+\ifdefstring{\bestRaufen}{\empty}{}{ -- Raufen+\bestRaufen}%
 %    \end{macrocode}
 % An dieser Stelle kann auch die Initiative |initiative| abgedruckt werden.
 %    \begin{macrocode}
-\ifdefstring{\bestInitiative}{none}{}{ -- \textsc{Initiative}+\bestInitiative}%
+\ifdefstring{\bestInitiative}{\empty}{}{ -- \textsc{Initiative}+\bestInitiative}%
 \par
 %    \end{macrocode}
 % Die Besonderheiten |bes| der Kreatur werden als entsprechend
@@ -2530,9 +2530,9 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
 % wird ein Eintrag für die Aura |aura| generiert, wobei die
 % Beschriftung in fetten Kapitälchen erfolgt.
 %    \begin{macrocode}
-\ifdefstring{\bestBes}{none}%
-           {\ifdefstring{\bestAura}{none}{}{\textbf{\textsc{Aura:}} \bestAura\par}}%
-           {\textbf{Bes.:} \bestBes \ifdefstring{\bestAura}{none}{}{ \optendash \textbf{\textsc{Aura:} \bestAura}}\par }%
+\ifdefstring{\bestBes}{\empty}%
+           {\ifdefstring{\bestAura}{\empty}{}{\textbf{\textsc{Aura:}} \bestAura\par}}%
+           {\textbf{Bes.:} \bestBes \ifdefstring{\bestAura}{\empty}{}{ \optendash \textbf{\textsc{Aura:} \bestAura}}\par }%
 %    \end{macrocode}
 % Die Zauberfertigkeiten |zauber| der Kreatur werden als mit
 % \textbf{Zaubern+|zauberEW|:} überschriebener Absatz mit hängendem
@@ -2541,28 +2541,28 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
 % |zauberArtig| mit |zauberArtigEW|, |zauberArtigMore| mit
 % |zauberArtigMoreEW| und |zauberArtigMMore| mit |zauberArtigMMoreEW|.
 %    \begin{macrocode}
-\ifdefstring{\bestZauber}{none}%
+\ifdefstring{\bestZauber}{\empty}%
            {}%
            {\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}\par}%
-\ifdefstring{\bestZauberMore}{none}%
+\ifdefstring{\bestZauberMore}{\empty}%
            {}%
            {\textbf{Zaubern+\bestZauberMoreEW:} \textit{\bestZauberMore}\par}%
-\ifdefstring{\bestZauberMMore}{none}%
+\ifdefstring{\bestZauberMMore}{\empty}%
            {}%
            {\textbf{Zaubern+\bestZauberMMoreEW:} \textit{\bestZauberMMore}\par}%
-\ifdefstring{\bestZauberArtig}{none}%
+\ifdefstring{\bestZauberArtig}{\empty}%
            {}%
            {\textbf{\guillemotright Zaubern+\bestZauberArtigEW\guillemotleft:} \textit{\bestZauberArtig}\par}%
-\ifdefstring{\bestZauberArtigMore}{none}%
+\ifdefstring{\bestZauberArtigMore}{\empty}%
            {}%
            {\textbf{\guillemotright Zaubern+\bestZauberArtigMoreEW\guillemotleft:} \textit{\bestZauberArtigMore}\par}%
-\ifdefstring{\bestZauberArtigMMore}{none}%
+\ifdefstring{\bestZauberArtigMMore}{\empty}%
            {}%
            {\textbf{\guillemotright Zaubern+\bestZauberArtigMMoreEW\guillemotleft:} \textit{\bestZauberArtigMMore}\par}%
 %    \end{macrocode}
 % Das Vorkommen der Kreatur letztlich wird in ähnlichem Stil mit hängendem Einzug erzeugt.           
 %    \begin{macrocode}
-\ifdefstring{\bestVork}{none}%
+\ifdefstring{\bestVork}{\empty}%
            {}%
            {\textbf{Vorkommen:} \bestVork}%
 %    \end{macrocode}
@@ -2606,11 +2606,11 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
 \begin{spacing}{0.5}%
 \noindent \textbf{\bestName}%
 \ifdefstring{\bestMag}{true}{~\imgMagisch}{}%
-\ifdefstring{\bestAdd}{none}{}{\textbf{,\,\bestAdd}}%
-\ifdefstring{\bestVariant}{none}{}{,\,\bestVariant}%
-~\ifdefstring{\bestModus}{none}{}{\bestModus~}%
+\ifdefstring{\bestAdd}{\empty}{}{\textbf{,\,\bestAdd}}%
+\ifdefstring{\bestVariant}{\empty}{}{,\,\bestVariant}%
+~\ifdefstring{\bestModus}{\empty}{}{\bestModus~}%
 (%
-\ifdefstring{\bestTyp}{none}{}{\bestTyp~}%
+\ifdefstring{\bestTyp}{\empty}{}{\bestTyp~}%
 Grad \bestGrad%
 \ifdefstring{\bestSize}{normal}{}{ -- \bestSize}%
 )\par%
@@ -2618,21 +2618,21 @@ Grad \bestGrad%
 \setlength{\leftskip}{1ex}
 \setlength{\parindent}{-1ex}
 \textbf{Angriff:} \bestAngriff%
-\ifdefstring{\bestRaufen}{none}{}{ -- Raufen+\bestRaufen}%
-\ifdefstring{\bestInitiative}{none}{}{ -- \textsc{Initiative}+\bestInitiative}%
+\ifdefstring{\bestRaufen}{\empty}{}{ -- Raufen+\bestRaufen}%
+\ifdefstring{\bestInitiative}{\empty}{}{ -- \textsc{Initiative}+\bestInitiative}%
 ~-- \textsc{Abwehr}+\bestAbwehr, \textsc{Resistenz}+\bestResistenz%
-\ifdefstring{\bestBes}{none}{%
-  \ifdefstring{\bestAura}{none}{}{\par\textsc{Aura:} \bestAura}%
+\ifdefstring{\bestBes}{\empty}{%
+  \ifdefstring{\bestAura}{\empty}{}{\par\textsc{Aura:} \bestAura}%
 }{%
   \par\textbf{Bes.:} \bestBes%
-  \ifdefstring{\bestAura}{none}{}{ -- \textsc{Aura:} \bestAura}%
+  \ifdefstring{\bestAura}{\empty}{}{ -- \textsc{Aura:} \bestAura}%
 }%
-\ifdefstring{\bestZauber}{none}{}{\par\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}}%
-\ifdefstring{\bestZauberMore}{none}{}{\par\textbf{Zaubern+\bestZauberMoreEW:} \textit{\bestZauberMore}}%
-\ifdefstring{\bestZauberMMore}{none}{}{\par\textbf{Zaubern+\bestZauberMMoreEW:} \textit{\bestZauberMMore}}%
-\ifdefstring{\bestZauberArtig}{none}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigEW\guillemotleft:} \textit{\bestZauberArtig}}%
-\ifdefstring{\bestZauberArtigMore}{none}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigMoreEW\guillemotleft:} \textit{\bestZauberArtigMore}}%
-\ifdefstring{\bestZauberArtigMMore}{none}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigMMoreEW\guillemotleft:} \textit{\bestZauberArtigMMore}}%
+\ifdefstring{\bestZauber}{\empty}{}{\par\textbf{Zaubern+\bestZauberEW:} \textit{\bestZauber}}%
+\ifdefstring{\bestZauberMore}{\empty}{}{\par\textbf{Zaubern+\bestZauberMoreEW:} \textit{\bestZauberMore}}%
+\ifdefstring{\bestZauberMMore}{\empty}{}{\par\textbf{Zaubern+\bestZauberMMoreEW:} \textit{\bestZauberMMore}}%
+\ifdefstring{\bestZauberArtig}{\empty}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigEW\guillemotleft:} \textit{\bestZauberArtig}}%
+\ifdefstring{\bestZauberArtigMore}{\empty}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigMoreEW\guillemotleft:} \textit{\bestZauberArtigMore}}%
+\ifdefstring{\bestZauberArtigMMore}{\empty}{}{\par\textbf{\guillemotright Zaubern+\bestZauberArtigMMoreEW\guillemotleft:} \textit{\bestZauberArtigMMore}}%
 \end{spacing}}\par%
 \vspace{0.5em plus 0.5em minus 0.2em}%
 \pagebreak[3]
@@ -2709,8 +2709,8 @@ Grad \bestGrad%
     ~-- \textsc{Abwehr}+\personAbwehr, \textsc{Resistenz}+\personResistenz%
   }
 }
-\ifdefstring{\personBesonderheiten}{none}{%
-  \ifdefstring{\personAura}{none}{}{\par\textsc{Aura:} \personAura}%
+\ifdefstring{\personBesonderheiten}{\empty}{%
+  \ifdefstring{\personAura}{\empty}{}{\par\textsc{Aura:} \personAura}%
 }{}%
 \ifdefstring{\personFertigkeiten}{}{}{\textit{\personFertigkeiten}\par}%
 \ifdefstring{\personZauber}{}%
@@ -2718,7 +2718,7 @@ Grad \bestGrad%
             {\textbf{Zaubern+\personZauberEW:} \textit{\personZauber}\par}%
 \ifdefstring{\personBesonderheiten}{}{}{
   \par\textbf{Bes.:} \personBesonderheiten%
-  \ifdefstring{\personAura}{none}{}{-- \textsc{Aura:} \personAura}%
+  \ifdefstring{\personAura}{\empty}{}{-- \textsc{Aura:} \personAura}%
 }%
 \ifdefstring{\personBesitz}{}{}{\textbf{Besitz:} \personBesitz}\par%
 \end{spacing}%
