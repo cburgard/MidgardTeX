@@ -916,6 +916,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % \StopEventually{\PrintIndex} \clearpage \section{Implementierung} \begin{macrocode}
 \RequirePackage{etex}
 \RequirePackage{setspace}
+\RequirePackage{environ}
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
 \RequirePackage{graphicx}
@@ -1185,6 +1186,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % verwendet. Um der Bequemlichkeit willen wollen wir auch das Einfügen
 % dieser Sonderzeichen direkt in den \LaTeX Quellcode erlauben.
 %    \begin{macrocode}
+\ifpdftex
 \@ifpackageloaded{inputenc}{%
 \DeclareUnicodeCharacter{00B0}{\ensuremath{^\circ}}
 \DeclareUnicodeCharacter{00B2}{\ensuremath{^2}}
@@ -1201,6 +1203,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
 \DeclareUnicodeCharacter{00AD}{\ignorespaces}
 }{}
+\fi
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\hyphenation}
@@ -1403,13 +1406,14 @@ ABENTEUER
 \define@key{fertigkeit}{A}{\def\fertigkeitA{#1}}
 \define@key{fertigkeit}{key}{\def\fertigkeitKey{#1}}
 \define@key{fertigkeit}{anmerkung}{\def\fertigkeitAnmerkung{#1}}
+\define@key{fertigkeit}{steigertabelle}{\def\fertigkeitSteigern{#1}}
 %    \end{macrocode}
 % Wir definieren zusätzlich \textit{default}-Werte für die Variablen,
 % für den Fall, dass sie nicht aufgerufen werden.
 %    \begin{macrocode}
 \presetkeys{fertigkeit}{name=Fähigkeit, entry=\empty, kategorie=\empty, leitAtt=\empty, 
   anforderungen=\empty, EW=\empty, ungelernt=\empty, spielbeginn=\empty, maximum=\empty, FP=hide, 
-  G=niemand, S=niemand, A=niemand, key=ability, anmerkung=\relax}{}
+  G=niemand, S=niemand, A=niemand, key=ability, anmerkung=\relax, steigertabelle=\empty}{}
 %    \end{macrocode}
 % Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
 % Seitenumbruch, um unschöne Umbrüche im Layout selbst zu vermindern.
@@ -1489,15 +1493,18 @@ ABENTEUER
 %
 % \begin{macro}{steigertabelle}
 %    \begin{macrocode}
-\newenvironment{steigertabelle}[1]{%
+\NewEnviron{steigertabelle}[1]{%
   \begin{center}
 \begin{minipage}{.8\linewidth}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
-  \setkeys{fertigkeit}{#1}%
-  \textbf{\fertigkeitName+\fertigkeitEW}\par
+\setkeys{fertigkeit}{#1, steigertabelle={\BODY}, key=abilityimprove}%
+\textbf{\fertigkeitName+\fertigkeitEW}\par
+  \expandafter\ifcsdef{\fertigkeitKey exportvalues}{%
+    \ifdatablist{\adddataline{\fertigkeitKey}{\csname \fertigkeitKey exportvalues\endcsname}}%
+  }{}
   \hspace{1em}\begin{tabular}{c >{\bfseries}r}
-}{%
+    \BODY
   \end{tabular}\par
   \begin{description}[font=\normalfont\itshape,noitemsep,nolistsep]
     \ifdefstring{\fertigkeitG}{niemand}{}{\item[Grund:]    \fertigkeitG}
@@ -1505,7 +1512,7 @@ ABENTEUER
     \ifdefstring{\fertigkeitA}{niemand}{}{\item[Ausnahme:]    \fertigkeitA}
   \end{description}
 \end{minipage}
-\end{center}
+  \end{center}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2386,18 +2393,21 @@ Beschwörung~%
 \define@key{best}{zauberArtigMoreEW}  {\def\bestZauberArtigMoreEW {#1}}
 \define@key{best}{zauberArtigMMore}   {\def\bestZauberArtigMMore {#1}}
 \define@key{best}{zauberArtigMMoreEW} {\def\bestZauberArtigMMoreEW {#1}}
+\define@key{best}{kido}             {\def\bestKido {#1}}
+\define@key{best}{kidoEW}           {\def\bestKidoEW {#1}}
 \define@key{best}{bestcategory}       {\def\bestKey{#1}}
 
 \presetkeys{best}{ name=Wesen, grad=0, modus=\empty, typ=\empty,
-  mag=false, aura=\empty, size=normal, addendum=\empty, variant=\empty,
-  LP=\textstar, AP=\textstar, RK=\textstar R, EP=0, In=t01, 
-  St=\textstar, Gw=01, B=\textstar, MW=\empty,
-  abwehr=10, resistenz=10/10/10, angriff=keiner, zauber=\empty,
+  mag=false, aura=\empty, size=normal, addendum=\empty,
+  variant=\empty, LP=\textstar, AP=\textstar, RK=\textstar R, EP=0,
+  In=t01, St=\textstar, Gw=01, B=\textstar, MW=\empty, abwehr=10,
+  resistenz=10/10/10, angriff=keiner, zauber=\empty,
   zauberMore=\empty, zauberMMore=\empty, zauberArtig=\empty,
   zauberArtigMore=\empty, zauberArtigMMore=\empty, zauberEW=0,
   zauberMoreEW=0, zauberMMoreEW=0, zauberArtigEW=0,
-  zauberArtigMoreEW=0, zauberArtigMMoreEW=0, bes=\empty, vorkommen=\empty,
-  energy=0, initiative=\empty,raufen=\empty,bestcategory=best }{}
+  zauberArtigMoreEW=0, zauberArtigMMoreEW=0, kidoEW=0, kido=\empty,
+  bes=\empty, vorkommen=\empty, energy=0,
+  initiative=\empty,raufen=\empty,bestcategory=best }{}
 %    \end{macrocode}
 %
 % \begin{macro}{\bestiarium}
@@ -2559,6 +2569,9 @@ Abwehr+\bestAbwehr \> Resistenz+\bestResistenz \ifdefstring{\bestEnergie}{0}{}{\
 \ifdefstring{\bestZauberArtigMMore}{\empty}%
            {}%
            {\textbf{\guillemotright Zaubern+\bestZauberArtigMMoreEW\guillemotleft:} \textit{\bestZauberArtigMMore}\par}%
+\ifdefstring{\bestKido}{\empty}%
+           {}%
+           {\textbf{KiDo+\bestKidoEW:} \textit{\bestKido}\par}%           
 %    \end{macrocode}
 % Das Vorkommen der Kreatur letztlich wird in ähnlichem Stil mit hängendem Einzug erzeugt.           
 %    \begin{macrocode}
