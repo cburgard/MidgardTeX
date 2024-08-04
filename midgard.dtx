@@ -1448,7 +1448,7 @@ IDGAR
   \addcontentsline{toc}{\midgard@fertigkeit@tocLevel}{\fertigkeitEntry}%
 }%
 \expandnext{\midgard@htarget}{\fertigkeitName}\textbf{\fertigkeitName}%
-\ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{\empty}} }{}{+\fertigkeitEW}%
+\ifboolexpr{ test {\ifdefstring{\fertigkeitEW}{\empty}} }{}{+\fertigkeitEW}%
 \ifdefstring{\fertigkeitKategorie}{\empty}{}{~(\fertigkeitKategorie)}%
 \ifdefstring{\fertigkeitAnmerkung}{\relax}{}{ \optendash{} \textit{\fertigkeitAnmerkung}}%
 \ifboolexpr{ test {\ifdefstring{\fertigkeitFP}{hide}} or test {\ifdefstring{\fertigkeitEW}{\empty}} }{%
