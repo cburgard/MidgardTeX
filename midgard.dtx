@@ -1419,6 +1419,7 @@ IDGAR
 % Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
 % Seitenumbruch, um unschöne Umbrüche im Layout selbst zu vermindern.
 %    \begin{macrocode}
+\newcommand*\fertigkeitsref[2][]{{\itshape\ifstrempty{#1}{\protect\midgard@hlink{#2}{#2}}{\protect\midgard@hlink{#1}{#2}}}}%%
 \newcommand\midgard@fertigkeit@customcode\relax%
 \newcommand*\fertigkeit[2][]{%
 \vspace{0.5em plus 0.5em}
@@ -1669,7 +1670,6 @@ IDGAR
 %   Mit dem |\zauberref|-Kommando erlauben wir einfaches referenzieren auf Zauber.
 %   \begin{macrocode}
 \newcommand*\zauberref[2][]{{\itshape\ifstrempty{#1}{\protect\midgard@hlink{#2}{#2}}{\protect\midgard@hlink{#1}{#2}}}}%%
-\newcommand*\fertigkeitsref[2][]{{\itshape\ifstrempty{#1}{\protect\midgard@hlink{#2}{#2}}{\protect\midgard@hlink{#1}{#2}}}}%%
 %   \end{macrocode}
 % \end{macro}
 % \begin{macro}{\zauber}
@@ -2352,6 +2352,67 @@ Beschwörung~%
 }
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsection{Bestiarium}
+% \begin{macro}{\kido}
+%   Definiert die Umgebung für das Layout neuer Kido-Techniken. 
+%   Zunächst werden lokale Kommandos innerhalb des |\kido|-Kommandos definiert, 
+%   um auf die Werte der einzelnen Felder zuzugreifen.
+%    \begin{macrocode}
+\setzeGliederungsEbene{kido}{subsubsection}
+\define@key{kido}{name}{\def\kidoname{#1}}
+\define@key{kido}{subtitle}{\def\kidosubtitle{#1}}
+\define@key{kido}{type}{\def\kidotype{#1}}
+\define@key{kido}{art}{\def\kidoart{#1}}
+\define@key{kido}{stufe}{\def\kidostufe{#1}}
+\define@key{kido}{apRot}{\def\kidoapRot{#1}}
+\define@key{kido}{apGelb}{\def\kidoapGelb{#1}}
+\define@key{kido}{apWeiss}{\def\kidoapWeiss{#1}}
+\define@key{kido}{fpRot}{\def\kidofpRot{#1}}
+\define@key{kido}{fpGelb}{\def\kidofpGelb{#1}}
+\define@key{kido}{fpWeiss}{\def\kidofpWeiss{#1}}
+\define@key{kido}{kidotype}{\def\kidoKey{#1}}
+%    \end{macrocode}
+% Wir definieren \textit{default}-Werte für die Variablen.
+%    \begin{macrocode}
+\presetkeys{kido}{name=Kido, subtitle=\empty, type=Attackieren, art=\empty, stufe=\empty, apRot=-, apGelb=-, apWeiss=-, fpRot=-, fpGelb=-, fpWeiss=-, kidotype=kido}{}
+%    \end{macrocode}
+% Das |kido|-Kommando wird eingeleitet mit etwas vertikalem Platz,
+% der nach Bedarf (z.\,B.~am Seitenanfang) nicht dargestellt
+% wird. Anschließend wird der Befehl |setkeys| aufgerufen, um auf die
+% zuvor definierten Kommandos zurückgreifen zu können.
+%    \begin{macrocode}
+\newcommand{\printkidocolor}[3]{%
+  \ifthenelse{\equal{#1}{-} \and \equal{#2}{-}}{-}{#3}%
+}
+\newcommand{\printkidocolors}{%
+  \printkidocolor{\kidoapRot}{\kidofpRot}{rot}/%
+  \printkidocolor{\kidoapGelb}{\kidofpGelb}{gelb}/%
+  \printkidocolor{\kidoapWeiss}{\kidofpWeiss}{weiß}%
+}
+\newcommand*\kidoref[2][]{{\itshape\ifstrempty{#1}{\protect\midgard@hlink{#2}{#2}}{\protect\midgard@hlink{#1}{#2}}}}%%
+\newcommand*\kido[2][]{%
+  \par\pagebreak[2]\addvspace{1em}
+\begingroup
+\setkeys{kido}{#1}{
+\phantomsection%
+\addcontentsline{toc}{\midgard@kido@tocLevel}{\kidoname{} (\kidosubtitle)}
+\expandafter\ifcsdef{\kidoKey exportvalues}{%
+  \ifdatablist{\adddataline{\kidoKey}{\csname \kidoKey exportvalues\endcsname}}%
+}{}%
+\begin{samepage}
+\noindent\expandnext{\midgard@htarget}{\kidoname}{\textbf{\kidoname}} (\kidosubtitle) \hfill \kidotype\\
+\noindent\kidoart/\textbf{\kidostufe} \hfill \printkidocolors \hfill \kidoapRot/\kidoapGelb/\kidoapWeiss~AP \hfill \kidofpRot/\kidofpGelb/\kidofpWeiss~FP\par
+\end{samepage}
+\vspace{1.0\midgardskip}\par
+}\endgroup%
+\@afterindentfalse%
+\@afterheading%
+}%
+%    \end{macrocode}
+%\end{macro}
+%
+%
 %
 % \subsection{Bestiarium}
 %
