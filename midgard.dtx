@@ -963,7 +963,9 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % dem \textsc{DF4} und dem \textsc{EnergieSystem}.
 %    \begin{macrocode}
 \newtoggle{useEnergy}
+\newtoggle{useWaehrungsReform}
 \newtoggle{useInitiative}
+\togglefalse{useWaehrungsReform}%
 \newcommand{\EnergieSystem}{%
   \typeout{package MIDGARD info: Verwende jetzt das Energie-System}%
   \global\toggletrue{useEnergy}%
@@ -988,6 +990,13 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 % sollte das |versions|-Paket zurate gezogen werden.
 %    \begin{macrocode}
 \newcommand{\EnergieOrDFR}[2]{\iftoggle{useEnergy}{#1}{#2}}
+%    \end{macrocode}
+%\end{macro}
+%\begin{macro}{\WaehrungsReformOrStandard} 
+% Mit diesem Kommando können kurze Textpassagen zwischen zwei Regelversionen
+% ein und desselben Dokumentes ausgetauscht werden. 
+%    \begin{macrocode}
+\newcommand{\WaehrungsReformOrStandard}[2]{\iftoggle{useWaehrungsReform}{#1}{#2}}
 %    \end{macrocode}
 %\end{macro}
 %
