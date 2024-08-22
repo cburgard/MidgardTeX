@@ -920,8 +920,6 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
 \RequirePackage{graphicx}
-\RequirePackage{numprint}
-\npthousandsep{\,}
 \RequirePackage[framemethod=tikz]{mdframed}
 \usetikzlibrary{shadows}
 \RequirePackage{longtable}
@@ -1368,12 +1366,18 @@ IDGAR
             {\iquo{\irem{#1}{\midgard@CopperPerSilver*\midgard@SilverPerGold}}{\midgard@CopperPerSilver}}% Silver pieces
             {\irem{\irem{#1}{\midgard@CopperPerSilver*\midgard@SilverPerGold}}{\midgard@CopperPerSilver}}% Copper pieces
 }
+
+\newcommand\thousandsep[1]{\expandafter\@thousandsep\the\numexpr#1\relax}
+\newcommand\@thousandsep[1]{\ifnum#1<1000 \number#1\else
+\@thousandsep{\numexpr#1/1000\relax}\,\@thousandsep@format{\number\numexpr#1-\numexpr#1/1000*1000\relax}\fi}
+\newcommand\@thousandsep@format[1]{\ifnum#1<100 0\fi\ifnum#1<10 0\fi#1}
+
 \newcommand{\printgold}[3]{% Prints GP/SP/CP
   % #1 = number of gold pieces
   % #2 = number of silver pieces
   % #3 = number of copper pieces
   \ifnum #1 > 0 
-    \numprint{#1}\,\goldAlias
+    \thousandsep{#1}\,\goldAlias
   \fi
   \ifnum \numexpr #1*#2 > 0 
     \thinspace%
@@ -1644,6 +1648,14 @@ IDGAR
 \newcommand\imgHolz    {\includegraphics[height=0.7em]{pics/wood}}
 \newcommand\imgMetall  {\includegraphics[height=0.7em]{pics/metal}}
 \newcommand\imgMagan   {\includegraphics[height=0.7em]{pics/magic}}
+\newcommand\imgBeherrschen{\includegraphics[width=.8em]{pics/placeholder.jpg}}
+\newcommand\imgBewegen{\includegraphics[width=.8em]{pics/placeholder.jpg}}
+\newcommand\imgErkennen{\includegraphics[width=.8em]{pics/placeholder.jpg}}
+\newcommand\imgErschaffen{\includegraphics[width=.8em]{pics/placeholder.jpg}}
+\newcommand\imgVeraendern{\includegraphics[width=.8em]{pics/placeholder.jpg}}
+\newcommand\imgVerwandeln{\includegraphics[width=.8em]{pics/placeholder.jpg}}
+\newcommand\imgZerstoeren{\includegraphics[width=.8em]{pics/placeholder.jpg}}
+\newcommand\imgschwarzmagisch{\includegraphics[width=.8em]{pics/placeholder.jpg}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\zaubervariante}
