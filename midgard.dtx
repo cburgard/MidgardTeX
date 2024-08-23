@@ -2160,6 +2160,7 @@ Beschwörung~%
 %    \begin{macrocode}
 \setzeGliederungsEbene{zaubermittel}{subsubsection}
 \define@key{zaubermittel}{name}{\def\zaubermittelName{#1}}
+\define@key{zaubermittel}{key}{\def\zaubermittelKey{#1}}
 \define@key{zaubermittel}{entry}{\def\zaubermittelEntry{#1}}
 \define@key{zaubermittel}{voraussetzungen}{\def\zaubermittelVor{#1}}
 \define@key{zaubermittel}{stufe}{\def\zaubermittelStufe{#1}}
@@ -2184,7 +2185,7 @@ Beschwörung~%
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
 \presetkeys{zaubermittel}{voraussetzungen=keine,stufe=1,zeitaufwand=keine,
-  FP=keine,G=niemand,S=niemand,A=niemand,entry=\empty,kosten=--,zeitaufwand=--,
+  FP=keine,G=niemand,S=niemand,A=niemand,entry=\empty,kosten=--,zeitaufwand=--,key=workshop,
   FP1=0,FP2=0,FP3=0,FP4=0,FP5=0,FP6=0,%
 }{}
 %    \end{macrocode}
@@ -2208,6 +2209,9 @@ Beschwörung~%
 \noindent{\bfseries\zaubermittelName} -- Stufe \zaubermittelStufe%
 \ifdefstring{\zaubermittelVor}{keine}{}{\\\textit{\zaubermittelVor}}%
 \par%
+\expandafter\ifcsdef{\zaubermittelKey exportvalues}{%
+  \ifdatablist{\adddataline{\zaubermittelKey}{\csname \zaubermittelKey exportvalues\endcsname}}%
+}{}%
 \ifdefstrequal{\zaubermittelZeit}{\zaubermittelKosten}{}{
   \vspace{0.5em}%
   \begin{spacelesstabbing}%
@@ -2269,6 +2273,12 @@ Beschwörung~%
 %   das Kommand |\zauberwerkstatt| als identisch mit |\zaubermittel|.
 %    \begin{macrocode}
 \let\zauberwerkstatt\zaubermittel
+\newcommand*\thaumaturgie[2][]{%
+\zauberwerkstatt[%
+  key=thaumaturgy,%
+  #1%
+]{#2}%
+}
 %    \end{macrocode}
 % \end{macro}
 %
