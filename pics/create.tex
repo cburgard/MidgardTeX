@@ -1,0 +1,35 @@
+\documentclass[border=1mm,tikz]{standalone}
+\usetikzlibrary{calc}
+\begin{document}
+\begin{tikzpicture}[]
+
+% Draw the central circle in 6 segments, alternating front and back
+  
+  \draw[line width=3mm, white] (90:1.5) arc[start angle=90, end angle=150, radius=1.5];  % Second segment behind
+  \draw[line width=2mm] (90:1.5) arc (90:150:1.5);
+  
+  \draw[line width=3mm, white] (210:1.5) arc[start angle=210, end angle=270, radius=1.5]; % Fourth segment behind
+  \draw[line width=2mm] (210:1.5) arc (210:270:1.5);
+   
+  \draw[line width=3mm, white] (330:1.5) arc[start angle=330, end angle=390, radius=1.5]; % Sixth segment behind
+  \draw[line width=2mm] (330:1.5) arc (330:390:1.5);
+  
+  % Draw the central dot
+\filldraw[black] (0,0) circle(0.2);
+
+\draw[line width=3mm, white] (90:2) -- (210:2) -- (330:2) -- cycle;
+\draw[line width=2mm] (90:2) -- (210:2) -- (330:2) -- cycle;
+
+  \draw[line width=3mm, white] (30:1.5) arc[start angle=30, end angle=90, radius=1.5];   % First segment in front
+  \draw[line width=2mm] (30:1.5) arc (30:90:1.5);
+
+    \draw[line width=3mm, white] (150:1.5) arc[start angle=150, end angle=210, radius=1.5]; % Third segment in front
+  \draw[line width=2mm] (150:1.5) arc (150:210:1.5);
+  
+  \draw[line width=3mm, white] (270:1.5) arc[start angle=270, end angle=330, radius=1.5]; % Fifth segment in front
+  \draw[line width=2mm] (270:1.5) arc (270:330:1.5);
+
+
+
+\end{tikzpicture}
+\end{document}
