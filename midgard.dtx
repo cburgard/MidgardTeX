@@ -963,6 +963,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \newtoggle{useEnergy}
 \newtoggle{useWaehrungsReform}
 \newtoggle{useInitiative}
+\newtoggle{showWeaponFP}
 \togglefalse{useWaehrungsReform}%
 \newcommand{\EnergieSystem}{%
   \typeout{package MIDGARD info: Verwende jetzt das Energie-System}%
@@ -1602,13 +1603,13 @@ IDGAR
   \noindent%
   \ifdefstring{\weaponG}{niemand}%
   {niemand }%
-  {\textbf{\themidgard@GrundKosten :} \nolinebreak \weaponG} -- %
+  {\textbf{\iftoggle{showWeaponFP}{\themidgard@GrundKosten}{Grund}:} \nolinebreak \weaponG} -- %
   \ifdefstring{\weaponS}{niemand}%
   {niemand }%
-  {\textbf{\themidgard@StandardKosten :} \nolinebreak \weaponS} -- %
+  {\textbf{\iftoggle{showWeaponFP}{\themidgard@StandardKosten}{Standard}:} \nolinebreak \weaponS} -- %
   \ifdefstring{\weaponA}{niemand}%
   {niemand }%
-  {\textbf{\themidgard@AusnahmeKosten :} \nolinebreak \weaponA}\par
+  {\textbf{\iftoggle{showWeaponFP}{\themidgard@AusnahmeKosten}{Ausnahme}:} \nolinebreak \weaponA}\par
 }
 \end{small}
 \expandafter\ifcsdef{\weaponKey exportvalues}{%
@@ -1616,6 +1617,69 @@ IDGAR
 }{}%
 }
 \vspace{0.2em plus 0.3em minus 0.1em}
+\@afterindentfalse%
+\@afterheading%
+}
+% \begin{macro}{\waffengrundkenntnisse}
+%   Grundkenntnisse für Waffen werden meistens nur in tabellarischer Form gezeigt.
+%    \begin{macrocode}
+\define@key{weaponbasics}{name}{\def\weaponbasicsName{#1}}
+\define@key{weaponbasics}{entry}{\def\weaponbasicsEntry{#1}}
+\define@key{weaponbasics}{FP}{\def\weaponbasicsFP{#1}}
+\define@key{weaponbasics}{G}{\def\weaponbasicsG{#1}}
+\define@key{weaponbasics}{S}{\def\weaponbasicsS{#1}}
+\define@key{weaponbasics}{A}{\def\weaponbasicsA{#1}}
+\define@key{weaponbasics}{key}{\def\weaponbasicsKey{#1}}
+%    \end{macrocode}
+% Wir definieren \textit{default}-Werte für die Variablen.
+%    \begin{macrocode}
+\presetkeys{weaponbasics}{name=Waffengattung, entry=\empty, FP=hide, G=niemand, S=niemand, A=niemand, key=weaponbasics}{}
+%    \end{macrocode}
+% Das tatsächliche Kommando beginnt mit der Empfehlung zu einem
+% Seitenumbruch, um unschöne Umbrüche im Layout selbst zu vermindern.
+%    \begin{macrocode}
+\newcommand*\waffengrundkenntnisse[2][]{%
+\pagebreak[2]
+%    \end{macrocode}
+% Anschließend wird der Befehl |setkeys| aufgerufen, um auf die zuvor
+% definierten Kommandos zurückgreifen zu können.
+%    \begin{macrocode}
+\setkeys{weaponbasics}{#1}{
+%    \end{macrocode}
+% Wenn |\weaponFP| \textit{hide} ist, müssen die FP nicht ausgelesen
+% werden. Andernfalls werden Counter für Standard- und Ausnahmekosten
+% definiert und nach der für Fähigkeiten üblichen Formel aus den
+% Standardkosten berechnet.
+%    \begin{macrocode}
+\ifdefstring{\weaponbasicsFP}{hide}{}{
+  \setcounter{midgard@StandardKosten}{\weaponbasicsFP}%
+  \setcounter{midgard@GrundKosten}{\value{midgard@StandardKosten}/2}%
+  \setcounter{midgard@AusnahmeKosten}{\value{midgard@StandardKosten}*2}%
+}%
+\phantomsection%
+\ifdefstring{\weaponbasicsEntry}{\empty}{%
+  \addcontentsline{toc}{\midgard@fertigkeit@tocLevel}{\weaponbasicsName}
+}{%
+  \addcontentsline{toc}{\midgard@fertigkeit@tocLevel}{\weaponbasicsEntry}
+}
+\par
+\begin{spacelesstabbing}%
+  \hspace{.4\linewidth} \= anytext\kill
+  \textbf{\weaponbasicsName} \>%
+  \ifdefstring{\weaponbasicsG}{niemand}%
+  {niemand }%
+  {\textbf{\themidgard@GrundKosten}: \nolinebreak \weaponbasicsG} -- %
+  \ifdefstring{\weaponbasicsS}{niemand}%
+  {niemand }%
+  {\textbf{\themidgard@StandardKosten}: \nolinebreak \weaponbasicsS} -- %
+  \ifdefstring{\weaponbasicsA}{niemand}%
+  {niemand }%
+  {\textbf{\themidgard@AusnahmeKosten}: \nolinebreak \weaponbasicsA}%
+\end{spacelesstabbing}
+\expandafter\ifcsdef{\weaponbasicsKey exportvalues}{%
+  \ifdatablist{\adddataline{\weaponbasicsKey}{\csname \weaponbasicsKey exportvalues\endcsname}}
+}{}%
+}
 \@afterindentfalse%
 \@afterheading%
 }
