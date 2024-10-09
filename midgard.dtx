@@ -918,6 +918,7 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \RequirePackage{setspace}
 \RequirePackage{environ}
 \RequirePackage{xkeyval}
+\RequirePackage{wasysym}
 \RequirePackage{etoolbox}
 \RequirePackage{graphicx}
 \RequirePackage[framemethod=tikz]{mdframed}
@@ -1720,13 +1721,21 @@ IDGAR
 \newcommand\imgVerwandeln {\includegraphics[height=.7em]{pics/transform}}
 \newcommand\imgZerstoeren {\includegraphics[height=.7em]{pics/destroy}}
 \newcommand\imgschwarzmagisch    {\includegraphics[height=.7em]{pics/blackmagic}}
+\let\imgSchwarzmagisch\imgschwarzmagisch
 \newcommand\imgNaheChaosebene    {\includegraphics[height=.7em]{pics/chaos-plains}}
+\let\imgDaemonisch\imgNaheChaosebene
 \newcommand\imgEbeneDerFinsternis{\includegraphics[height=.7em]{pics/plains-of-darkness}}
 \let\imgFinster\imgEbeneDerFinsternis
 \newcommand\imgBeschwoeren{\includegraphics[height=.7em]{pics/summon}}
 \newcommand\imgWundertat  {\includegraphics[height=.7em]{pics/sun}}
+\let\imgGoettlich\imgWundertat
+\newcommand\imgThaumaturgie  {\includegraphics[height=.7em]{pics/thaumagramm}}
+\let\imgThaumaturgisch\imgThaumaturgie
+\newcommand\imgBardisch{\halfnote}
 \newcommand\imgDweomer    {\includegraphics[height=.7em]{pics/triskele}}
 \newcommand\imgTotem      {\includegraphics[height=.7em]{pics/totem}}
+\newcommand\imgElementar    {\includegraphics[height=.7em]{pics/elemental-plains}}
+\newcommand\imgUrwelten    {\includegraphics[height=.7em]{pics/first-plains}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\zaubervariante}
