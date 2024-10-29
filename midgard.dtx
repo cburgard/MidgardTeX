@@ -1785,6 +1785,8 @@ IDGAR
 \define@key{zauber}{anmerkung}{\def\zauberAnmerkung{#1}}
 \define@key{zauber}{untertitel}{\def\zauberUntertitel{#1}}
 \define@key{zauber}{scroll}{\def\zauberscroll{#1}}
+\define@key{zauber}{dweomer}{\def\zauberdweomer{#1}}
+\define@key{zauber}{wundertat}{\def\zauberwundertat{#1}}
 \define@key{zauber}{th}{\def\zauberth{#1}}
 \define@key{zauber}{art}{\def\zauberart{#1}}
 \define@key{zauber}{artshort}{\def\zauberartshort{#1}}
@@ -1825,7 +1827,7 @@ IDGAR
 %    \end{macrocode}
 % Wir definieren \textit{default}-Werte für die Variablen.
 %    \begin{macrocode}
-\presetkeys{zauber}{name=Zauber, entry=\empty, scroll=true, th=\empty, kurztext={},
+\presetkeys{zauber}{name=Zauber, entry=\empty, scroll=true, dweomer=false, wundertat=false, th=\empty, kurztext={},
   anmerkung=\empty, untertitel=\empty, art=Zauber, stufe=1, spelltype=spell,
   material=\empty, matpreis=\empty, matannotation=\empty, 
   koeder=\empty, koederpreis=\empty, feld=\empty, feldpreis=\empty,
@@ -1877,6 +1879,14 @@ IDGAR
     \unraggedright\expandnext{\midgard@htarget}{\zaubername}\noindent \bfseries \large  \zaubername%
   }%
 \hfill%
+\ifdefstring{\zauberdweomer}{true}%
+           {\imgDweomer}%
+           {}%
+\hfill%
+\ifdefstring{\zauberwundertat}{true}%
+           {\imgWundertat}%
+           {}%
+\hfill%           
 \ifdefstring{\zauberscroll}{true}%
            {}%
            {\imgMagisch}%
