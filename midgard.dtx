@@ -2067,6 +2067,253 @@ IDGAR
 %\begin{macro}{\beschwoerung}
 %   Völlig analog definieren wir ein Kommando für das Layout von Beschwörungen.
 %    \begin{macrocode}
+
+\def\beschwoerung@finsternis@DefaultG{DBe\textsuperscript{f}}
+\def\beschwoerung@finsternis@DefaultS{DBe\textsuperscript{c}}
+\def\beschwoerung@finsternis@DefaultA{EBe, Hx, Ma, Mm, PC, Sc, Sw, TBe, Th, To}
+\def\beschwoerung@nekromantie@DefaultG{niemand}
+\def\beschwoerung@nekromantie@DefaultS{DBe, TBe}
+\def\beschwoerung@nekromantie@DefaultA{EBe, Hx, Ma, Mm, PC, Sc, Sw, Th, To}
+\def\beschwoerung@urwelt@DefaultG{EBe\textsuperscript{p}}
+\def\beschwoerung@urwelt@DefaultS{EBe\textsuperscript{s}}
+\def\beschwoerung@urwelt@DefaultA{DBe, De, Dr, Hl, Hx, Km, Ma, Mm, \textsc{Pri} a.~C, Sc, Sw, TBe, Th, To}
+\def\beschwoerung@elementar@DefaultG{EBe\textsuperscript{p}}
+\def\beschwoerung@elementar@DefaultS{EBe\textsuperscript{s}}
+\def\beschwoerung@elementar@DefaultA{DBe, De, Dr, Hl, Hx, Km, Nb, Fm, Km, Ma, Mm, \textsc{Pri} a.~C, Sa, Sc, Sw, TBe, Th, To}
+\def\beschwoerung@mittelwelt@DefaultG{niemand}
+\def\beschwoerung@mittelwelt@DefaultS{DBe, EBe}
+\def\beschwoerung@mittelwelt@DefaultA{De, Dr, Hl, Hx, Km, Nb, Fm, Km, Ma, Mm, \textsc{Pri}, Sa, Sc, Sw, TBe, Th, To}
+\def\beschwoerung@chaos@DefaultG{DBe\textsuperscript{c}}
+\def\beschwoerung@chaos@DefaultS{DBe\textsuperscript{f}}
+\def\beschwoerung@chaos@DefaultA{EBe, Hx, Fm, Km, Ma, Mm, PC, Sa, Sc, Sw, TBe, Th, To}
+
+\define@key{zauber}{anrufungEbene}{%
+  \edef\beschwoerungsEbene{#1}%
+  \ifcsname beschwoerung@#1@DefaultG\endcsname\def\zauberG{\csname beschwoerung@#1@DefaultG\endcsname}\fi%
+  \ifcsname beschwoerung@#1@DefaultS\endcsname\def\zauberS{\csname beschwoerung@#1@DefaultS\endcsname}\fi%
+  \ifcsname beschwoerung@#1@DefaultA\endcsname\def\zauberA{\csname beschwoerung@#1@DefaultA\endcsname}\fi% 
+  \ifdefstring{\beschwoerungsEbene}{chaos}{%
+    \def\beschwoerungsfeld{Heptagon}%
+    \def\zauberUr{dämonisch}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{mittelwelt}{%  
+    \def\beschwoerungsfeld{Hexagon}%
+    \def\zauberUr{dämonisch}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{mittelwelt}{%  
+    \def\beschwoerungsfeld{Hexagon}%
+    \def\zauberUr{schwarzmagisch}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{finsternis}{%  
+    \def\beschwoerungsfeld{Oktagon}%
+    \def\zauberUr{schwarzmagisch}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{elementar}{%  
+    \def\beschwoerungsfeld{Tetragon}%
+    \def\zauberUr{elementar}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{urwelt}{%  
+    \def\beschwoerungsfeld{Pentagon}%
+    \def\zauberUr{elementar}%
+  }{}
+}
+\define@key{zauber}{beschwoerungEbene}{%
+  \edef\beschwoerungsEbene{#1}
+  \ifcsname beschwoerung@#1@DefaultG\endcsname\def\zauberG{\csname beschwoerung@#1@DefaultG\endcsname}\fi%
+  \ifcsname beschwoerung@#1@DefaultS\endcsname\def\zauberS{\csname beschwoerung@#1@DefaultS\endcsname}\fi%
+  \ifcsname beschwoerung@#1@DefaultA\endcsname\def\zauberA{\csname beschwoerung@#1@DefaultA\endcsname}\fi%   
+  \ifdefstring{\beschwoerungsEbene}{chaos}{%
+    \def\beschwoerungsfeld{Heptagramm}%
+    \def\zauberUr{dämonisch}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{mittelwelt}{%  
+    \def\beschwoerungsfeld{Hexagramm}%
+    \def\zauberUr{dämonisch}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{nekromantie}{%  
+    \def\beschwoerungsfeld{Hexagramm}%
+    \def\zauberUr{schwarzmagisch}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{finsternis}{%  
+    \def\beschwoerungsfeld{Oktagramm}%
+    \def\zauberUr{schwarzmagisch}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{elementar}{%  
+    \def\beschwoerungsfeld{Tetragramm}%
+    \def\zauberUr{elementar}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{urwelt}{%  
+    \def\beschwoerungsfeld{Pentagramm}%
+    \def\zauberUr{elementar}%
+  }{}
+}
+\define@key{zauber}{dominierungEbene}{%
+  \edef\beschwoerungsEbene{#1}
+  \ifcsname beschwoerung@#1@DefaultG\endcsname\def\zauberG{\csname beschwoerung@#1@DefaultG\endcsname}\fi%
+  \ifcsname beschwoerung@#1@DefaultS\endcsname\def\zauberS{\csname beschwoerung@#1@DefaultS\endcsname}\fi%
+  \ifcsname beschwoerung@#1@DefaultA\endcsname\def\zauberA{\csname beschwoerung@#1@DefaultA\endcsname}\fi%
+  \ifdefstring{\beschwoerungsEbene}{chaos}{%
+    \def\zauberUr{dämonisch}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{mittelwelt}{%  
+    \def\zauberUr{dämonisch}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{nekromantie}{%  
+    \def\zauberUr{schwarzmagisch}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{finsternis}{%  
+    \def\zauberUr{schwarzmagisch}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{elementar}{%  
+    \def\zauberUr{elementar}%
+  }{}
+  \ifdefstring{\beschwoerungsEbene}{urwelt}{%  
+    \def\zauberUr{elementar}%
+  }{}
+}
+\define@key{zauber}{beschwoerungStandardGrad}{%
+  \ifcase#1 % = if #1 == 0 (invalid)
+    \PackageError{zauber}{Grad 0 ist ungültig}{Nur Grade 1–15 erlaubt.}%
+  \or % 1
+    \def\zauberstufe{1}\def\zauberAP{\EnergieOrDFR{4}{2}}\def\zauberZd{30\,min}\def\zauberFP{100}\def\beschwoerungsfeldpreis{\geld{100}}%
+  \or % 2
+    \def\zauberstufe{2}\def\zauberAP{\EnergieOrDFR{6}{3}}\def\zauberZd{1\,h}\def\zauberFP{400}\def\beschwoerungsfeldpreis{\geld{200}}%
+  \or % 3
+    \def\zauberstufe{3}\def\zauberAP{\EnergieOrDFR{8}{4}}\def\zauberZd{1\,h~30\,min}\def\zauberFP{800}\def\beschwoerungsfeldpreis{\geld{200}}%
+  \or % 4
+    \def\zauberstufe{4}\def\zauberAP{\EnergieOrDFR{10}{5}}\def\zauberZd{2\,h}\def\zauberFP{1600}\def\beschwoerungsfeldpreis{\geld{300}}%
+  \or % 5
+    \def\zauberstufe{5}\def\zauberAP{\EnergieOrDFR{12}{6}}\def\zauberZd{2\,h~30\,min}\def\zauberFP{2000}\def\beschwoerungsfeldpreis{\geld{500}}%
+  \or % 6
+    \def\zauberstufe{5}\def\zauberAP{\EnergieOrDFR{12}{6}}\def\zauberZd{3\,h}\def\zauberFP{2000}\def\beschwoerungsfeldpreis{\geld{500}}%
+  \or % 7
+    \def\zauberstufe{5}\def\zauberAP{\EnergieOrDFR{22}{11}}\def\zauberZd{3\,h~30\,min}\def\zauberFP{2000}\def\beschwoerungsfeldpreis{\geld{700}}%
+  \or % 8
+    \def\zauberstufe{5}\def\zauberAP{\EnergieOrDFR{22}{11}}\def\zauberZd{4\,h}\def\zauberFP{2000}\def\beschwoerungsfeldpreis{\geld{1000}}%
+  \or % 9
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{22}{11}}\def\zauberZd{4\,h~30\,min}\def\zauberFP{2000}\def\beschwoerungsfeldpreis{\geld{2000}}%
+  \or % 10
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{22}{11}}\def\zauberZd{5\,h}\def\zauberFP{2000}\def\beschwoerungsfeldpreis{\geld{2000}}%
+  \or % 11
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{22}{11}}\def\zauberZd{5\,h~30\,min}\def\zauberFP{3000}\def\beschwoerungsfeldpreis{\geld{2000}}%
+  \or % 12
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{22}{11}}\def\zauberZd{6\,h}\def\zauberFP{3000}\def\beschwoerungsfeldpreis{\geld{2000}}%
+  \or % 13
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{22}{11}}\def\zauberZd{6\,h~30\,min}\def\zauberFP{4000}\def\beschwoerungsfeldpreis{\geld{2000}}%
+  \or % 14
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{22}{11}}\def\zauberZd{7\,h}\def\zauberFP{4000}\def\beschwoerungsfeldpreis{\geld{2000}}%
+  \or % 15
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{22}{11}}\def\zauberZd{7\,h~30\,min}\def\zauberFP{5000}\def\beschwoerungsfeldpreis{\geld{3000}}%
+  \or % 16
+    \def\zauberstufe{GM}\def\zauberAP{\EnergieOrDFR{36}{18}}\def\zauberZd{8\,h}\def\zauberFP{7000}\def\beschwoerungsfeldpreis{\geld{5000}}%
+  \or % 17
+    \def\zauberstufe{GM}\def\zauberAP{\EnergieOrDFR{36}{18}}\def\zauberZd{8\,h~30\,min}\def\zauberFP{7000}\def\beschwoerungsfeldpreis{\geld{5000}}%
+  \or % 18
+    \def\zauberstufe{GM}\def\zauberAP{\EnergieOrDFR{36}{18}}\def\zauberZd{9\,h}\def\zauberFP{7000}\def\beschwoerungsfeldpreis{\geld{5000}}%
+  \or % 19
+    \def\zauberstufe{GM}\def\zauberAP{\EnergieOrDFR{36}{18}}\def\zauberZd{9\,h~30\,min}\def\zauberFP{7000}\def\beschwoerungsfeldpreis{\geld{5000}}%
+  \or % 20
+    \def\zauberstufe{GM}\def\zauberAP{\EnergieOrDFR{36}{18}}\def\zauberZd{10\,h}\def\zauberFP{7000}\def\beschwoerungsfeldpreis{\geld{5000}}%  
+  \else
+    \PackageError{zauber}{Grad #1 ist ungültig}{Nur Werte von 1–20 erlaubt.}%
+  \fi
+}
+\define@key{zauber}{individualBeschwoerungStandardGrad}{%
+  \def\beschwoerungsecreagens{Luft}\def\showformula{true}    
+  \ifcase#1
+    \PackageError{zauber}{Grad #1 ist ungültig}{Nur Werte 7–15 erlaubt.}%
+  \or\or\or\or\or\or % skip 1–6
+  \or % 7
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{3\,h~30\,min}\def\zauberFP{4000}\def\beschwoerungsfeldpreis{\geld{1000}}%
+  \or % 8
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{4\,h}\def\zauberFP{4000}\def\beschwoerungsfeldpreis{\geld{1500}}%
+  \or % 9
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{4\,h~30\,min}\def\zauberFP{6000}\def\beschwoerungsfeldpreis{\geld{2000}}%
+  \or % 10
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{5\,h}\def\zauberFP{8000}\def\beschwoerungsfeldpreis{\geld{2500}}%
+  \or % 11
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{5\,h~30\,min}\def\zauberFP{10000}\def\beschwoerungsfeldpreis{\geld{5000}}%
+  \or % 12
+    \def\zauberstufe{GM}\def\zauberAP{\EnergieOrDFR{36}{18}}\def\zauberZd{6\,h}\def\zauberFP{12000}\def\beschwoerungsfeldpreis{\geld{5000}}%
+  \or % 13
+    \def\zauberstufe{GM}\def\zauberAP{\EnergieOrDFR{36}{18}}\def\zauberZd{6\,h~30\,min}\def\zauberFP{13000}\def\beschwoerungsfeldpreis{\geld{5000}}%
+  \or % 14
+    \def\zauberstufe{GM}\def\zauberAP{\EnergieOrDFR{36}{18}}\def\zauberZd{7\,h}\def\zauberFP{14000}\def\beschwoerungsfeldpreis{\geld{5000}}%
+  \or % 15
+    \def\zauberstufe{GM}\def\zauberAP{\EnergieOrDFR{36}{18}}\def\zauberZd{7\,h~30\,min}\def\zauberFP{15000}\def\beschwoerungsfeldpreis{\geld{5000}}%
+  \else
+    \PackageError{zauber}{Grad #1 ist ungültig}{Nur Werte 7–15 erlaubt.}%
+  \fi
+}
+\define@key{zauber}{individualAnrufungStandardGrad}{%
+  \def\beschwoerungsecreagens{Luft}\def\showformula{true}      
+  \ifcase#1
+    \PackageError{zauber}{Grad #1 ist ungültig}{Nur Werte 7–20 erlaubt.}%
+  \or\or\or\or\or\or % skip 1–6
+  \or % 7
+    \def\zauberstufe{5}\def\zauberAP{\EnergieOrDFR{6}{3}}\def\zauberZd{1\,h~30\,min}\def\zauberFP{2000}\def\beschwoerungsfeldpreis{\geld{500}}%
+  \or % 8
+    \def\zauberstufe{5}\def\zauberAP{\EnergieOrDFR{6}{3}}\def\zauberZd{2\,h}\def\zauberFP{2500}\def\beschwoerungsfeldpreis{\geld{750}}%
+  \or % 9
+    \def\zauberstufe{5}\def\zauberAP{\EnergieOrDFR{6}{3}}\def\zauberZd{2\,h}\def\zauberFP{3000}\def\beschwoerungsfeldpreis{\geld{1000}}%
+  \or % 10
+    \def\zauberstufe{5}\def\zauberAP{\EnergieOrDFR{6}{3}}\def\zauberZd{2\,h~30\,min}\def\zauberFP{4000}\def\beschwoerungsfeldpreis{\geld{1250}}%
+  \or % 11
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{2\,h~30\,min}\def\zauberFP{5000}\def\beschwoerungsfeldpreis{\geld{2500}}%
+  \or % 12
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{3\,h}\def\zauberFP{6000}\def\beschwoerungsfeldpreis{\geld{2500}}%
+  \or % 13
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{3\,h}\def\zauberFP{6500}\def\beschwoerungsfeldpreis{\geld{2500}}%
+  \or % 14
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{3\,h~30\,min}\def\zauberFP{7000}\def\beschwoerungsfeldpreis{\geld{2500}}%
+  \or % 15
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{3\,h~30\,min}\def\zauberFP{7500}\def\beschwoerungsfeldpreis{\geld{2500}}%
+  \or % 16
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{4\,h}\def\zauberFP{7500}\def\beschwoerungsfeldpreis{\geld{2500}}%
+  \or % 17
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{4\,h}\def\zauberFP{7500}\def\beschwoerungsfeldpreis{\geld{2500}}%
+  \or % 18
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{4\,h~30\,min}\def\zauberFP{7500}\def\beschwoerungsfeldpreis{\geld{2500}}%
+  \or % 19
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{4\,h~30\,min}\def\zauberFP{7500}\def\beschwoerungsfeldpreis{\geld{2500}}%
+  \or % 20
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{18}{9}}\def\zauberZd{5\,h}\def\zauberFP{7500}\def\beschwoerungsfeldpreis{\geld{2500}}%
+  \else
+    \PackageError{zauber}{Grad #1 ist ungültig}{Nur Werte 7–20 erlaubt.}%
+  \fi
+}
+\define@key{zauber}{individualDominierungStandardGrad}{%
+  \def\zauberZd{20\,sec}\def\zauberRw{15\,m}\def\zauberWz{Geist}\def\zauberWb{1 Wesen}\def\zauberWd{2\,h}\def\zauberart{Wortzauber}\def\zauberprozess{Beherrschen}\def\zauberagens{Magan}\def\zauberreagens{Wasser}\def\zauberEnergie{200}%
+  \ifcase#1
+    \PackageError{zauber}{Grad #1 ist ungültig}{Nur Werte 7–15 erlaubt.}%
+  \or\or\or\or\or\or % skip 1–6
+  \or % 7
+    \def\zauberstufe{4}\def\zauberAP{\EnergieOrDFR{12}{6}}\def\zauberFP{1200}%
+  \or % 8
+    \def\zauberstufe{4}\def\zauberAP{\EnergieOrDFR{12}{6}}\def\zauberFP{1400}%
+  \or % 9
+    \def\zauberstufe{4}\def\zauberAP{\EnergieOrDFR{12}{6}}\def\zauberFP{1600}%
+  \or % 10
+    \def\zauberstufe{5}\def\zauberAP{\EnergieOrDFR{12}{6}}\def\zauberFP{2000}%
+  \or % 11
+    \def\zauberstufe{4}\def\zauberAP{\EnergieOrDFR{12}{6}}\def\zauberFP{2200}%
+  \or % 12
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{24}{12}}\def\zauberFP{5000}%
+  \or % 13
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{24}{12}}\def\zauberFP{5000}%
+  \or % 14
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{24}{12}}\def\zauberFP{5000}%
+  \or % 15
+    \def\zauberstufe{6}\def\zauberAP{\EnergieOrDFR{24}{12}}\def\zauberFP{5000}%
+  \else
+    \PackageError{zauber}{Grad #1 ist ungültig}{Nur Werte 7–15 erlaubt.}%
+  \fi
+}
+\newcommand\newBeschwoerungTemplate[2][]{
+  \expandafter\expandafter\expandafter\def\csname #2\endcsname[##1]##2{
+    \beschwoerung[#1,##1]{}
+  }
+}
 \newcommand*\beschwoerung[2][]{%
   \pagebreak[2]\addvspace{1em}
 \begingroup
