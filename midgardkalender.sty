@@ -42,7 +42,7 @@
 %------------
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{midgardkalender}[2020/10/16 Midgard Kalender]
+\ProvidesPackage{midgardkalender}[2026/09/11 Midgard Kalender]
 \RequirePackage{tikz}
 \RequirePackage{wasysym}
 %
@@ -63,6 +63,15 @@
 \DeclareOption{moravod}{
   \providecommand{\kalendertagnames}{1/Pervayaden,2/Vtorayaden,3/Tretyaden,4/Chetvertayaden,5/Pyetayaden,6/Sheshtayaden,7/Sedmayaden,8/Vosmayaden,9/Devyatayaden,10/Desyatayaden,11/Odinnadtsatayaden,12/Dvenadtsatayaden,13/Trinadtsatayaden}
     \providecommand{\mondnames}{1/B\"arenmond,2/Luchsmond,3/Einhornmond,4/Nixenmond,5/Schlangenmond,6/Feenmond,7/Hirschmond,8/Drachenmond,9/Kranichmond,10/Rabenmond,11/Trollmond,12/Draugmond,13/Wolfsmond}
+}
+
+% Waeland follows the standard Midgard/Vesternesse moon calendar.
+% The Waeland sourcebook explicitly uses Ceaddag, Catrudag, Sedag,
+% Seachdag as well as Ljosdag and Myrkdag in its festival calendar.
+\DeclareOption{waeland}{
+  \providecommand{\kalendertagnames}{1/Ceaddag,2/Daradag,3/Triudag,4/Catrudag,5/Cuindag,6/Sedag,7/Seachdag,8/Oachdag,9/Naondag,10/Deachdag,11/Aonadag,12/Dosandag,13/Criochdag}
+  \providecommand{\mondnames}{1/B\"arenmond,2/Luchsmond,3/Einhornmond,4/Nixenmond,5/Schlangenmond,6/Feenmond,7/Hirschmond,8/Drachenmond,9/Kranichmond,10/Rabenmond,11/Trollmond,12/Draugmond,13/Wolfsmond}
+  \providecommand{\finaldays}{0/Ljosdag,1/Myrkdag}
 }
 
 \DeclareOption{rawindra}{
