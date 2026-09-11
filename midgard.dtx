@@ -925,11 +925,13 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 \usetikzlibrary{shadows}
 \RequirePackage{longtable}
 \RequirePackage{calc}
+\RequirePackage{adjustbox}
 \RequirePackage{caption}
 \RequirePackage{anyfontsize}
 \RequirePackage{forloop}
 \RequirePackage{etextools}
 \RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
 %    \end{macrocode}
 %\begin{macro}{\phantomsection}
 % Um auch ohne das |hyperref|-Paket fehlerlos Dokumente verarbeiten zu können,
@@ -1240,6 +1242,85 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\hyphenation}
+% Das Midgard-Regelwerk verwendet einige sehr ungewöhnliche Begriffe,
+% die sich mit den gängigen Silbentrennungsregeln nicht umbrechen
+% lassen. Für diese definieren wir daher die Silbentrennungsregeln
+% manuell.
+%    \begin{macrocode}
+\newcommand\coverimage{}
+\newcommand\covertitlestyle{\color{white}\HUGE}
+\newcommand\covertitleposition{0,.85}
+\newcommand\innertitlestyle{\bfseries \sffamily \Huge}
+\newcommand\coverauthorstyle{\color{white}\Large\scshape}
+\newcommand\coverauthorposition{0,-.92}
+\def\moduledescription#1{\gdef\@moduledescription{#1}}
+\moduledescription{Rollenspiel-Material für die Welt\\und das Rollenspielsystem Midgard}
+
+\def\maketitle{
+\begin{center}
+\vspace*{.5cm}
+\innertitlestyle\@title
+\vspace{1cm}
+\end{center}
+}
+
+\def\makecover{
+\clearpage
+\thispagestyle{empty}
+\begin{center}
+\begin{tikzpicture}[x=0.5\paperwidth, y=0.5\paperheight, remember picture,overlay, shift={(current page.center)}]
+\node at (current page.center) {\coverimage};
+\node[text width=\textwidth, align=center] at (\covertitleposition)  {\covertitlestyle\@title};
+\node[text width=.8\paperwidth, align=center] at (\coverauthorposition)  {\coverauthorstyle \@author};
+\end{tikzpicture}
+\end{center}
+\clearpage
+\pagestyle{midgard}
+\begin{center}
+\vspace*{0pt}
+\vfill
+\midgardsource
+\bfseries 
+\vfill\par
+\begingroup
+\Large \@author
+\endgroup\par
+\vspace{.5cm}
+\begingroup
+\huge \@title
+\endgroup\par\vfill\par
+\large \@moduledescription
+\end{center}
+\clearpage
+}
+\newcommand\midgardheaderdecoration{}
+\newcommand\midgardheader{
+\newcommand\midgardheaderheight{.95cm}
+\begin{adjustbox}{width=\textwidth}
+\begin{tikzpicture}[x=1.5cm]
+    \draw[draw=black, rounded corners=3pt] (-5.13,-0.55) rectangle (5.13,.55);
+    \draw[fill=black, rounded corners=3pt] (-5.1,-0.5) rectangle (5.1,.5);
+    \node[anchor=east,inner sep=0pt,xshift=.25pt] at(-5,0) {\includegraphics[height=\midgardheaderheight]{pics/midgard-ornament-cap.pdf}};
+    \node[anchor=east, inner sep=0pt,xshift=.25pt] at(-3,0) {\includegraphics[height=\midgardheaderheight]{pics/midgard-ornament-body.pdf}};
+    \node[anchor=east, inner sep=0pt,xshift=.25pt] at(-1,0) {\includegraphics[height=\midgardheaderheight]{pics/midgard-ornament-body.pdf}};
+    \node[inner sep=0pt] at(0,0) {\includegraphics[height=\midgardheaderheight]{pics/midgard-ornament-body.pdf}};
+    \node[anchor=west, inner sep=0pt,xshift=-.25pt] at(1,0) {\includegraphics[height=\midgardheaderheight]{pics/midgard-ornament-body.pdf}};
+    \node[anchor=west, inner sep=0pt,xshift=-.25pt] at(3,0) {\includegraphics[height=\midgardheaderheight]{pics/midgard-ornament-body.pdf}};
+    \node[anchor=east,inner sep=0pt,scale=-1,xshift=.25pt] at(5,0) {\includegraphics[height=\midgardheaderheight]{pics/midgard-ornament-cap.pdf}};
+    \node[inner sep=1pt,draw=black,thick,circle,minimum width=.9cm,fill=white] at (0,0) {\thepage};
+    \midgardheaderdecoration
+\end{tikzpicture}
+\end{adjustbox}
+}
+\fancypagestyle{midgard}{%              
+    \fancyhf{}%                            
+    \fancyhead[C]{\midgardheader}
+    \renewcommand{\headrulewidth}{0pt}%  
+}
+\setlength{\headheight}{0.8cm} 
+%    \end{macrocode}
+%\end{macro}
 %\begin{macro}{\HUGE}
 % In Midgardpublikationen werden oft sehr große Schriftgrößen verwendet. Daher definieren wir ein neues Schriftgrößenkommando, um diesen Extra-Größen gerecht zu werden.
 %    \begin{macrocode}
@@ -1252,38 +1333,27 @@ Code-Zeilen, in denen der betreffende Eintrag verwendet wird.  }
 %   Schriftzug wie den in Abbildung~\ref{fig:midgardabenteuer}
 %   dargestellten. Diesen wollen wir hier nachempfinden.
 %    \begin{macrocode}
+\newcommand\midgardsource{\midgardabenteuer}
 \newcommand\midgardabenteuer{%
-\textbf{\fontsize{36}{0}\selectfont M}
-\hspace{-6pt}
-\begin{minipage}{65pt}
-\vspace{-20pt}
-\centering \noindent{\LARGE \textbf{IDGAR}}\\
-ABENTEUER
-\end{minipage}
-\hspace{-6pt}
-\textbf{\fontsize{36}{0}\selectfont D}
-} 
+\begin{tikzpicture}[x=1.6cm]
+\node[inner sep=.25pt,scale=2,anchor=north] (idgar) at (0,0) {\bfseries IDGAR};
+\node[inner sep=0pt,scale=4,anchor=north east] at (idgar.north west) {\bfseries M};
+\node[inner sep=0pt,scale=4,anchor=north west] at (idgar.north east) {\bfseries D};
+\node[anchor=north,scale=1.2] at (idgar.south) {ABENTEUER};
+\end{tikzpicture}
+}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\midgardquellenbuch}
 %   Ähnlich verhält es sich mit Quellenbüchern.
 %    \begin{macrocode}
 \newcommand\midgardquellenbuch{%
-\textbf{\fontsize{48}{0}\selectfont M}
-\hspace{-6pt}
-\begin{minipage}[t]{106pt}
-\centering \noindent
-\vspace{-34pt}
-\mbox{\bfseries
-\fontsize{30}{0}\selectfont
-IDGAR
-}
-\vspace{-6pt}
-\par
- \LARGE Quellenbuch
-\end{minipage}
-\hspace{-6pt}
-\textbf{\fontsize{48}{0}\selectfont D}
+\begin{tikzpicture}[x=1.6cm]
+\node[inner sep=.25pt,scale=2,anchor=north] (idgar) at (0,0) {\bfseries IDGAR};
+\node[inner sep=0pt,scale=4,anchor=north east] at (idgar.north west) {\bfseries M};
+\node[inner sep=0pt,scale=4,anchor=north west] at (idgar.north east) {\bfseries D};
+\node[anchor=north,scale=1] at (idgar.south) {QUELLENBUCH};
+\end{tikzpicture}
 }
 %    \end{macrocode}
 %\end{macro}

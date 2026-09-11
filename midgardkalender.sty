@@ -1,0 +1,175 @@
+%% midgardkalender.sty
+%% Copyright 2020 Mario B. Schulz 
+% 
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `author-maintained'.
+% 
+% The Current Maintainer of this work is Mario B. Schulz.
+%
+% This work consists of the files midgardkalender.sty.
+% A documentation might be added in later versions. 
+% 
+%
+% Description
+%-----------
+% midgardkalender.sty - package for drawing a Midgard calender in tikz. 
+%
+% Created 2020 by Mario Schulz. Last updated: 2020-10-20
+%--------------------------------------------------------
+%
+%
+% Requirements
+%------------
+% This requires the packages tikz and wasysym.
+%
+%
+% Recommended use with typearea-package
+%------------
+% \storeareas\StandardArea
+% \KOMAoptions{paper=landscape,headinclude=false,DIV=47}
+% \thispagestyle{empty} 
+% \begin{kalender}[]
+% \end{kalender}
+% \clearpage
+% \StandardArea 
+%------------
+%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{midgardkalender}[2020/10/16 Midgard Kalender]
+\RequirePackage{tikz}
+\RequirePackage{wasysym}
+%
+\renewcommand*{\ttdefault}{cmvtt}
+\providecommand{\mondfont}{\bfseries\sffamily} % Style der Mondnamen
+\providecommand{\kalendertagfont}{\sffamily} % Style der Trideaden-Tage
+\providecommand{\Eintrag}[3][]{\node[tag,#1]at(#2){#3};}
+\providecommand{\quest}[3][]{\node[tag,fill=yellow!50,#1]at(#2){\scriptsize#3};}
+
+\DeclareOption{kanthaipan}{
+  \providecommand{\finaldays}{0/Vollmondtag,1/Tag des Mondloses}    
+}
+\DeclareOption{alba}{
+  \providecommand{\kalendertagnames}{1/Ceaddag,2/Daradag,3/Triudag,4/Catrudag,5/Cuindag,6/Sedadag,7/Soachdag,8/Oachdag,9/Noondag,10/Deachdag,11/Aonadag,12/Dosandag,13/Criochdag}
+  \providecommand{\mondnames}{1/B\"arenmond,2/Luchsmond,3/Einhornmond,4/Nixenmond,5/Schlangenmond,6/Feenmond,7/Hirschmond,8/Drachenmond,9/Kranichmond,10/Rabenmond,11/Trollmond,12/Draugmond,13/Wolfsmond}
+  \providecommand{\finaldays}{0/Ljosdag,1/Myrkdag}  
+}
+\DeclareOption{moravod}{
+  \providecommand{\kalendertagnames}{1/Pervayaden,2/Vtorayaden,3/Tretyaden,4/Chetvertayaden,5/Pyetayaden,6/Sheshtayaden,7/Sedmayaden,8/Vosmayaden,9/Devyatayaden,10/Desyatayaden,11/Odinnadtsatayaden,12/Dvenadtsatayaden,13/Trinadtsatayaden}
+    \providecommand{\mondnames}{1/B\"arenmond,2/Luchsmond,3/Einhornmond,4/Nixenmond,5/Schlangenmond,6/Feenmond,7/Hirschmond,8/Drachenmond,9/Kranichmond,10/Rabenmond,11/Trollmond,12/Draugmond,13/Wolfsmond}
+}
+
+\DeclareOption{rawindra}{
+  \providecommand{\mondnames}{1/Taubenmond, 2/Rindermond, 3/Elefantenmond, 4/Gazellenmond, 5/Schlangenmond, 6/Katzenmond, 7/Pferdemond, 8/Affenmond, 9/Tigermond, 10/Nashornmond, 11/Rattenmond, 12/Adlermond, 13/Menschenmond}
+}
+
+\DeclareOption{buluga}{
+  \providecommand{\mondnames}{10/Erstfeuermond, 11/Hüttenerneuerungsmond, 12/Aloeblütenmond, 13/Kleiner Staubmond, 1/Großer Staubmond, 2/Neugrasmond, 3/Einhornmond, 4/Erstfeldermond, 5/Schößlingsmond, 6/Mond der zugewachsenen Pfade, 7/Kürbissuchemond, 8/Hundepaarungsmond, 9/Nahrungsüberflußmond}
+}
+  
+\DeclareOption{eschar}{
+  \providecommand{\mondnames}{2/Steinbock, 3/Ibis, 4/Falke, 5/Skorpion, 6/Schlange, 7/Fisch, 8/Krokodilt, 9/Kröte, 10/Stier, 11/Widder, 12/Schakal, 13/Geier, 1/Flußpferd}
+  \providecommand{\finaldays}{0/Tag des Sehenden,1/Tag des Blinden}  
+}
+
+
+\ProcessOptions\relax
+
+\providecommand{\kalendertagnames}{1/Ersttag,2/Zweittag,3/Drittag,4/Vierttag,5/Fünfttag,6/Sechsttag,7/Siebttag,8/Achttag,9/Neunttag,10/Zehnttag,11/Elfttag,12/Zwölfttag,13/Dreizehnttag}
+\providecommand{\mondnames}{1/Mond,2/Mond,3/Mond,4/Mond,5/Mond,6/Mond,7/Mond,8/Mond,9/Mond,10/Mond,11/ Mond,12/Mond,13/Mond}
+
+\providecommand{\finaldays}{0/Vollmondtag,1/Neumondtag}
+%
+%
+%
+\newenvironment{midgardkalender}[1][Jahr]{
+  \pgfmathsetmacro{\nullteSpalte}{2.3em/1cm} % Breite der nullten Spalte
+  \pgfmathsetmacro{\nullteZeile}{5ex/1cm} % Hoehe der Kopfzeile
+  \pgfmathsetmacro{\nodeinnersep}{2.5pt} % Abstand eines Eintrags zum Gitter
+  \pgfmathsetmacro{\mondsep}{0.1} % Dicke der vertikalen Balken zwischen den Monden
+  \pgfmathsetmacro{\breite}{(\textwidth-3pt)/1cm} % Gesamtbreite des Kalenders
+  \pgfmathsetmacro{\hoehe}{(\textheight-3pt)/1cm} % Gesamthoehe des Kalenders
+  \pgfmathsetmacro{\xstep}{(\breite-\nullteSpalte-5*\mondsep)/10} % Breite eines Tages
+  \pgfmathsetmacro{\ystep}{(\hoehe-\nullteZeile)/15/3} % Hoehe eines Tages
+  %
+  \noindent
+  \begin{tikzpicture}[yscale=-1,remember picture,line width=0.5pt,
+      tag/.style={rectangle,inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\xstep*1cm-0.5pt-2*\nodeinnersep}}
+    ]
+    %
+    %%% Jahreszeiten:
+    \path(0,0)rectangle(\breite,\hoehe);
+    \path(0,0)rectangle(\nullteSpalte,\hoehe);
+    \path(0,0)rectangle(\breite,\nullteZeile);
+    \begin{scope}[shift={({\nullteSpalte+\mondsep/2},{\nullteZeile})},xscale={\xstep+\mondsep/2},yscale=\nullteZeile]
+      \node[below]at(1,-1){\Large\scshape Fr\"uhling};
+      \node[below]at(3,-1){\Large\scshape Sommer};
+      \node[below]at(5,-1){\Large\scshape Herbst};
+      \node[below]at(7,-1){\Large\scshape Winter};
+      \node[below]at(9,-1){\Large\bfseries #1};
+    \end{scope}
+    %
+    %%% vertikale Nummerierung links:
+    \begin{scope}[shift={({0},{\nullteZeile})},xscale=\nullteSpalte,yscale=\ystep]
+      \draw(0,0)grid(1,45);
+      \foreach\mond in {0,1,2}{
+        \foreach\kalendertag in {1,...,13}{
+          \node[inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\nullteSpalte*1cm-0.5pt-2*\nodeinnersep}] at (1/2,1/2+\kalendertag+\mond*15){\hfill\kalendertagfont\kalendertag~~};
+        }
+        \node[inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\nullteSpalte*1cm-0.5pt-2*\nodeinnersep}] at (1/2,1/2+\mond*15-0.05){\hfill\kalendertagfont\astrosun~~};
+        \node[inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\nullteSpalte*1cm-0.5pt-2*\nodeinnersep}] at (1/2,1/2+14+\mond*15){\hfill\kalendertagfont M~~};
+      } 
+    \end{scope}
+    %
+    %%% Trideaden-Tage rechts:
+    \begin{scope}[shift={({\nullteSpalte+\mondsep/2+4*(\mondsep+2*\xstep)},{\nullteZeile+ 15*\ystep})},xscale=\xstep,yscale=\ystep]
+      \draw(0,0)grid[xstep=2](2,30);
+      \fill
+      (2,0)rectangle(2+0.5*\mondsep/\xstep,30)
+      (0,0)rectangle(-0.5*\mondsep/\xstep,30);
+      ;
+      
+      \foreach\mond/\finalday in \finaldays{
+        \pgfmathsetmacro\mondlabel{int(\mond+1)}
+        \node[fill=black!33,inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\xstep*2cm-0.5pt-2*\nodeinnersep}] at (1,1/2+0+\mond*15){\kalendertagfont\bfseries~\mondlabel.~Trideade};
+        \foreach\kalendertag/\kalendertagname in \kalendertagnames{
+          \node[inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\xstep*2cm-0.5pt-2*\nodeinnersep}] at (1,1/2+\kalendertag+\mond*15){\kalendertagfont~\kalendertag~\mbox{\kalendertagname}};
+        }
+        \node[inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\xstep*2cm-0.5pt-2*\nodeinnersep}] at (1,1/2+14+\mond*15){\kalendertagfont~\finalday};
+      } 
+    \end{scope}
+    %
+    %%% Monde: Hier werden die Eintraglabels generiert. 
+    \foreach\mond/\mondname in \mondnames{
+      \begin{scope}[shift={({\nullteSpalte+\mondsep/2+floor((\mond-1)/3)*(\mondsep+2*\xstep)},{\nullteZeile+mod(\mond-1,3)*15*\ystep})},xscale=\xstep,yscale=\ystep]
+        \draw(0,0)grid(2,15);
+        \fill
+        (2,0)rectangle(2+0.5*\mondsep/\xstep,15)
+        (0,0)rectangle(-0.5*\mondsep/\xstep,15);
+        ;
+        \node[white,fill=black,rectangle,inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},align=center,text width={\xstep*2cm-2pt}] at (1,1/2){\mondfont\mond~\mbox{\mondname}};
+        \foreach\kalendertag in {1,...,14}{
+          \coordinate(\kalendertag-1-\mond)at(1/2,\kalendertag+1/2);
+          \coordinate(\kalendertag-2-\mond)at(3/2,\kalendertag+1/2);
+        }
+      \end{scope}
+    }
+}{
+  %%% Mondphasen:
+  \foreach\mond in {1,...,13}{
+    \node[tag]at (7-1-\mond){\hfill\rightmoon};
+    \node[tag]at (7-2-\mond){\hfill\leftmoon};
+    \node[tag]at(14-1-\mond){\hfill\fullmoon};
+    \node[tag]at(14-2-\mond){\hfill\newmoon};
+  }
+  \end{tikzpicture}
+}
+
+
+\endinput
