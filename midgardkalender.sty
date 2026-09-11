@@ -1,184 +1,610 @@
-%% midgardkalender.sty
-%% Copyright 2020 Mario B. Schulz 
-% 
-% This work may be distributed and/or modified under the
-% conditions of the LaTeX Project Public License, either version 1.3
-% of this license or (at your option) any later version.
-% The latest version of this license is in
-%   http://www.latex-project.org/lppl.txt
-% and version 1.3 or later is part of all distributions of LaTeX
-% version 2005/12/01 or later.
-%
-% This work has the LPPL maintenance status `author-maintained'.
-% 
-% The Current Maintainer of this work is Mario B. Schulz.
-%
-% This work consists of the files midgardkalender.sty.
-% A documentation might be added in later versions. 
-% 
-%
-% Description
-%-----------
-% midgardkalender.sty - package for drawing a Midgard calender in tikz. 
-%
-% Created 2020 by Mario Schulz. Last updated: 2020-10-20
-%--------------------------------------------------------
-%
-%
-% Requirements
-%------------
-% This requires the packages tikz and wasysym.
-%
-%
-% Recommended use with typearea-package
-%------------
-% \storeareas\StandardArea
-% \KOMAoptions{paper=landscape,headinclude=false,DIV=47}
-% \thispagestyle{empty} 
-% \begin{kalender}[]
-% \end{kalender}
-% \clearpage
-% \StandardArea 
-%------------
-%
+%% midgardkalender-v2-6.sty
+%% Datengetriebene Neufassung des Pakets midgardkalender.sty
+%% Urspruenglicher Code: Copyright 2020 Mario B. Schulz
+%% Neufassung 2026.
+%% Lizenz: LPPL 1.3c oder spaeter.
+
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{midgardkalender}[2026/09/11 Midgard Kalender]
+\ProvidesPackage{midgardkalender}[2026/09/11 v2.6 Datengetriebener Midgard-Kalender]
 \RequirePackage{tikz}
+\RequirePackage{graphicx}
 \RequirePackage{wasysym}
-%
+\RequirePackage{xparse}
+\RequirePackage{xstring}
+
 \renewcommand*{\ttdefault}{cmvtt}
-\providecommand{\mondfont}{\bfseries\sffamily} % Style der Mondnamen
-\providecommand{\kalendertagfont}{\sffamily} % Style der Trideaden-Tage
-\providecommand{\Eintrag}[3][]{\node[tag,#1]at(#2){#3};}
-\providecommand{\quest}[3][]{\node[tag,fill=yellow!50,#1]at(#2){\scriptsize#3};}
+\providecommand{\mondfont}{\bfseries\sffamily}
+\providecommand{\dayfont}{\sffamily\scriptsize}
+\providecommand{\kalendertagfont}{\sffamily}
+\providecommand{\kalendereintrag}[3][]{\node[tag,#1] at (#2) {\dayfont #3};}
+\providecommand{\quest}[3][]{\node[tag,fill=yellow!50,#1] at (#2) {\dayfont #3};}
 
-\DeclareOption{kanthaipan}{
-  \providecommand{\finaldays}{0/Vollmondtag,1/Tag des Mondloses}    
-}
-\DeclareOption{alba}{
-  \providecommand{\kalendertagnames}{1/Ceaddag,2/Daradag,3/Triudag,4/Catrudag,5/Cuindag,6/Sedadag,7/Soachdag,8/Oachdag,9/Noondag,10/Deachdag,11/Aonadag,12/Dosandag,13/Criochdag}
-  \providecommand{\mondnames}{1/B\"arenmond,2/Luchsmond,3/Einhornmond,4/Nixenmond,5/Schlangenmond,6/Feenmond,7/Hirschmond,8/Drachenmond,9/Kranichmond,10/Rabenmond,11/Trollmond,12/Draugmond,13/Wolfsmond}
-  \providecommand{\finaldays}{0/Ljosdag,1/Myrkdag}  
-}
-\DeclareOption{moravod}{
-  \providecommand{\kalendertagnames}{1/Pervayaden,2/Vtorayaden,3/Tretyaden,4/Chetvertayaden,5/Pyetayaden,6/Sheshtayaden,7/Sedmayaden,8/Vosmayaden,9/Devyatayaden,10/Desyatayaden,11/Odinnadtsatayaden,12/Dvenadtsatayaden,13/Trinadtsatayaden}
-    \providecommand{\mondnames}{1/B\"arenmond,2/Luchsmond,3/Einhornmond,4/Nixenmond,5/Schlangenmond,6/Feenmond,7/Hirschmond,8/Drachenmond,9/Kranichmond,10/Rabenmond,11/Trollmond,12/Draugmond,13/Wolfsmond}
-}
+\makeatletter
 
-% Waeland follows the standard Midgard/Vesternesse moon calendar.
-% The Waeland sourcebook explicitly uses Ceaddag, Catrudag, Sedag,
-% Seachdag as well as Ljosdag and Myrkdag in its festival calendar.
-\DeclareOption{waeland}{
-  \providecommand{\kalendertagnames}{1/Ceaddag,2/Daradag,3/Triudag,4/Catrudag,5/Cuindag,6/Sedag,7/Seachdag,8/Oachdag,9/Naondag,10/Deachdag,11/Aonadag,12/Dosandag,13/Criochdag}
-  \providecommand{\mondnames}{1/B\"arenmond,2/Luchsmond,3/Einhornmond,4/Nixenmond,5/Schlangenmond,6/Feenmond,7/Hirschmond,8/Drachenmond,9/Kranichmond,10/Rabenmond,11/Trollmond,12/Draugmond,13/Wolfsmond}
-  \providecommand{\finaldays}{0/Ljosdag,1/Myrkdag}
-}
+% --------------------------------------------------------------------------
+% Oeffentliche Layoutwahl
+% --------------------------------------------------------------------------
+\def\mk@layout@columns{columns}
+\def\mk@layout@rows{rows}
+\let\mk@layout\mk@layout@columns
 
-\DeclareOption{rawindra}{
-  \providecommand{\mondnames}{1/Taubenmond, 2/Rindermond, 3/Elefantenmond, 4/Gazellenmond, 5/Schlangenmond, 6/Katzenmond, 7/Pferdemond, 8/Affenmond, 9/Tigermond, 10/Nashornmond, 11/Rattenmond, 12/Adlermond, 13/Menschenmond}
-}
+\newcommand{\kalendermonatsspalten}{\global\let\mk@layout\mk@layout@columns}
+\newcommand{\kalendermonatszeilen}{\global\let\mk@layout\mk@layout@rows}
 
-\DeclareOption{buluga}{
-  \providecommand{\mondnames}{10/Erstfeuermond, 11/Hüttenerneuerungsmond, 12/Aloeblütenmond, 13/Kleiner Staubmond, 1/Großer Staubmond, 2/Neugrasmond, 3/Einhornmond, 4/Erstfeldermond, 5/Schößlingsmond, 6/Mond der zugewachsenen Pfade, 7/Kürbissuchemond, 8/Hundepaarungsmond, 9/Nahrungsüberflußmond}
-}
-  
-\DeclareOption{eschar}{
-  \providecommand{\mondnames}{2/Steinbock, 3/Ibis, 4/Falke, 5/Skorpion, 6/Schlange, 7/Fisch, 8/Krokodilt, 9/Kröte, 10/Stier, 11/Widder, 12/Schakal, 13/Geier, 1/Flußpferd}
-  \providecommand{\finaldays}{0/Tag des Sehenden,1/Tag des Blinden}  
-}
+% --------------------------------------------------------------------------
+% Kalenderdaten
+% --------------------------------------------------------------------------
+\def\mk@defaultdays{%
+  1/Ersttag,2/Zweittag,3/Drittag,4/Vierttag,5/Fünfttag,6/Sechsttag,
+  7/Siebttag,8/Achttag,9/Neunttag,10/Zehnttag,11/Elfttag,
+  12/Zwölfttag,13/Dreizehnttag}
+\def\mk@albadays{%
+  1/Ceaddag,2/Daradag,3/Triudag,4/Catrudag,5/Cuindag,6/Sedadag,
+  7/Soachdag,8/Oachdag,9/Noondag,10/Deachdag,11/Aonadag,
+  12/Dosandag,13/Criochdag}
+\def\mk@waelanddays{%
+  1/Ceaddag,2/Daradag,3/Triudag,4/Catrudag,5/Cuindag,6/Sedag,
+  7/Seachdag,8/Oachdag,9/Naondag,10/Deachdag,11/Aonadag,
+  12/Dosandag,13/Criochdag}
+\def\mk@moravoddays{%
+  1/Pervayaden,2/Vtorayaden,3/Tretyaden,4/Chetvertayaden,
+  5/Pyetayaden,6/Sheshtayaden,7/Sedmayaden,8/Vosmayaden,
+  9/Devyatayaden,10/Desyatayaden,11/Odinnadtsatayaden,
+  12/Dvenadtsatayaden,13/Trinadtsatayaden}
+\def\mk@nahuatlandays{%
+  1/Ikoloq,2/Maguey,3/Teocaltin,4/Tlalli,5/Coatl,6/Ixtanx,7/Pudu,
+  8/Tochtli,9/Atl,10/Itzcuintli,11/Saimiri,12/Malinalli,13/Acatl,
+  14/Iquibalar,15/Caranxo,16/Huaxolom,17/Olin,18/Tecpatl,
+  19/Quiyahuitl,20/Xochitl}
 
+\def\mk@type@standard{standard}
+\def\mk@type@nahuatlan{nahuatlan}
 
-\ProcessOptions\relax
+\def\mk@type@default{standard}
+\def\mk@months@default{1/Mond,2/Mond,3/Mond,4/Mond,5/Mond,6/Mond,7/Mond,8/Mond,9/Mond,10/Mond,11/Mond,12/Mond,13/Mond}
+\def\mk@days@default{\mk@defaultdays}
+\def\mk@finaldays@default{0/Vollmondtag,1/Neumondtag}
 
-\providecommand{\kalendertagnames}{1/Ersttag,2/Zweittag,3/Drittag,4/Vierttag,5/Fünfttag,6/Sechsttag,7/Siebttag,8/Achttag,9/Neunttag,10/Zehnttag,11/Elfttag,12/Zwölfttag,13/Dreizehnttag}
-\providecommand{\mondnames}{1/Mond,2/Mond,3/Mond,4/Mond,5/Mond,6/Mond,7/Mond,8/Mond,9/Mond,10/Mond,11/ Mond,12/Mond,13/Mond}
+\def\mk@type@kanthaipan{standard}
+\let\mk@months@kanthaipan\mk@months@default
+\def\mk@days@kanthaipan{\mk@defaultdays}
+\def\mk@finaldays@kanthaipan{0/Vollmondtag,1/Tag des Mondloses}
 
-\providecommand{\finaldays}{0/Vollmondtag,1/Neumondtag}
+\def\mk@type@alba{standard}
+\def\mk@months@alba{1/Bärenmond,2/Luchsmond,3/Einhornmond,4/Nixenmond,5/Schlangenmond,6/Feenmond,7/Hirschmond,8/Drachenmond,9/Kranichmond,10/Rabenmond,11/Trollmond,12/Draugmond,13/Wolfsmond}
+\def\mk@days@alba{\mk@albadays}
+\def\mk@finaldays@alba{0/Ljosdag,1/Myrkdag}
+
+\def\mk@type@waeland{standard}
+\let\mk@months@waeland\mk@months@alba
+\def\mk@days@waeland{\mk@waelanddays}
+\def\mk@finaldays@waeland{0/Ljosdag,1/Myrkdag}
+
+\def\mk@type@moravod{standard}
+\let\mk@months@moravod\mk@months@alba
+\def\mk@days@moravod{\mk@moravoddays}
+\def\mk@finaldays@moravod{0/Vollmondtag,1/Neumondtag}
+
+\def\mk@type@rawindra{standard}
+\def\mk@months@rawindra{1/Taubenmond,2/Rindermond,3/Elefantenmond,4/Gazellenmond,5/Schlangenmond,6/Katzenmond,7/Pferdemond,8/Affenmond,9/Tigermond,10/Nashornmond,11/Rattenmond,12/Adlermond,13/Menschenmond}
+\def\mk@days@rawindra{\mk@defaultdays}
+\def\mk@finaldays@rawindra{0/Vollmondtag,1/Neumondtag}
+
+\def\mk@type@buluga{standard}
+\def\mk@months@buluga{10/Erstfeuermond,11/Hüttenerneuerungsmond,12/Aloeblütenmond,13/Kleiner Staubmond,1/Großer Staubmond,2/Neugrasmond,3/Einhornmond,4/Erstfeldermond,5/Schößlingsmond,6/Mond der zugewachsenen Pfade,7/Kürbissuchemond,8/Hundepaarungsmond,9/Nahrungsüberflußmond}
+\def\mk@days@buluga{\mk@defaultdays}
+\def\mk@finaldays@buluga{0/Vollmondtag,1/Neumondtag}
+
+\def\mk@type@eschar{standard}
+\def\mk@months@eschar{2/Steinbock,3/Ibis,4/Falke,5/Skorpion,6/Schlange,7/Fisch,8/Krokodil,9/Kröte,10/Stier,11/Widder,12/Schakal,13/Geier,1/Flußpferd}
+\def\mk@days@eschar{\mk@defaultdays}
+\def\mk@finaldays@eschar{0/Tag des Sehenden,1/Tag des Blinden}
+
+\def\mk@type@nahuatlan{nahuatlan}
+
+% --------------------------------------------------------------------------
+% Explizite Belegungsmatrizen
+% kalendereintrag: Typ/ID/Spalte/Zeile. Typ M=Monat, I=Infobox.
+% --------------------------------------------------------------------------
+% Regulärer Kalender, \kalendermonatsspalten:
+% F1 S1 H1 W1 W4
+% F2 S2 H2 W2 I1
+% F3 S3 H3 W3 I2
+\def\mk@placement@regular@columns{%
+ M/1/1/1,M/4/2/1,M/7/3/1,M/10/4/1,M/13/5/1,
+ M/2/1/2,M/5/2/2,M/8/3/2,M/11/4/2,I/1/5/2,
+ M/3/1/3,M/6/2/3,M/9/3/3,M/12/4/3,I/2/5/3}
+\def\mk@headers@regular@columns{1/Frühling,2/Sommer,3/Herbst,4/Winter}
+\def\mk@cols@regular@columns{5}\def\mk@rows@regular@columns{3}
+
+% Regulärer Kalender, \kalendermonatszeilen:
+% F1 S1 H1 W1
+% F2 S2 H2 W2
+% F3 S3 H3 W3
+% I1 I2 -- W4
+\def\mk@placement@regular@rows{%
+ M/1/1/1,M/4/2/1,M/7/3/1,M/10/4/1,
+ M/2/1/2,M/5/2/2,M/8/3/2,M/11/4/2,
+ M/3/1/3,M/6/2/3,M/9/3/3,M/12/4/3,
+ I/1/1/4,I/2/2/4,M/13/4/4}
+\def\mk@headers@regular@rows{1/Frühling,2/Sommer,3/Herbst,4/Winter}
+\def\mk@cols@regular@rows{4}\def\mk@rows@regular@rows{4}
+
+% Eschar: drei Jahreszeiten. Die beiden Layouts sind Transpositionen.
+% Spalten: Ernte/Ueberschwemmung/Aussaat von oben nach unten.
+\def\mk@placement@eschar@columns{%
+ M/2/1/1,M/6/2/1,M/10/3/1,
+ M/3/1/2,M/7/2/2,M/11/3/2,
+ M/4/1/3,M/8/2/3,M/12/3/3,
+ M/5/1/4,M/9/2/4,M/13/3/4,
+ I/1/1/5,I/2/2/5,M/1/3/5}
+\def\mk@headers@eschar@columns{1/Ernte,2/Überschwemmung,3/Aussaat}
+\def\mk@cols@eschar@columns{3}\def\mk@rows@eschar@columns{5}
+
+% Zeilen: jede Jahreszeit bildet eine Zeile.
+\def\mk@placement@eschar@rows{%
+ M/2/1/1,M/3/2/1,M/4/3/1,M/5/4/1,I/1/5/1,
+ M/6/1/2,M/7/2/2,M/8/3/2,M/9/4/2,I/2/5/2,
+ M/10/1/3,M/11/2/3,M/12/3/3,M/13/4/3,M/1/5/3}
+\def\mk@rowheaders@eschar@rows{1/Ernte,2/Überschwemmung,3/Aussaat}
+\def\mk@headers@eschar@rows{}
+\def\mk@cols@eschar@rows{5}\def\mk@rows@eschar@rows{3}
+
+% --------------------------------------------------------------------------
+% Zeitspannen
+% --------------------------------------------------------------------------
+% Syntax:
+%   \zeitspanne[<TikZ-Stil>]{<Anfang>}{<Label Anfang>}{<Ende>}{<Label Ende>}
+% Spaeter gezeichnete \kalendereintrag-Knoten koennen die gefaerbten Felder ueberschreiben.
+\NewDocumentCommand{\zeitspanne}{O{fill=orange!18} m m m m}{%
+  \begingroup
+  \ifx\mk@type\mk@type@standard
+    \mk@standarddateindex{#2}\mk@spanstart
+    \mk@standarddateindex{#4}\mk@spanend
+    \def\mk@spantotal{364}%
+    \ifnum\mk@spanend<\mk@spanstart\relax
+      \pgfmathtruncatemacro{\mk@spanend}{\mk@spanend+\mk@spantotal}%
+    \fi
+    \foreach \mk@spanindex in {\mk@spanstart,...,\mk@spanend}{%
+      \pgfmathtruncatemacro{\mk@wrappedindex}{mod(\mk@spanindex-1,\mk@spantotal)+1}%
+      \mk@standardindexdate{\mk@wrappedindex}%
+      \def\mk@spanlabel{}%
+      \ifnum\mk@spanindex=\mk@spanstart\relax\def\mk@spanlabel{#3}\fi
+      \ifnum\mk@spanindex=\mk@spanend\relax
+        \ifnum\mk@spanend=\mk@spanstart\relax\else\def\mk@spanlabel{#5}\fi
+      \fi
+      \node[tag,#1] at (\mk@spancoord) {\dayfont\mk@spanlabel};%
+    }%
+  \else
+    \mk@nahuatlandateindex{#2}\mk@spanstart
+    \mk@nahuatlandateindex{#4}\mk@spanend
+    \def\mk@spantotal{364}%
+    \ifnum\mk@spanend<\mk@spanstart\relax
+      \pgfmathtruncatemacro{\mk@spanend}{\mk@spanend+\mk@spantotal}%
+    \fi
+    \foreach \mk@spanindex in {\mk@spanstart,...,\mk@spanend}{%
+      \pgfmathtruncatemacro{\mk@wrappedindex}{mod(\mk@spanindex-1,\mk@spantotal)+1}%
+      \mk@nahuatlanindexdate{\mk@wrappedindex}%
+      \def\mk@spanlabel{}%
+      \ifnum\mk@spanindex=\mk@spanstart\relax\def\mk@spanlabel{#3}\fi
+      \ifnum\mk@spanindex=\mk@spanend\relax
+        \ifnum\mk@spanend=\mk@spanstart\relax\else\def\mk@spanlabel{#5}\fi
+      \fi
+      \node[tag,#1] at (\mk@spancoord) {\dayfont\mk@spanlabel};%
+    }%
+  \fi
+  \endgroup}
+
+\def\mk@standarddateindex#1#2{\expandafter\mk@standarddateindex@aux#1\@nil#2}
+\def\mk@standarddateindex@aux#1-#2-#3\@nil#4{%
+  \pgfmathtruncatemacro{#4}{(#3-1)*28+(#2-1)*14+#1}}
+\def\mk@standardindexdate#1{%
+  \pgfmathtruncatemacro{\mk@spanmonth}{floor((#1-1)/28)+1}%
+  \pgfmathtruncatemacro{\mk@spanrest}{mod(#1-1,28)}%
+  \pgfmathtruncatemacro{\mk@spanpart}{floor(\mk@spanrest/14)+1}%
+  \pgfmathtruncatemacro{\mk@spanday}{mod(\mk@spanrest,14)+1}%
+  \edef\mk@spancoord{\mk@spanday-\mk@spanpart-\mk@spanmonth}}
+
+\def\mk@nahuatlandateindex#1#2{%
+  \IfBeginWith{#1}{hollow-after-}{%
+    \StrBehind{#1}{hollow-after-}[\mk@afterq]%
+    \ifcase\mk@afterq\relax
+    \or\or\def#2{41}%  after 2
+    \or\or\or\or\or\or\def#2{162}% after 8
+    \or\or\or\or\or\or\or\def#2{303}% after 15
+    \or\or\or\def#2{364}% after 18
+    \else\PackageError{midgardkalender-v2-2}{Unbekannter Hohler Tag `#1'}{}\def#2{1}\fi
+  }{\expandafter\mk@nahuatlandateindex@aux#1\@nil#2}}
+\def\mk@nahuatlandateindex@aux#1-#2\@nil#3{%
+  \pgfmathtruncatemacro{#3}{(#2-1)*20+#1+(#2>2)+(#2>8)+(#2>15)}}
+\def\mk@nahuatlanindexdate#1{%
+  \ifnum#1=41\relax\def\mk@spancoord{hollow-after-2}%
+  \else\ifnum#1=162\relax\def\mk@spancoord{hollow-after-8}%
+  \else\ifnum#1=303\relax\def\mk@spancoord{hollow-after-15}%
+  \else\ifnum#1=364\relax\def\mk@spancoord{hollow-after-18}%
+  \else
+    \pgfmathtruncatemacro{\mk@regularindex}{#1-(#1>41)-(#1>162)-(#1>303)}%
+    \pgfmathtruncatemacro{\mk@spanq}{floor((\mk@regularindex-1)/20)+1}%
+    \pgfmathtruncatemacro{\mk@spanday}{mod(\mk@regularindex-1,20)+1}%
+    \edef\mk@spancoord{\mk@spanday-\mk@spanq}%
+  \fi\fi\fi\fi}
+
+% --------------------------------------------------------------------------
+% Vordefinierte Kalenderannotationen und API
+% --------------------------------------------------------------------------
+% Zwei Annotationstypen werden derzeit unterstuetzt:
+%   event  -- einzelner Kalendertag
+%   range  -- zusammenhaengende Zeitspanne
 %
-%
-%
-\newenvironment{midgardkalender}[1][Jahr]{
-  \pgfmathsetmacro{\nullteSpalte}{2.3em/1cm} % Breite der nullten Spalte
-  \pgfmathsetmacro{\nullteZeile}{5ex/1cm} % Hoehe der Kopfzeile
-  \pgfmathsetmacro{\nodeinnersep}{2.5pt} % Abstand eines Eintrags zum Gitter
-  \pgfmathsetmacro{\mondsep}{0.1} % Dicke der vertikalen Balken zwischen den Monden
-  \pgfmathsetmacro{\breite}{(\textwidth-3pt)/1cm} % Gesamtbreite des Kalenders
-  \pgfmathsetmacro{\hoehe}{(\textheight-3pt)/1cm} % Gesamthoehe des Kalenders
-  \pgfmathsetmacro{\xstep}{(\breite-\nullteSpalte-5*\mondsep)/10} % Breite eines Tages
-  \pgfmathsetmacro{\ystep}{(\hoehe-\nullteZeile)/15/3} % Hoehe eines Tages
-  %
-  \noindent
-  \begin{tikzpicture}[yscale=-1,remember picture,line width=0.5pt,
-      tag/.style={rectangle,inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\xstep*1cm-0.5pt-2*\nodeinnersep}}
-    ]
-    %
-    %%% Jahreszeiten:
-    \path(0,0)rectangle(\breite,\hoehe);
-    \path(0,0)rectangle(\nullteSpalte,\hoehe);
-    \path(0,0)rectangle(\breite,\nullteZeile);
-    \begin{scope}[shift={({\nullteSpalte+\mondsep/2},{\nullteZeile})},xscale={\xstep+\mondsep/2},yscale=\nullteZeile]
-      \node[below]at(1,-1){\Large\scshape Fr\"uhling};
-      \node[below]at(3,-1){\Large\scshape Sommer};
-      \node[below]at(5,-1){\Large\scshape Herbst};
-      \node[below]at(7,-1){\Large\scshape Winter};
-      \node[below]at(9,-1){\Large\bfseries #1};
-    \end{scope}
-    %
-    %%% vertikale Nummerierung links:
-    \begin{scope}[shift={({0},{\nullteZeile})},xscale=\nullteSpalte,yscale=\ystep]
-      \draw(0,0)grid(1,45);
-      \foreach\mond in {0,1,2}{
-        \foreach\kalendertag in {1,...,13}{
-          \node[inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\nullteSpalte*1cm-0.5pt-2*\nodeinnersep}] at (1/2,1/2+\kalendertag+\mond*15){\hfill\kalendertagfont\kalendertag~~};
-        }
-        \node[inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\nullteSpalte*1cm-0.5pt-2*\nodeinnersep}] at (1/2,1/2+\mond*15-0.05){\hfill\kalendertagfont\astrosun~~};
-        \node[inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\nullteSpalte*1cm-0.5pt-2*\nodeinnersep}] at (1/2,1/2+14+\mond*15){\hfill\kalendertagfont M~~};
-      } 
-    \end{scope}
-    %
-    %%% Trideaden-Tage rechts:
-    \begin{scope}[shift={({\nullteSpalte+\mondsep/2+4*(\mondsep+2*\xstep)},{\nullteZeile+ 15*\ystep})},xscale=\xstep,yscale=\ystep]
-      \draw(0,0)grid[xstep=2](2,30);
-      \fill
-      (2,0)rectangle(2+0.5*\mondsep/\xstep,30)
-      (0,0)rectangle(-0.5*\mondsep/\xstep,30);
-      ;
-      
-      \foreach\mond/\finalday in \finaldays{
-        \pgfmathsetmacro\mondlabel{int(\mond+1)}
-        \node[fill=black!33,inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\xstep*2cm-0.5pt-2*\nodeinnersep}] at (1,1/2+0+\mond*15){\kalendertagfont\bfseries~\mondlabel.~Trideade};
-        \foreach\kalendertag/\kalendertagname in \kalendertagnames{
-          \node[inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\xstep*2cm-0.5pt-2*\nodeinnersep}] at (1,1/2+\kalendertag+\mond*15){\kalendertagfont~\kalendertag~\mbox{\kalendertagname}};
-        }
-        \node[inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\xstep*2cm-0.5pt-2*\nodeinnersep}] at (1,1/2+14+\mond*15){\kalendertagfont~\finalday};
-      } 
-    \end{scope}
-    %
-    %%% Monde: Hier werden die Eintraglabels generiert. 
-    \foreach\mond/\mondname in \mondnames{
-      \begin{scope}[shift={({\nullteSpalte+\mondsep/2+floor((\mond-1)/3)*(\mondsep+2*\xstep)},{\nullteZeile+mod(\mond-1,3)*15*\ystep})},xscale=\xstep,yscale=\ystep]
-        \draw(0,0)grid(2,15);
-        \fill
-        (2,0)rectangle(2+0.5*\mondsep/\xstep,15)
-        (0,0)rectangle(-0.5*\mondsep/\xstep,15);
-        ;
-        \node[white,fill=black,rectangle,inner sep=\nodeinnersep,text depth={0},text height={\ystep*1cm-0.5pt-2*\nodeinnersep},align=center,text width={\xstep*2cm-2pt}] at (1,1/2){\mondfont\mond~\mbox{\mondname}};
-        \foreach\kalendertag in {1,...,14}{
-          \coordinate(\kalendertag-1-\mond)at(1/2,\kalendertag+1/2);
-          \coordinate(\kalendertag-2-\mond)at(3/2,\kalendertag+1/2);
-        }
-      \end{scope}
-    }
-}{
-  %%% Mondphasen:
-  \foreach\mond in {1,...,13}{
-    \node[tag]at (7-1-\mond){\hfill\rightmoon};
-    \node[tag]at (7-2-\mond){\hfill\leftmoon};
-    \node[tag]at(14-1-\mond){\hfill\fullmoon};
-    \node[tag]at(14-2-\mond){\hfill\newmoon};
-  }
-  \end{tikzpicture}
+% Die IDs einer Region werden gemeinsam in \mk@annotationids@<region>
+% registriert. \showholidays rendert anschliessend alle Annotationen der
+% aktuellen Region, unabhaengig von ihrem Typ.
+
+\def\mk@annotationtype@event{event}
+\def\mk@annotationtype@range{range}
+
+\def\mk@annotationids@default{}
+\def\mk@annotationids@kanthaipan{}
+\def\mk@annotationids@waeland{}
+\def\mk@annotationids@moravod{%
+  dschertvanica,dschertvanica-abschluss,probudschdenje,
+  alatnirs-bluete,medwed,spokojnje,spokojnje-ende,sviatlo,natschalno,
+  jurika,natalja-gedenktag,geburtstag-grossfuerst,djen-rodine}
+\def\mk@annotationids@rawindra{}
+\def\mk@annotationids@buluga{}
+\def\mk@annotationids@eschar{%
+  aid-el-uled-ed-dar,al-aschr-ed-dhimirjat,hilal-eth-tayr-al-atir,kan-ma-kan}
+\def\mk@annotationids@nahuatlan{}
+\def\mk@annotationids@alba{%
+  nubliona,beginn-troscad,thurionstid,snaesend,tos-tradai,irindarstid,
+  aeljostid,elrodstid,vanastid,dwyllanstid,xanstid,esberntid,vraidostid,
+  altu-comric,liostid,vraidosvaen,ylathorstid,belthan,samhain}
+
+% Einzelereignis registrieren:
+%   \mk@event{<Region>}{<ID>}{<Datum>}{<Label>}
+\newcommand{\mk@event}[4]{%
+  \expandafter\gdef\csname midgardkalender@#1@#2@type\endcsname{event}%
+  \expandafter\gdef\csname midgardkalender@#1@#2@date\endcsname{#3}%
+  \expandafter\gdef\csname midgardkalender@#1@#2@label\endcsname{#4}}
+
+% Zeitspanne registrieren:
+%   \mk@range{<Region>}{<ID>}{<Anfang>}{<Anfangslabel>}{<Ende>}{<Endlabel>}
+\newcommand{\mk@range}[6]{%
+  \expandafter\gdef\csname midgardkalender@#1@#2@type\endcsname{range}%
+  \expandafter\gdef\csname midgardkalender@#1@#2@start\endcsname{#3}%
+  \expandafter\gdef\csname midgardkalender@#1@#2@startlabel\endcsname{#4}%
+  \expandafter\gdef\csname midgardkalender@#1@#2@end\endcsname{#5}%
+  \expandafter\gdef\csname midgardkalender@#1@#2@endlabel\endcsname{#6}}
+
+% Rueckwaertskompatible Datumsanpassung fuer Einzelereignisse.
+\newcommand{\setzedatum}[3]{%
+  \expandafter\gdef\csname midgardkalender@#1@#2@date\endcsname{#3}}
+
+% Datumsanpassung fuer bereits registrierte Zeitspannen.
+\newcommand{\setzezeitspanne}[4]{%
+  \expandafter\gdef\csname midgardkalender@#1@#2@start\endcsname{#3}%
+  \expandafter\gdef\csname midgardkalender@#1@#2@end\endcsname{#4}}
+
+% Rueckwaertskompatibler interner Name.
+\let\mk@holiday\mk@event
+
+\mk@event{alba}{nubliona}{14-2-11}{Nubliona}
+\mk@event{alba}{beginn-troscad}{14-1-12}{Beginn Troscad}
+\mk@event{alba}{thurionstid}{14-2-12}{Thurionstid}
+\mk@event{alba}{snaesend}{1-1-1}{Snaesend}
+\mk@event{alba}{tos-tradai}{7-1-1}{Tos Tradai}
+\mk@event{alba}{irindarstid}{14-1-1}{Irindarstid}
+\mk@event{alba}{aeljostid}{4-2-1}{Aeljostid}
+\mk@event{alba}{elrodstid}{3-1-3}{Elrodstid}
+\mk@event{alba}{vanastid}{13-2-3}{Vanastid}
+\mk@event{alba}{dwyllanstid}{14-1-4}{Dwyllanstid}
+\mk@event{alba}{xanstid}{14-1-5}{Xanstid}
+\mk@event{alba}{esberntid}{4-2-7}{Esberntid}
+\mk@event{alba}{vraidostid}{8-1-6}{Vraidostid}
+\mk@event{alba}{altu-comric}{1-1-9}{Altu Comric}
+\mk@event{alba}{liostid}{14-2-9}{Liostid}
+\mk@event{alba}{vraidosvaen}{6-1-10}{Vraidosvaen}
+\mk@event{alba}{ylathorstid}{11-2-10}{Ylathorstid}
+\mk@event{alba}{belthan}{14-1-11}{Belthan}
+\mk@range{alba}{samhain}{1-1-9}{$\RHD$ Samhain}{13-1-9}{\hfill $\LHD$}
+
+\mk@event{eschar}{aid-el-uled-ed-dar}{14-2-8}{Aid el-Uled ed-Dar}
+\mk@event{eschar}{al-aschr-ed-dhimirjat}{3-1-3}{Al-Aschr ed-Dhimirjat}
+\mk@event{eschar}{hilal-eth-tayr-al-atir}{14-2-1}{Hilal eth-Tayr al-Atir}
+\mk@event{eschar}{kan-ma-kan}{1-1-10}{Kan-ma-kan}
+
+\mk@range{moravod}{dschertvanica}{10-2-13}{$\RHD$ Dschertvanica}{7-2-1}{\hfill $\LHD$}
+\mk@event{moravod}{probudschdenje}{4-1-1}{Probudschdenje}
+\mk@event{moravod}{alatnirs-bluete}{14-1-5}{Alatnirs Blüte}
+\mk@range{moravod}{medwed}{6-2-9}{$\RHD$ Medwed}{8-2-9}{\hfill $\LHD$}
+\mk@range{moravod}{spokojnje}{11-2-9}{$\RHD$ Spokojnje}{3-1-10}{\hfill $\LHD$}
+\mk@event{moravod}{sviatlo}{14-2-11}{Sviatlo}
+\mk@event{moravod}{natschalno}{14-2-11}{Natschalno}
+\mk@event{moravod}{jurika}{8-1-3}{Jurika}
+\mk@event{moravod}{natalja-gedenktag}{8-1-8}{DP Natalji}
+\mk@event{moravod}{geburtstag-grossfuerst}{14-1-13}{DR Wladimira}
+\mk@event{moravod}{djen-rodine}{5-1-2}{Djen-Rodine}
+
+\def\mk@showholidays{%
+  \edef\mk@ids{\csname mk@annotationids@\mk@region\endcsname}%
+  \ifx\mk@ids\@empty\else
+    \foreach \mk@id in \mk@ids {%
+      \edef\mk@annotationtype{%
+        \csname midgardkalender@\mk@region @\mk@id @type\endcsname}%
+      \ifx\mk@annotationtype\mk@annotationtype@event
+        \edef\mk@date{%
+          \csname midgardkalender@\mk@region @\mk@id @date\endcsname}%
+        \edef\mk@label{%
+          \csname midgardkalender@\mk@region @\mk@id @label\endcsname}%
+        \ifx\mk@date\@empty\else
+          \kalendereintrag[fill=orange!30]{\mk@date}{\dayfont\mk@label}%
+        \fi
+      \else\ifx\mk@annotationtype\mk@annotationtype@range
+        \edef\mk@start{%
+          \csname midgardkalender@\mk@region @\mk@id @start\endcsname}%
+        \edef\mk@startlabel{%
+          \csname midgardkalender@\mk@region @\mk@id @startlabel\endcsname}%
+        \edef\mk@end{%
+          \csname midgardkalender@\mk@region @\mk@id @end\endcsname}%
+        \edef\mk@endlabel{%
+          \csname midgardkalender@\mk@region @\mk@id @endlabel\endcsname}%
+        \ifx\mk@start\@empty\else
+          \zeitspanne[fill=orange!18]
+            {\mk@start}{\mk@startlabel}{\mk@end}{\mk@endlabel}%
+        \fi
+      \else
+        \PackageWarning{midgardkalender-v2-3}{%
+          Unbekannter Annotationstyp `\mk@annotationtype' fuer
+          `\mk@region/\mk@id'}%
+      \fi\fi
+    }%
+  \fi}
+
+% --------------------------------------------------------------------------
+% Hilfen
+% --------------------------------------------------------------------------
+\def\mk@select#1{%
+  \@ifundefined{mk@type@#1}{%
+    \PackageError{midgardkalender-v2}{Unbekannte Kalenderregion `#1'}{Verfuegbar: default, kanthaipan, alba, waeland, moravod, rawindra, buluga, eschar, nahuatlan.}%
+  }{\edef\mk@region{#1}\expandafter\let\expandafter\mk@type\csname mk@type@#1\endcsname}}
+
+\def\mk@getmonthname#1{%
+  \def\mk@monthname{Mond}%
+  \foreach \mk@n/\mk@name in \mk@months {\ifnum\mk@n=#1\relax\xdef\mk@monthname{\unexpanded\expandafter{\mk@name}}\fi}}
+
+\def\mk@setlayoutdata{%
+  \def\mk@family{regular}\def\mk@escharname{eschar}
+  \ifx\mk@region\mk@escharname\def\mk@family{eschar}\fi
+  \ifx\mk@layout\mk@layout@columns\def\mk@orientation{columns}\else\def\mk@orientation{rows}\fi
+  \expandafter\edef\expandafter\mk@placement\expandafter{\csname mk@placement@\mk@family @\mk@orientation\endcsname}
+  \expandafter\edef\expandafter\mk@headers\expandafter{\csname mk@headers@\mk@family @\mk@orientation\endcsname}
+  \expandafter\edef\expandafter\mk@cols\expandafter{\csname mk@cols@\mk@family @\mk@orientation\endcsname}
+  \expandafter\edef\expandafter\mk@rows\expandafter{\csname mk@rows@\mk@family @\mk@orientation\endcsname}}
+
+% --------------------------------------------------------------------------
+% Standardrenderer
+% --------------------------------------------------------------------------
+\def\mk@drawmonth#1#2#3{%
+  \mk@getmonthname{#1}%
+  \begin{scope}[shift={({\leftgutter+(#2-1)*(\cellwidth+\cellsep)},{\headheight+(#3-1)*(\cellheight+\cellsep)})},xscale=\xstep,yscale=\ystep]
+    \draw (0,0) grid (2,15);
+    \node[white,fill=black,rectangle,inner sep=\nodeinnersep,text depth=0pt,
+      text height={\ystep*1cm-0.5pt-2*\nodeinnersep},align=center,
+      text width={\xstep*2cm-0.5pt-2*\nodeinnersep}] at (1,1/2){{\mondfont #1~\mk@monthname}};
+    \foreach \mk@d in {1,...,14}{%
+      \coordinate (\mk@d-1-#1) at (1/2,\mk@d+1/2);
+      \coordinate (\mk@d-2-#1) at (3/2,\mk@d+1/2);}
+  \end{scope}}
+
+\def\mk@drawinfo#1#2#3{%
+  \begin{scope}[shift={({\leftgutter+(#2-1)*(\cellwidth+\cellsep)},{\headheight+(#3-1)*(\cellheight+\cellsep)})},xscale=\xstep,yscale=\ystep]
+    \draw (0,0) grid[xstep=2] (2,15);
+    \pgfmathtruncatemacro{\mk@partlabel}{#1}
+    \node[fill=black!33,inner sep=\nodeinnersep,text depth=0pt,
+      text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\xstep*2cm-0.5pt-2*\nodeinnersep}]
+      at (1,1/2){\kalendertagfont\bfseries \mk@partlabel.~Trideade};
+    \foreach \mk@d/\mk@dayname in \mk@days {%
+      \node[inner sep=\nodeinnersep,text depth=0pt,
+        text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\xstep*2cm-0.5pt-2*\nodeinnersep}]
+        at (1,1/2+\mk@d){\kalendertagfont\mk@d~\mbox{\mk@dayname}};}
+    \foreach \mk@p/\mk@finalname in \mk@finaldays {\ifnum\numexpr\mk@p+1\relax=#1\relax
+      \node[inner sep=\nodeinnersep,text depth=0pt,text width={\xstep*2cm-0.5pt-2*\nodeinnersep}]
+        at (1,14.5){\kalendertagfont\mk@finalname};\fi}
+  \end{scope}}
+
+\def\mk@renderstandard#1{%
+  \expandafter\edef\expandafter\mk@months\expandafter{\csname mk@months@\mk@region\endcsname}
+  \expandafter\edef\expandafter\mk@days\expandafter{\csname mk@days@\mk@region\endcsname}
+  \expandafter\edef\expandafter\mk@finaldays\expandafter{\csname mk@finaldays@\mk@region\endcsname}
+  \mk@setlayoutdata
+  \pgfmathsetmacro{\nodeinnersep}{2pt}
+  \pgfmathsetmacro{\cellsep}{0.08}
+  \pgfmathsetmacro{\leftgutter}{0.85}
+  \pgfmathsetmacro{\headheight}{0.75}
+  \pgfmathsetmacro{\breite}{(\textwidth-3pt)/1cm}
+  \pgfmathsetmacro{\hoehe}{(\textheight-6pt)/1cm}
+  \pgfmathsetmacro{\cellwidth}{(\breite-\leftgutter-(\mk@cols-1)*\cellsep)/\mk@cols}
+  \pgfmathsetmacro{\cellheight}{(\hoehe-\headheight-(\mk@rows-1)*\cellsep)/\mk@rows}
+  \pgfmathsetmacro{\xstep}{\cellwidth/2}
+  \pgfmathsetmacro{\ystep}{\cellheight/15}
+  \noindent\begin{tikzpicture}[yscale=-1,remember picture,line width=0.5pt,
+    tag/.style={rectangle,inner sep=\nodeinnersep,text depth=0pt,
+      text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\xstep*1cm-0.5pt-2*\nodeinnersep}}]
+    \path (0,0) rectangle (\breite,\hoehe);
+    \foreach \mk@slot/\mk@label in \mk@headers {%
+      \pgfmathsetmacro{\mk@hx}{\leftgutter+(\mk@slot-0.5)*(\cellwidth+\cellsep)-0.5*\cellsep}
+      \node at (\mk@hx,0.42*\headheight){\Large\scshape\mk@label};}
+    \node[anchor=east] at (\breite-0.15,0.42*\headheight){\Large\bfseries #1};
+    % Gemeinsame Tagesnummern je Rasterzeile.
+    \foreach \mk@r in {1,...,\mk@rows}{%
+      \begin{scope}[shift={(0,{\headheight+(\mk@r-1)*(\cellheight+\cellsep)})},yscale=\ystep]
+        \draw (0,0) grid[xstep=\leftgutter] (\leftgutter,15);
+        \foreach \mk@d in {1,...,13}{\node[anchor=east,font=\dayfont] at (\leftgutter-0.08,\mk@d+0.5){\mk@d};}
+        \node[anchor=east,font=\dayfont] at (\leftgutter-0.08,0.5){\astrosun};
+        \node[anchor=east,font=\dayfont] at (\leftgutter-0.08,14.5){M};
+      \end{scope}}
+    \foreach \mk@kind/\mk@id/\mk@c/\mk@r in \mk@placement {\if M\mk@kind\mk@drawmonth{\mk@id}{\mk@c}{\mk@r}\else\mk@drawinfo{\mk@id}{\mk@c}{\mk@r}\fi}
 }
 
+\def\mk@endstandard{%
+  \foreach \mk@m in {1,...,13}{%
+    \node[tag] at (7-1-\mk@m){\hfill\rightmoon};
+    \node[tag] at (7-2-\mk@m){\hfill\leftmoon};
+    \node[tag] at (14-1-\mk@m){\hfill\fullmoon};
+    \node[tag] at (14-2-\mk@m){\hfill\newmoon};}
+  \end{tikzpicture}}
 
+% --------------------------------------------------------------------------
+% Darstellung der nahuatlanischen Tagesbezeichnungen
+% --------------------------------------------------------------------------
+% Der Inhalt eines regulaeren Tagesfeldes wird durch eine frei definierbare
+% Schablone festgelegt. Innerhalb dieser Schablone stehen fuer den jeweils
+% gerenderten Tag folgende Platzhalter zur Verfuegung:
+%   \zahl -- Tageszahl
+%   \name -- Tagesname
+%   \bild -- Piktogramm aus pics/<Tagesname>.<Endung>
+%
+% Beispiele:
+%   \def\nahuatlandaystyle{\zahl\quad\name}
+%   \def\nahuatlandaystyle{\bild}
+%   \def\nahuatlandaystyle{\zahl\hfill\bild\hfill\name}
+%
+% Die Platzhalter werden nur lokal beim Zeichnen eines Tages belegt. Dadurch
+% koennen sie in \nahuatlandaystyle beliebig oft und in beliebiger Reihenfolge
+% verwendet werden, ohne ausserhalb des Renderers globale Definitionen zu
+% ueberschreiben.
+\providecommand{\nahuatlandaystyle}{\zahl\quad\name}
+\def\mk@nahuatlanpicpath{pics}
+
+% Der Pfad kann bei Bedarf relativ zum Hauptdokument angepasst werden.
+\newcommand{\NahuatlanBildpfad}[1]{\gdef\mk@nahuatlanpicpath{#1}}
+
+% Binde ein Piktogramm mit einer der von graphicx ueblicherweise unterstuetzten
+% Endungen ein. Fehlt die Datei, bleibt der Kalender kompilierbar und zeigt
+% ersatzweise den Tagesnamen an.
+\def\mk@nahuatlanpicture#1{%
+  \def\mk@nahuatlanpicfile{}%
+  \IfFileExists{\mk@nahuatlanpicpath/#1.pdf}%
+    {\edef\mk@nahuatlanpicfile{\mk@nahuatlanpicpath/#1.pdf}}{}%
+  \ifx\mk@nahuatlanpicfile\@empty
+    \IfFileExists{\mk@nahuatlanpicpath/#1.png}%
+      {\edef\mk@nahuatlanpicfile{\mk@nahuatlanpicpath/#1.png}}{}%
+  \fi
+  \ifx\mk@nahuatlanpicfile\@empty
+    \IfFileExists{\mk@nahuatlanpicpath/#1.jpg}%
+      {\edef\mk@nahuatlanpicfile{\mk@nahuatlanpicpath/#1.jpg}}{}%
+  \fi
+  \ifx\mk@nahuatlanpicfile\@empty
+    \IfFileExists{\mk@nahuatlanpicpath/#1.jpeg}%
+      {\edef\mk@nahuatlanpicfile{\mk@nahuatlanpicpath/#1.jpeg}}{}%
+  \fi
+  \ifx\mk@nahuatlanpicfile\@empty
+    \PackageWarning{midgardkalender-v2-5}{Piktogramm fuer `#1' nicht gefunden}%
+  \else
+    \includegraphics[height=\mk@nahuatlanpicheight]{\mk@nahuatlanpicfile}%
+  \fi}
+
+% Belege die drei oeffentlichen Platzhalter fuer genau einen Tag und werte
+% anschliessend die benutzerdefinierte Schablone aus.
+\def\mk@nahuatlandaycontent#1#2{%
+  \begingroup
+    \def\zahl{#1}%
+    \def\name{#2}%
+    \def\bild{\mk@nahuatlanpicture{#2}}%
+    \nahuatlandaystyle
+  \endgroup}
+
+% --------------------------------------------------------------------------
+% Nahuatlanrenderer
+% --------------------------------------------------------------------------
+\def\mk@rendernahuatlan#1{%
+  \pgfmathsetmacro{\nodeinnersep}{1.7pt}
+  \pgfmathsetmacro{\breite}{(\textwidth-3pt)/1cm}
+  \pgfmathsetmacro{\hoehe}{(\textheight-6pt)/1cm}
+  \pgfmathsetmacro{\kopf}{0.75}
+  \pgfmathsetmacro{\sep}{0.08}
+  \ifx\mk@layout\mk@layout@columns
+    \def\mk@qcols{6}\def\mk@qrows{3}%
+  \else
+    \def\mk@qcols{3}\def\mk@qrows{6}%
+  \fi
+  \pgfmathsetmacro{\qwidth}{(\breite-(\mk@qcols-1)*\sep)/\mk@qcols}
+  \pgfmathsetmacro{\qheight}{(\hoehe-\kopf-(\mk@qrows-1)*\sep)/\mk@qrows}
+  \pgfmathsetmacro{\ystep}{\qheight/22}
+  \pgfmathsetlengthmacro{\mk@nahuatlanpicheight}{0.72*\ystep cm}
+  \noindent\begin{tikzpicture}[yscale=-1,remember picture,line width=0.5pt,
+    tag/.style={rectangle,inner sep=\nodeinnersep,text depth=0pt,
+      text height={\ystep*1cm-0.5pt-2*\nodeinnersep},text width={\qwidth*1cm-0.5pt-2*\nodeinnersep}}]
+    \path (0,0) rectangle (\breite,\hoehe);
+    \node[anchor=west] at (0.15,0.42*\kopf){\Large\scshape Nahuahauquihtl};
+    \node[anchor=east] at (\breite-0.15,0.42*\kopf){\Large\bfseries #1};
+    \foreach \mk@q in {1,...,18}{%
+      \pgfmathtruncatemacro{\mk@c}{mod(\mk@q-1,\mk@qcols)}
+      \pgfmathtruncatemacro{\mk@r}{floor((\mk@q-1)/\mk@qcols)}
+      \begin{scope}[shift={({\mk@c*(\qwidth+\sep)},{\kopf+\mk@r*(\qheight+\sep)})},xscale=\qwidth,yscale=\ystep]
+        \def\mk@qgridrows{21}%
+        \ifnum\mk@q=2\relax
+        \def\mk@qgridrows{22}%
+        \fi
+        \ifnum\mk@q=8\relax
+        \def\mk@qgridrows{22}%
+        \fi
+        \ifnum\mk@q=15\relax
+        \def\mk@qgridrows{22}%
+        \fi
+        \ifnum\mk@q=18\relax
+        \def\mk@qgridrows{22}%
+        \fi
+        \draw (0,0) grid (1,\mk@qgridrows);
+        \node[white,fill=black,rectangle,inner sep=\nodeinnersep,text depth=0pt, text height={\ystep*1cm-0.5pt-2*\nodeinnersep}, 
+          text width={\qwidth*1cm-0.5pt-2*\nodeinnersep},align=center] at (1/2,1/2){\scalebox{0.75}{\mondfont\mk@q.~Quiautl}};
+        \foreach \mk@d/\mk@dayname in \mk@nahuatlandays {%
+          \coordinate (\mk@d-\mk@q) at (1/2,\mk@d+1/2);
+          \node[font=\dayfont,align=left,text width={\qwidth*1cm-4pt}] at (1/2,\mk@d+1/2)%
+               {\mk@nahuatlandaycontent{\mk@d}{\mk@dayname}};
+          \pgfmathtruncatemacro{\mk@dayindex}{(\mk@q-1)*20+\mk@d+(\mk@q>2)+(\mk@q>8)+(\mk@q>15)}%
+          \mk@nahuatlanphase{\mk@dayindex}{\mk@d+1/2}%
+        }
+        \ifnum\mk@q=2 \mk@hollow{2}{41}\fi
+        \ifnum\mk@q=8 \mk@hollow{8}{162}\fi
+        \ifnum\mk@q=15 \mk@hollow{15}{303}\fi
+        \ifnum\mk@q=18 \mk@hollow{18}{364}\fi
+      \end{scope}}
+}
+% Mondphase zum fortlaufenden Tag des nahuatlanischen Jahres.
+% Da Tag 364 ein Neumondtag ist, gilt fuer den Rest modulo 28:
+% 0 = Neumond, 7 = zunehmender Halbmond, 14 = Vollmond,
+% 21 = abnehmender Halbmond.
+\def\mk@nahuatlanphase#1#2{%
+  \pgfmathtruncatemacro{\mk@phasemod}{mod(#1,28)}%
+  \def\mk@phasesymbol{}%
+  \ifnum\mk@phasemod=0\relax\def\mk@phasesymbol{\newmoon}\fi
+  \ifnum\mk@phasemod=7\relax\def\mk@phasesymbol{\rightmoon}\fi
+  \ifnum\mk@phasemod=14\relax\def\mk@phasesymbol{\fullmoon}\fi
+  \ifnum\mk@phasemod=21\relax\def\mk@phasesymbol{\leftmoon}\fi
+  \ifx\mk@phasesymbol\@empty\else
+    \node[anchor=east,inner sep=1.5pt,font=\dayfont] at (0.98,#2){\mk@phasesymbol};%
+  \fi}
+
+% Ein Hohler Tag belegt exakt eine Rasterzeile und damit dieselbe Hoehe
+% wie jeder regulaere Kalendertag, unabhaengig von Seitenformat und -groesse.
+\def\mk@hollow#1#2{%
+  \coordinate (hollow-after-#1) at (1/2,21.5);%
+  \node[tag,fill=black!20,font=\dayfont,align=left]
+    at (1/2,21.5){\mk@nahuatlandaycontent{}{Hohler Tag}};%
+  \mk@nahuatlanphase{#2}{21.5}%
+}
+\def\mk@endnahuatlan{\end{tikzpicture}}
+
+% --------------------------------------------------------------------------
+% Umgebung
+% --------------------------------------------------------------------------
+\NewDocumentEnvironment{midgardkalender}{m O{Jahr}}{%
+  \begingroup\mk@select{#1}\let\showholidays\mk@showholidays
+  \ifx\mk@type\mk@type@standard\mk@renderstandard{#2}\else\mk@rendernahuatlan{#2}\fi
+}{%
+  \ifx\mk@type\mk@type@standard\mk@endstandard\else\mk@endnahuatlan\fi
+  \endgroup}
+
+\makeatother
 \endinput
